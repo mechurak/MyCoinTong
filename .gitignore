@@ -1,0 +1,15 @@
+*.iml
+.gradle
+/local.properties
+.idea
+.DS_Store
+app/libs
+/build
+/captures
+.externalNativeBuild
+
+# Built application files
+/*/build/
+
+# Local configuration file (sdk path, etc)
+local.properties

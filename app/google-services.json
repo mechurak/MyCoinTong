@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "20433619326",
+    "firebase_url": "https://mycointong.firebaseio.com",
+    "project_id": "mycointong",
+    "storage_bucket": "mycointong.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20433619326:android:6a07eacd346087a7",
+        "android_client_info": {
+          "package_name": "com.shimnssso.mycointong"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20433619326-707imh4o4osu8av4ku5b4nad5epvenhl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvoSxysiiO4Og8NPqonSwFWonsUEkDonY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
