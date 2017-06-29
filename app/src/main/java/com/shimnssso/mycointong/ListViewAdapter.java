@@ -70,14 +70,18 @@ public class ListViewAdapter extends BaseAdapter {
         }
         priceChangeTextView.setText(intFormatter.format(changePrice));
         percentChangeTextView.setText(floatFormatter.format(changePercent));
-        if (changePrice >= 0) {
+        if (changePrice > 0) {
             priceTextView.setTextColor(Color.RED);
             priceChangeTextView.setTextColor(Color.RED);
             percentChangeTextView.setTextColor(Color.RED);
-        } else {
+        } else if (changePrice < 0) {
             priceTextView.setTextColor(Color.BLUE);
+            priceChangeTextView.setTextColor(Color.BLUE);
             percentChangeTextView.setTextColor(Color.BLUE);
-            percentChangeTextView.setTextColor(Color.BLUE);
+        } else {
+            priceTextView.setTextColor(Color.BLACK);
+            priceChangeTextView.setTextColor(Color.BLACK);
+            percentChangeTextView.setTextColor(Color.BLACK);
         }
 
         int myPriceChange = 0;
