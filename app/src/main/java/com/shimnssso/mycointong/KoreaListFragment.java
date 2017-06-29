@@ -49,6 +49,9 @@ public class KoreaListFragment extends ListFragment {
         ListViewItem xrpCoinoneItem = new ListViewItem(Constant.CoinName.XRP_COINONE);
         adapter.addItem(xrpCoinoneItem);
 
+        ListViewItem tempItem = new ListViewItem("TEST");
+        adapter.addItem(tempItem);
+
 
         // TODO: Remove this test code
         BithumClient bithumClient = new BithumClient();

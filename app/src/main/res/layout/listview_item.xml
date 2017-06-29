@@ -53,18 +53,17 @@
         android:layout_weight="2.7"
         android:orientation="vertical">
 
-        <TextView
+        <com.shimnssso.mycointong.CandleView
             android:id="@+id/candle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="candle" />
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/volume"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="right|center"
             android:text="volume"
