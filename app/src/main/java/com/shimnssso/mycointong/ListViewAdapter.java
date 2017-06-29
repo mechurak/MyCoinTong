@@ -62,7 +62,7 @@ public class ListViewAdapter extends BaseAdapter {
         DecimalFormat floatFormatter = new DecimalFormat("#,##0.00");
 
         priceTextView.setText(intFormatter.format(listViewItem.getCurPrice()));
-        volumeTextView.setText(floatFormatter.format(listViewItem.getVolume()));
+        volumeTextView.setText(intFormatter.format(listViewItem.getVolume()));
         int changePrice = listViewItem.getCurPrice() - listViewItem.getOpenPrice();
         float changePercent = 0.0f;
         if (listViewItem.getOpenPrice() > 0.0f) {
