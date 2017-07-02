@@ -1,6 +1,8 @@
 package com.shimnssso.mycointong;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +16,6 @@ import com.shimnssso.mycointong.network.KorbitClient;
 
 public class KoreaListFragment extends ListFragment {
     private static final String TAG = "KoreaListFragment";
-    ListViewAdapter adapter ;
 
     @Override
     public void onListItemClick (ListView l, View v, int position, long id) {
@@ -24,36 +25,21 @@ public class KoreaListFragment extends ListFragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.i(TAG, "LifeCycle. onAttach()");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i(TAG, "LifeCycle. onCreate()");
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        adapter = ListViewAdapter.getInstance() ;
-        setListAdapter(adapter) ;
+        Log.i(TAG, "LifeCycle. onCreateView()");
 
-        ListViewItem korbitItem = new ListViewItem(Constant.CoinName.BTC_KORBIT);
-        adapter.addItem(korbitItem);
-
-        ListViewItem bithumItem = new ListViewItem(Constant.CoinName.BTC_BITHUM);
-        adapter.addItem(bithumItem);
-
-        ListViewItem coinoneItem = new ListViewItem(Constant.CoinName.BTC_COINONE);
-        adapter.addItem(coinoneItem);
-
-        ListViewItem ethBithumItem = new ListViewItem(Constant.CoinName.ETH_BITHUM);
-        adapter.addItem(ethBithumItem);
-
-        ListViewItem ethCoinoneItem = new ListViewItem(Constant.CoinName.ETH_COINONE);
-        adapter.addItem(ethCoinoneItem);
-
-        ListViewItem xrpBithumItem = new ListViewItem(Constant.CoinName.XRP_BITHUM);
-        adapter.addItem(xrpBithumItem);
-
-        ListViewItem xrpCoinoneItem = new ListViewItem(Constant.CoinName.XRP_COINONE);
-        adapter.addItem(xrpCoinoneItem);
-
-        ListViewItem tempItem = new ListViewItem("TEST");
-        adapter.addItem(tempItem);
-
-
-        // TODO: Remove this test code
         BithumClient bithumClient = new BithumClient();
         bithumClient.execute();
         CoinoneClient coinoneClient = new CoinoneClient();
@@ -62,5 +48,53 @@ public class KoreaListFragment extends ListFragment {
         korbitClient.execute();
 
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.i(TAG, "LifeCycle. onActivityCreated()");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "LifeCycle. onStart()");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "LifeCycle. onResume()");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "LifeCycle. onPause()");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "LifeCycle. onStop()");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG, "LifeCycle. onDestroyView()");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "LifeCycle. onDestroy()");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(TAG, "LifeCycle. onDetach()");
     }
 }
