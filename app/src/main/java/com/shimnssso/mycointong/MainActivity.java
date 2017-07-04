@@ -22,24 +22,29 @@ public class MainActivity extends AppCompatActivity {
         // Init listViewAdapter
         ListViewAdapter adapter = ListViewAdapter.getInstance();
         ListViewItem korbitItem = new ListViewItem(Constant.CoinName.BTC_KORBIT);
+        korbitItem.setCoinoneChartSite(Constant.ChartSite.BTC_KORBIT);
         adapter.addItem(korbitItem);
 
         ListViewItem bithumItem = new ListViewItem(Constant.CoinName.BTC_BITHUM);
+        bithumItem.setCoinoneChartSite(Constant.ChartSite.BTC_BITHUM);
         adapter.addItem(bithumItem);
 
         ListViewItem coinoneItem = new ListViewItem(Constant.CoinName.BTC_COINONE);
+        coinoneItem.setCoinoneChartSite(Constant.ChartSite.BTC_COINONE);
         adapter.addItem(coinoneItem);
 
         ListViewItem ethBithumItem = new ListViewItem(Constant.CoinName.ETH_BITHUM);
         adapter.addItem(ethBithumItem);
 
         ListViewItem ethCoinoneItem = new ListViewItem(Constant.CoinName.ETH_COINONE);
+        ethCoinoneItem.setCoinoneChartSite(Constant.ChartSite.ETH_COINONE);
         adapter.addItem(ethCoinoneItem);
 
         ListViewItem xrpBithumItem = new ListViewItem(Constant.CoinName.XRP_BITHUM);
         adapter.addItem(xrpBithumItem);
 
         ListViewItem xrpCoinoneItem = new ListViewItem(Constant.CoinName.XRP_COINONE);
+        xrpCoinoneItem.setCoinoneChartSite(Constant.ChartSite.XRP_COINONE);
         adapter.addItem(xrpCoinoneItem);
 
         ListViewItem tempItem = new ListViewItem("TEST");

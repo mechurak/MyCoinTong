@@ -1,8 +1,11 @@
 package com.shimnssso.mycointong;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +25,17 @@ public class KoreaListFragment extends ListFragment {
         // get TextView's Text.
         ListViewItem item = (ListViewItem ) l.getItemAtPosition(position) ;
         Log.d(TAG, "onListItemClick(). position: " + position + ", id: " + id + "name: " + item.getName());
+
+        String chartSite = item.getCoinoneChartSite();
+        if (!chartSite.equals(Constant.ChartSite.NOT_SUPPORT)) {
+            String url = String.format("https://coinone.co.kr/chart/?site=%s&unit_time=%s", chartSite, item.getUnitTime());
+            Log.d(TAG, "onListItemClick(). url: " + url);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        }
+        else {
+            Snackbar.make(v, "Coninone ProChart does not support " + item.getName(), Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override

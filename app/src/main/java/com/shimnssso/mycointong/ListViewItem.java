@@ -8,6 +8,8 @@ public class ListViewItem {
     private int curPrice;
     private double volume;
     private int myPrice;
+    private String coinoneChartSite = Constant.ChartSite.NOT_SUPPORT;
+    private String unitTime = Constant.UnitTime.FIFTEEN_MIN;
 
     ListViewItem(String name) {
         this.name = name;
@@ -37,6 +39,14 @@ public class ListViewItem {
         return highPrice;
     }
 
+    public String getCoinoneChartSite() {
+        return coinoneChartSite;
+    }
+
+    public String getUnitTime() {
+        return unitTime;
+    }
+
     public void setPrice(int openPrice, int highPrice, int lowPrice, int curPrice, double volume) {
         this.openPrice = openPrice;
         this.highPrice = highPrice;
@@ -55,6 +65,14 @@ public class ListViewItem {
 
     public void setMyPrice(int myPrice) {
         this.myPrice = myPrice;
+    }
+
+    public void setCoinoneChartSite(String chartSite) {
+        this.coinoneChartSite = chartSite;
+    }
+
+    public void setUnitTime(String unitTime) {
+        this.unitTime = unitTime;
     }
 
     @Override
