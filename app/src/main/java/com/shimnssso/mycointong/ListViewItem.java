@@ -15,6 +15,11 @@ public class ListViewItem {
         this.name = name;
     }
 
+    ListViewItem(String name, String coinoneChartSite) {
+        this.name = name;
+        this.coinoneChartSite = coinoneChartSite;
+    }
+
     public String getName() {
         return name;
     }

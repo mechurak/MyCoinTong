@@ -8,6 +8,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.shimnssso.mycointong.data.DbHelper;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
@@ -19,36 +23,19 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Init listViewAdapter
         ListViewAdapter adapter = ListViewAdapter.getInstance();
-        ListViewItem korbitItem = new ListViewItem(Constant.CoinName.BTC_KORBIT);
-        korbitItem.setCoinoneChartSite(Constant.ChartSite.BTC_KORBIT);
-        adapter.addItem(korbitItem);
-
-        ListViewItem bithumItem = new ListViewItem(Constant.CoinName.BTC_BITHUM);
-        bithumItem.setCoinoneChartSite(Constant.ChartSite.BTC_BITHUM);
-        adapter.addItem(bithumItem);
-
-        ListViewItem coinoneItem = new ListViewItem(Constant.CoinName.BTC_COINONE);
-        coinoneItem.setCoinoneChartSite(Constant.ChartSite.BTC_COINONE);
-        adapter.addItem(coinoneItem);
-
-        ListViewItem ethBithumItem = new ListViewItem(Constant.CoinName.ETH_BITHUM);
-        adapter.addItem(ethBithumItem);
-
-        ListViewItem ethCoinoneItem = new ListViewItem(Constant.CoinName.ETH_COINONE);
-        ethCoinoneItem.setCoinoneChartSite(Constant.ChartSite.ETH_COINONE);
-        adapter.addItem(ethCoinoneItem);
-
-        ListViewItem xrpBithumItem = new ListViewItem(Constant.CoinName.XRP_BITHUM);
-        adapter.addItem(xrpBithumItem);
-
-        ListViewItem xrpCoinoneItem = new ListViewItem(Constant.CoinName.XRP_COINONE);
-        xrpCoinoneItem.setCoinoneChartSite(Constant.ChartSite.XRP_COINONE);
-        adapter.addItem(xrpCoinoneItem);
-
-        ListViewItem tempItem = new ListViewItem("TEST");
-        adapter.addItem(tempItem);
+        if (adapter.getCount() == 0) {
+            DbHelper dbHelper = DbHelper.getInstance(getApplicationContext());
+            Log.e(TAG, "after db");
+            ArrayList<String[]> coinList = dbHelper.getInterestingCoinList();
+            for (String[] coinRow : coinList) {
+                Log.e(TAG, coinRow[0] + ", " + coinRow[1]);
+                ListViewItem item = new ListViewItem(coinRow[0], coinRow[1]);
+                adapter.addItem(item);
+            }
+            ListViewItem tempItem = new ListViewItem("TEST");
+            adapter.addItem(tempItem);
+        }
 
         // Init fragment
         ListFragment koreaListFrgmt = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.korea_list_fragment);
