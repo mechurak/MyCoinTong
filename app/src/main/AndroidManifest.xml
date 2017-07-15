@@ -21,6 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".HoldingActivity"
+            android:label="@string/title_activity_holding"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+
     </application>
 
 </manifest>

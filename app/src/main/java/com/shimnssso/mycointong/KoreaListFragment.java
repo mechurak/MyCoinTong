@@ -11,19 +11,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.shimnssso.mycointong.data.DbHelper;
 import com.shimnssso.mycointong.network.BithumClient;
 import com.shimnssso.mycointong.network.CoinoneClient;
 import com.shimnssso.mycointong.network.KorbitClient;
 
-public class KoreaListFragment extends ListFragment {
+import static android.app.Activity.RESULT_OK;
+
+public class KoreaListFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
     private static final String TAG = "KoreaListFragment";
 
     @Override
     public void onListItemClick (ListView l, View v, int position, long id) {
         // get TextView's Text.
-        ListViewItem item = (ListViewItem ) l.getItemAtPosition(position) ;
+        ListViewItem item = (ListViewItem) l.getItemAtPosition(position) ;
         Log.d(TAG, "onListItemClick(). position: " + position + ", id: " + id + "name: " + item.getName());
 
         String chartSite = item.getCoinoneChartSite();
@@ -36,6 +40,16 @@ public class KoreaListFragment extends ListFragment {
         else {
             Snackbar.make(v, "Coninone ProChart does not support " + item.getName(), Snackbar.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        ListViewItem item = (ListViewItem ) parent.getItemAtPosition(position) ;
+        Log.d(TAG, "onItemLongClick(). position: " + position + ", id: " + id + "name: " + item.getName());
+        Intent intent = new Intent(getActivity(), HoldingActivity.class);
+        intent.putExtra(Constant.HoldingIntentKey.CoinName, item.getName());
+        startActivityForResult(intent, Constant.RequestCode.HoldingActivity);
+        return true;
     }
 
     @Override
@@ -68,6 +82,8 @@ public class KoreaListFragment extends ListFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.i(TAG, "LifeCycle. onActivityCreated()");
+
+        getListView().setOnItemLongClickListener(this);
     }
 
     @Override
@@ -110,5 +126,33 @@ public class KoreaListFragment extends ListFragment {
     public void onDetach() {
         super.onDetach();
         Log.i(TAG, "LifeCycle. onDetach()");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult(). requestCode: " + requestCode + ", resultCode: " + resultCode);
+        switch (requestCode) {
+            case Constant.RequestCode.HoldingActivity:
+                if (resultCode == RESULT_OK) {
+                    String coinName = data.getStringExtra(Constant.HoldingIntentKey.CoinName);
+                    double avgPrice = data.getDoubleExtra(Constant.HoldingIntentKey.AvgPrice, 0.0d);
+                    double quantity = data.getDoubleExtra(Constant.HoldingIntentKey.Quantity, 0.0d);
+                    Log.d(TAG, "coin: " + coinName + ", avgPrice: " + avgPrice + ", quantity: " + quantity);
+
+                    DbHelper dbHelper = DbHelper.getInstance(getContext());
+                    dbHelper.updateHolding(coinName, avgPrice, quantity);
+
+                    ListViewAdapter adapter = ListViewAdapter.getInstance();
+                    ListViewItem item = (ListViewItem) adapter.getItemByName(coinName);
+                    item.setMyAvgPrice(avgPrice);
+                    item.setMyQuantity(quantity);
+
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

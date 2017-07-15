@@ -48,4 +48,14 @@ public class Constant {
         public static String ONE_DAY = "1D";
         public static String ONE_WEEK = "1W";
     }
+
+    public static class RequestCode {
+        public static final int HoldingActivity = 1000;
+    }
+
+    public static class HoldingIntentKey {
+        public static final String CoinName = "coin_name";
+        public static final String AvgPrice = "avg_price";
+        public static final String Quantity = "quantity";
+    }
 }

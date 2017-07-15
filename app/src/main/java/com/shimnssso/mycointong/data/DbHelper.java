@@ -1,5 +1,6 @@
 package com.shimnssso.mycointong.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -87,21 +88,38 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public ArrayList<String[]> getInterestingCoinList() {
+    public ArrayList<CoinInfo> getInterestingCoinList() {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {
                 DbMeta.CoinTableMeta.COIN,
-                DbMeta.CoinTableMeta.CHART_COINONE
+                DbMeta.CoinTableMeta.CHART_COINONE,
+                DbMeta.CoinTableMeta.MY_PRICE,
+                DbMeta.CoinTableMeta.MY_VOLUME
         };
-        ArrayList<String[]> ret = new ArrayList<>();
+        ArrayList<CoinInfo> ret = new ArrayList<>();
         Cursor c = db.query(DbMeta.CoinTableMeta.TABLE_NAME, columns, null, null, null, null, DbMeta.CoinTableMeta.LIST_ORDER);
         if (c != null && c.moveToFirst()) {
             do {
-                ret.add(new String[]{c.getString(0), c.getString(1)});
+                ret.add(
+                        new CoinInfo(
+                                c.getString(c.getColumnIndex(DbMeta.CoinTableMeta.COIN)),
+                                c.getString(c.getColumnIndex(DbMeta.CoinTableMeta.CHART_COINONE)),
+                                c.getDouble(c.getColumnIndex(DbMeta.CoinTableMeta.MY_PRICE)),
+                                c.getDouble(c.getColumnIndex(DbMeta.CoinTableMeta.MY_VOLUME))
+                        )
+                );
             } while (c.moveToNext());
             c.close();
         }
         Log.d(TAG, "getInterestingCoinList. size:" + ret.size());
         return ret;
+    }
+
+    public void updateHolding(String coinName, double avgPrice, double quantity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues content = new ContentValues();
+        content.put(DbMeta.CoinTableMeta.MY_PRICE, avgPrice);
+        content.put(DbMeta.CoinTableMeta.MY_VOLUME, quantity);
+        db.update(DbMeta.CoinTableMeta.TABLE_NAME, content, DbMeta.CoinTableMeta.COIN + "='" + coinName + "'", null);
     }
 }

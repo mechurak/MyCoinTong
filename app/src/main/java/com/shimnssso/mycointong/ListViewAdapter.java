@@ -85,13 +85,13 @@ public class ListViewAdapter extends BaseAdapter {
             percentChangeTextView.setTextColor(Color.BLACK);
         }
 
-        int myPriceChange = 0;
-        if (listViewItem.getMyPrice() != 0) {
-            myPriceChange = listViewItem.getMyPrice() - listViewItem.getCurPrice();
+        double myPriceChange = 0;
+        if (listViewItem.getMyAvgPrice() != 0.0d) {
+            myPriceChange = listViewItem.getCurPrice() - listViewItem.getMyAvgPrice();
         }
-        float myPercentChange = 0.0f;
-        if (myPriceChange != 0 && listViewItem.getMyPrice() > 0.0f) {
-            myPercentChange = myPriceChange / listViewItem.getMyPrice();
+        double myPercentChange = 0.0d;
+        if (myPriceChange != 0 && listViewItem.getMyAvgPrice() > 0.0d) {
+            myPercentChange = myPriceChange / listViewItem.getCurPrice() * 100;
 
             myPriceChangeTextView.setText(intFormatter.format(myPriceChange));
             myPercentChangeTextView.setText(floatFormatter.format(myPercentChange));
@@ -99,6 +99,16 @@ public class ListViewAdapter extends BaseAdapter {
         else {
             myPriceChangeTextView.setText("");
             myPercentChangeTextView.setText("");
+        }
+        if (myPriceChange > 0) {
+            myPriceChangeTextView.setTextColor(Color.RED);
+            myPercentChangeTextView.setTextColor(Color.RED);
+        } else if (myPriceChange < 0) {
+            myPriceChangeTextView.setTextColor(Color.BLUE);
+            myPercentChangeTextView.setTextColor(Color.BLUE);
+        } else {
+            myPriceChangeTextView.setTextColor(Color.BLACK);
+            myPercentChangeTextView.setTextColor(Color.BLACK);
         }
 
         candleView.setData(listViewItem.getOpenPrice(), listViewItem.getHighPrice(), listViewItem.getLowPrice(), listViewItem.getCurPrice());

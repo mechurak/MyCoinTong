@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
 
 import java.util.ArrayList;
@@ -27,10 +28,12 @@ public class MainActivity extends AppCompatActivity {
         if (adapter.getCount() == 0) {
             DbHelper dbHelper = DbHelper.getInstance(getApplicationContext());
             Log.e(TAG, "after db");
-            ArrayList<String[]> coinList = dbHelper.getInterestingCoinList();
-            for (String[] coinRow : coinList) {
-                Log.e(TAG, coinRow[0] + ", " + coinRow[1]);
-                ListViewItem item = new ListViewItem(coinRow[0], coinRow[1]);
+            ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList();
+            for (CoinInfo coinRow : coinList) {
+                Log.e(TAG, coinRow.toString());
+                ListViewItem item = new ListViewItem(coinRow.coinName, coinRow.chartCoinone);
+                item.setMyAvgPrice(coinRow.avgPrice);
+                item.setMyQuantity(coinRow.quantity);
                 adapter.addItem(item);
             }
             ListViewItem tempItem = new ListViewItem("TEST");

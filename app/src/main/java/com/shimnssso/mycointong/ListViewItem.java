@@ -7,7 +7,8 @@ public class ListViewItem {
     private int lowPrice;
     private int curPrice;
     private double volume;
-    private int myPrice;
+    private double myAvgPrice;
+    private double myQuantity;
     private String coinoneChartSite = Constant.ChartSite.NOT_SUPPORT;
     private String unitTime = Constant.UnitTime.FIFTEEN_MIN;
 
@@ -64,12 +65,20 @@ public class ListViewItem {
         return volume;
     }
 
-    public int getMyPrice() {
-        return myPrice;
+    public double getMyAvgPrice() {
+        return myAvgPrice;
     }
 
-    public void setMyPrice(int myPrice) {
-        this.myPrice = myPrice;
+    public void setMyAvgPrice(double myAvgPrice) {
+        this.myAvgPrice = myAvgPrice;
+    }
+
+    public double getMyQuantity() {
+        return myQuantity;
+    }
+
+    public void setMyQuantity(double myQuantity) {
+        this.myQuantity = myQuantity;
     }
 
     public void setCoinoneChartSite(String chartSite) {
