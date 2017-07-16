@@ -15,10 +15,12 @@ public class CandleView extends View {
     private static final String TAG = "CandleView";
     private static final float MAX_PERCENT = 30.0f;
     private static final float STROKE_WIDTH = 3.0f;
+    private static final int RED_1 = 0xFFFF7777;
+    private static final int BLUE_1 = 0xFF5555FF;
 
-    private float highPercent;
-    private float lowPercent;
-    private float curPercent;
+    private float highPercent = 0.0f;
+    private float lowPercent = 0.0f;
+    private float curPercent = 0.0f;
 
     public CandleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -52,29 +54,58 @@ public class CandleView extends View {
 
         canvas.drawRect(rect, paint);
 
-        if (curPercent > 0.0f) paint.setColor(Color.RED);
-        else if (curPercent < 0.0f) paint.setColor(Color.BLUE);
+        if (curPercent > 0.0f) paint.setColor(RED_1);
+        else if (curPercent < 0.0f) paint.setColor(BLUE_1);
         else paint.setColor(Color.WHITE);
         paint.setStrokeWidth(STROKE_WIDTH);
 
+        // line for -30% ~ 30%
         float startX = center - lowPercent * unit;
         float stopX = center + highPercent * unit;
-        Log.d(TAG, "lowPercent: " + lowPercent + ", highPercent: " + highPercent);
-        Log.d(TAG, "startX: " + lowPercent + ", stopX: " + highPercent);
-
+        if (startX < 0.0f) startX = 0.0f;
+        if (stopX > width) stopX = width;
         canvas.drawLine(startX, height/2, stopX, height/2, paint);
 
         float curX = center + curPercent * unit;
+        if (MAX_PERCENT < curPercent) { // over 30%
+            canvas.drawRect(center, padding, width, height - padding, paint);
+            paint.setColor(Color.RED);
+            curX = center + (curPercent-MAX_PERCENT) * unit;
+
+        }
+        else if (curPercent < -MAX_PERCENT) { // under -30%
+            canvas.drawRect(0, padding, width/2, height - padding, paint);
+            paint.setColor(Color.BLUE);
+            curX = center + (curPercent+MAX_PERCENT) * unit;
+
+        }
+
         RectF rectF;
-        if (curX > center) {
-            rectF = new RectF(center, padding, curX, height - padding);
+        if (curX < center) {
+            rectF = new RectF(curX, padding, center, height - padding);
         }
         else if (center < curX) {
-            rectF = new RectF(curX, padding, center, height - padding);
+            rectF = new RectF(center, padding, curX, height - padding);
         }
         else {
             rectF = new RectF(curX - STROKE_WIDTH/2, padding, center + STROKE_WIDTH/2, height - padding);
         }
         canvas.drawRect(rectF, paint);
+
+        // line for -60% ~ -30%
+        if (MAX_PERCENT < lowPercent) {
+            paint.setStrokeWidth(STROKE_WIDTH + 2.0f);
+            paint.setColor(Color.BLUE);
+            startX = center - (lowPercent - MAX_PERCENT) * unit;
+            canvas.drawLine(startX, height/2, center, height/2, paint);
+        }
+
+        // line for 30% ~ 60%
+        if (MAX_PERCENT < highPercent) {
+            paint.setStrokeWidth(STROKE_WIDTH + 2.0f);
+            paint.setColor(Color.RED);
+            stopX = center + (highPercent - MAX_PERCENT) * unit;
+            canvas.drawLine(center, height/2, stopX, height/2, paint);
+        }
     }
 }

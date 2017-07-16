@@ -50,7 +50,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2.7"
+        android:layout_weight="2.4"
         android:orientation="vertical">
 
         <com.shimnssso.mycointong.CandleView
@@ -73,7 +73,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="3.3"
         android:orientation="vertical">
 
         <TextView
@@ -96,7 +96,7 @@
                 android:id="@+id/priceChange"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="7"
+                android:layout_weight="6"
                 android:gravity="right|center"
                 android:text="10,000"
                 android:textSize="12sp" />
@@ -105,7 +105,7 @@
                 android:id="@+id/percentChange"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
+                android:layout_weight="4"
                 android:gravity="right|center"
                 android:text="10.00"
                 android:textSize="12sp" />
