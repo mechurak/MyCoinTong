@@ -1,12 +1,14 @@
 package com.shimnssso.mycointong;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
@@ -43,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
         // Init fragment
         ListFragment koreaListFrgmt = (ListFragment) getSupportFragmentManager().findFragmentById(R.id.korea_list_fragment);
         koreaListFrgmt.setListAdapter(adapter);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                KoreaListFragment.refresh();
+            }
+        });
     }
 
     @Override

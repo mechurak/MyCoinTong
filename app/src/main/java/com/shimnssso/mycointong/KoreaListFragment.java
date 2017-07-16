@@ -67,14 +67,7 @@ public class KoreaListFragment extends ListFragment implements AdapterView.OnIte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.i(TAG, "LifeCycle. onCreateView()");
-
-        BithumClient bithumClient = new BithumClient();
-        bithumClient.execute();
-        CoinoneClient coinoneClient = new CoinoneClient();
-        coinoneClient.execute();
-        KorbitClient korbitClient = new KorbitClient();
-        korbitClient.execute();
-
+        refresh();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -154,5 +147,14 @@ public class KoreaListFragment extends ListFragment implements AdapterView.OnIte
             default:
                 break;
         }
+    }
+
+    public static void refresh() {
+        BithumClient bithumClient = new BithumClient();
+        bithumClient.execute();
+        CoinoneClient coinoneClient = new CoinoneClient();
+        coinoneClient.execute();
+        KorbitClient korbitClient = new KorbitClient();
+        korbitClient.execute();
     }
 }
