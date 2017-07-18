@@ -91,7 +91,7 @@ public class ListViewAdapter extends BaseAdapter {
         }
         double myPercentChange = 0.0d;
         if (myPriceChange != 0 && listViewItem.getMyAvgPrice() > 0.0d) {
-            myPercentChange = myPriceChange / listViewItem.getCurPrice() * 100;
+            myPercentChange = myPriceChange / listViewItem.getMyAvgPrice() * 100;
 
             myPriceChangeTextView.setText(intFormatter.format(myPriceChange));
             myPercentChangeTextView.setText(floatFormatter.format(myPercentChange));
