@@ -126,9 +126,9 @@ public class ListViewAdapter extends BaseAdapter {
         return listViewItemList.get(position) ;
     }
 
-    public Object getItemByName(String name) {
+    public Object getItemByName(String coin, String currency, String exchange) {
         for (ListViewItem item : listViewItemList) {
-            if (item.getName().equals(name)) {
+            if (item.getCoin().equals(coin) && item.getCurrency().equals(currency) && item.getExchange().equals(exchange)) {
                 return item;
             }
         }

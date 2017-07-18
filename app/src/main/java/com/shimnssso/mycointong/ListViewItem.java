@@ -1,7 +1,9 @@
 package com.shimnssso.mycointong;
 
 public class ListViewItem {
-    private String name;
+    private String coin;
+    private String currency;
+    private String exchange;
     private int openPrice;
     private int highPrice;
     private int lowPrice;
@@ -12,21 +14,31 @@ public class ListViewItem {
     private String coinoneChartSite = Constant.ChartSite.NOT_SUPPORT;
     private String unitTime = Constant.UnitTime.FIFTEEN_MIN;
 
-    ListViewItem(String name) {
-        this.name = name;
+    ListViewItem(String coin) {
+        this.coin = coin;
     }
 
-    ListViewItem(String name, String coinoneChartSite) {
-        this.name = name;
+    ListViewItem(String coin, String currency, String exchange, String coinoneChartSite) {
+        this.coin = coin;
+        this.currency = currency;
+        this.exchange = exchange;
         this.coinoneChartSite = coinoneChartSite;
     }
 
-    public String getName() {
-        return name;
+    public String getCoin() {
+        return coin;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getCurrency() {
+        return currency;
+    }
+
+    public String getExchange() {
+        return exchange;
+    }
+
+    public String getName() {
+        return coin + "/" + currency + "(" + exchange + ")";
     }
 
     public int getCurPrice() {
@@ -79,10 +91,6 @@ public class ListViewItem {
 
     public void setMyQuantity(double myQuantity) {
         this.myQuantity = myQuantity;
-    }
-
-    public void setCoinoneChartSite(String chartSite) {
-        this.coinoneChartSite = chartSite;
     }
 
     public void setUnitTime(String unitTime) {

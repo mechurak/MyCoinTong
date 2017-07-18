@@ -44,6 +44,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + DbMeta.CoinTableMeta.TABLE_NAME + " ("
                 + DbMeta.CoinTableMeta.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DbMeta.CoinTableMeta.COIN + " TEXT NOT NULL, "
+                + DbMeta.CoinTableMeta.CURRENCY + " TEXT NOT NULL, "
+                + DbMeta.CoinTableMeta.EXCHANGE + " TEXT NOT NULL, "
                 + DbMeta.CoinTableMeta.INTEREST + " INTEGER DEFAULT 1, "
                 + DbMeta.CoinTableMeta.LIST_ORDER + " INTEGER, "
                 + DbMeta.CoinTableMeta.MY_PRICE + " REAL, "
@@ -54,22 +56,26 @@ public class DbHelper extends SQLiteOpenHelper {
         );
 
         String[][] coinList = {
-                {Constant.CoinName.BTC_KORBIT, "0", Constant.ChartSite.BTC_KORBIT},
-                {Constant.CoinName.BTC_BITHUM, "1", Constant.ChartSite.BTC_BITHUM},
-                {Constant.CoinName.BTC_COINONE, "2", Constant.ChartSite.BTC_COINONE},
-                {Constant.CoinName.ETH_KORBIT, "3", Constant.ChartSite.ETH_KORBIT},
-                {Constant.CoinName.ETH_BITHUM, "4", Constant.ChartSite.ETH_BITHUM},
-                {Constant.CoinName.ETH_COINONE, "5", Constant.ChartSite.ETH_COINONE},
-                {Constant.CoinName.ETC_KORBIT, "6", Constant.ChartSite.ETC_KORBIT},
-                {Constant.CoinName.ETC_BITHUM, "7", Constant.ChartSite.ETC_BITHUM},
-                {Constant.CoinName.ETC_COINONE, "8", Constant.ChartSite.ETC_COINONE},
-                {Constant.CoinName.DASH_BITHUM, "9", Constant.ChartSite.DASH_BITHUM},
-                {Constant.CoinName.LTC_BITHUM, "10", Constant.ChartSite.LTC_BITHUM},
-                {Constant.CoinName.XRP_BITHUM, "11", Constant.ChartSite.XRP_BITHUM},
-                {Constant.CoinName.XRP_COINONE, "12", Constant.ChartSite.XRP_COINONE},
+                {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.KORBIT, "0", Constant.ChartSite.BTC_KORBIT},
+                {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", Constant.ChartSite.BTC_BITHUM},
+                {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.COINONE, "2", Constant.ChartSite.BTC_COINONE},
+
+                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.KORBIT, "3", Constant.ChartSite.ETH_KORBIT},
+                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "4", Constant.ChartSite.ETH_BITHUM},
+                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.COINONE, "5", Constant.ChartSite.ETH_COINONE},
+
+                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.KORBIT, "6", Constant.ChartSite.ETC_KORBIT},
+                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "7", Constant.ChartSite.ETC_BITHUM},
+                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.COINONE, "8", Constant.ChartSite.ETC_COINONE},
+
+                {Constant.Coin.DASH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "9", Constant.ChartSite.DASH_BITHUM},
+                {Constant.Coin.LTC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "10", Constant.ChartSite.LTC_BITHUM},
+
+                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "11", Constant.ChartSite.XRP_BITHUM},
+                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.COINONE, "12", Constant.ChartSite.XRP_COINONE},
         };
 
-        String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,null,?,null,null,?,null)";
+        String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,?,?,null,?,null,null,?,null)";
         SQLiteStatement statement = db.compileStatement(sql);
         for (String[] row : coinList) {
             Log.d(TAG, "inserting " + Arrays.toString(row));
@@ -92,6 +98,8 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {
                 DbMeta.CoinTableMeta.COIN,
+                DbMeta.CoinTableMeta.CURRENCY,
+                DbMeta.CoinTableMeta.EXCHANGE,
                 DbMeta.CoinTableMeta.CHART_COINONE,
                 DbMeta.CoinTableMeta.MY_PRICE,
                 DbMeta.CoinTableMeta.MY_VOLUME
@@ -103,6 +111,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 ret.add(
                         new CoinInfo(
                                 c.getString(c.getColumnIndex(DbMeta.CoinTableMeta.COIN)),
+                                c.getString(c.getColumnIndex(DbMeta.CoinTableMeta.CURRENCY)),
+                                c.getString(c.getColumnIndex(DbMeta.CoinTableMeta.EXCHANGE)),
                                 c.getString(c.getColumnIndex(DbMeta.CoinTableMeta.CHART_COINONE)),
                                 c.getDouble(c.getColumnIndex(DbMeta.CoinTableMeta.MY_PRICE)),
                                 c.getDouble(c.getColumnIndex(DbMeta.CoinTableMeta.MY_VOLUME))
@@ -115,11 +125,14 @@ public class DbHelper extends SQLiteOpenHelper {
         return ret;
     }
 
-    public void updateHolding(String coinName, double avgPrice, double quantity) {
+    public void updateHolding(String coin, String currency, String exchange, double avgPrice, double quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content = new ContentValues();
         content.put(DbMeta.CoinTableMeta.MY_PRICE, avgPrice);
         content.put(DbMeta.CoinTableMeta.MY_VOLUME, quantity);
-        db.update(DbMeta.CoinTableMeta.TABLE_NAME, content, DbMeta.CoinTableMeta.COIN + "='" + coinName + "'", null);
+        db.update(DbMeta.CoinTableMeta.TABLE_NAME, content,
+                DbMeta.CoinTableMeta.COIN + "='" + coin + "' AND " +
+                DbMeta.CoinTableMeta.CURRENCY + "='" + currency + "' AND " +
+                DbMeta.CoinTableMeta.EXCHANGE + "='" + exchange + "' ", null);
     }
 }

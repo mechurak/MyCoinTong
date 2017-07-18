@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "after db");
             ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList();
             for (CoinInfo coinRow : coinList) {
-                Log.e(TAG, coinRow.toString());
-                ListViewItem item = new ListViewItem(coinRow.coinName, coinRow.chartCoinone);
+                Log.i(TAG, coinRow.toString());
+                ListViewItem item = new ListViewItem(coinRow.coin, coinRow.currency, coinRow.exchange, coinRow.chartCoinone);
                 item.setMyAvgPrice(coinRow.avgPrice);
                 item.setMyQuantity(coinRow.quantity);
                 adapter.addItem(item);

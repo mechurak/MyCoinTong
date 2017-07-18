@@ -13,6 +13,8 @@ import org.json.JSONObject;
 public class KorbitClient extends AsyncTask<Void, Void, String> {
     private static final String TAG = "KorbitClient";
     private static final String TICKER_URL = "https://api.korbit.co.kr/v1/ticker/detailed";
+    private static final String MY_CURRENCY = Constant.Currency.KRW;
+    private static final String MY_EXCHANGE = Constant.Exchange.COINONE;
 
     // parameter
     // currency_pair	btc_krw (default), etc_krw, eth_krw, xrp_krw
@@ -52,7 +54,7 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
         ListViewItem curItem;
 
         // BTC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.BTC_KORBIT);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(TIME_STAMP)) {
             updateItemValues(curItem, responseObject);
         }

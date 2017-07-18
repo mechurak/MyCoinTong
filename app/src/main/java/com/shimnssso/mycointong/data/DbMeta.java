@@ -18,6 +18,8 @@ public class DbMeta {
 
         public static final String ID = "_id";
         public static final String COIN = "coin";
+        public static final String CURRENCY = "currency";
+        public static final String EXCHANGE = "exchange";
         public static final String INTEREST = "interest";
         public static final String LIST_ORDER = "list_order";
         public static final String MY_PRICE = "my_price";

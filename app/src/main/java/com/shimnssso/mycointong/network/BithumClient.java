@@ -13,6 +13,8 @@ import org.json.JSONObject;
 public class BithumClient extends AsyncTask<Void, Void, String> {
     private static final String TAG = "BithumClient";
     private static final String TICKER_URL = "https://api.bithumb.com/public/ticker/all";
+    private static final String MY_CURRENCY = Constant.Currency.KRW;
+    private static final String MY_EXCHANGE = Constant.Exchange.BITHUMB;
 
     // {currency} BTC, ETH, DASH, LTC, ETC, XRP (default: BTC), ALL
     private static String STATUS = "status";
@@ -84,42 +86,42 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
         ListViewItem curItem;
 
         // BTC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.BTC_BITHUM);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(BTC)) {
             JSONObject coinObject = dataObject.optJSONObject(BTC);
             updateItemValues(curItem, coinObject);
         }
 
         // ETH
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.ETH_BITHUM);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.ETH, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(ETH)) {
             JSONObject coinObject = dataObject.optJSONObject(ETH);
             updateItemValues(curItem, coinObject);
         }
 
         // DASH
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.DASH_BITHUM);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.DASH, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(DASH)) {
             JSONObject coinObject = dataObject.optJSONObject(DASH);
             updateItemValues(curItem, coinObject);
         }
 
         // LTC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.LTC_BITHUM);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.LTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(LTC)) {
             JSONObject coinObject = dataObject.optJSONObject(LTC);
             updateItemValues(curItem, coinObject);
         }
 
         // ETC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.ETC_BITHUM);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.ETC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(ETC)) {
             JSONObject coinObject = dataObject.optJSONObject(ETC);
             updateItemValues(curItem, coinObject);
         }
 
         // XRP
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.XRP_BITHUM);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(XRP)) {
             JSONObject coinObject = dataObject.optJSONObject(XRP);
             updateItemValues(curItem, coinObject);

@@ -47,7 +47,9 @@ public class KoreaListFragment extends ListFragment implements AdapterView.OnIte
         ListViewItem item = (ListViewItem ) parent.getItemAtPosition(position) ;
         Log.d(TAG, "onItemLongClick(). position: " + position + ", id: " + id + "name: " + item.getName());
         Intent intent = new Intent(getActivity(), HoldingActivity.class);
-        intent.putExtra(Constant.HoldingIntentKey.CoinName, item.getName());
+        intent.putExtra(Constant.HoldingIntentKey.Coin, item.getCoin());
+        intent.putExtra(Constant.HoldingIntentKey.Currency, item.getCurrency());
+        intent.putExtra(Constant.HoldingIntentKey.Exchange, item.getExchange());
         startActivityForResult(intent, Constant.RequestCode.HoldingActivity);
         return true;
     }
@@ -128,16 +130,18 @@ public class KoreaListFragment extends ListFragment implements AdapterView.OnIte
         switch (requestCode) {
             case Constant.RequestCode.HoldingActivity:
                 if (resultCode == RESULT_OK) {
-                    String coinName = data.getStringExtra(Constant.HoldingIntentKey.CoinName);
+                    String coin = data.getStringExtra(Constant.HoldingIntentKey.Coin);
+                    String currency = data.getStringExtra(Constant.HoldingIntentKey.Currency);
+                    String exchange = data.getStringExtra(Constant.HoldingIntentKey.Exchange);
                     double avgPrice = data.getDoubleExtra(Constant.HoldingIntentKey.AvgPrice, 0.0d);
                     double quantity = data.getDoubleExtra(Constant.HoldingIntentKey.Quantity, 0.0d);
-                    Log.d(TAG, "coin: " + coinName + ", avgPrice: " + avgPrice + ", quantity: " + quantity);
+                    Log.d(TAG, "coin: " + coin + ", avgPrice: " + avgPrice + ", quantity: " + quantity);
 
                     DbHelper dbHelper = DbHelper.getInstance(getContext());
-                    dbHelper.updateHolding(coinName, avgPrice, quantity);
+                    dbHelper.updateHolding(coin, currency, exchange, avgPrice, quantity);
 
                     ListViewAdapter adapter = ListViewAdapter.getInstance();
-                    ListViewItem item = (ListViewItem) adapter.getItemByName(coinName);
+                    ListViewItem item = (ListViewItem) adapter.getItemByName(coin, currency, exchange);
                     item.setMyAvgPrice(avgPrice);
                     item.setMyQuantity(quantity);
 

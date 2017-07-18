@@ -16,7 +16,9 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
 
     TextView mTextCoinName;
     Button mBtnConfirm, mBtnCancel;
-    String mCoinName;
+    String mCoin;
+    String mCurrency;
+    String mExchange;
     EditText mEditAvgPrice, mEditQuantity;
 
     @Override
@@ -25,7 +27,9 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         Intent intent = getIntent();
-        mCoinName = intent.getStringExtra(Constant.HoldingIntentKey.CoinName);
+        mCoin = intent.getStringExtra(Constant.HoldingIntentKey.Coin);
+        mCurrency = intent.getStringExtra(Constant.HoldingIntentKey.Currency);
+        mExchange = intent.getStringExtra(Constant.HoldingIntentKey.Exchange);
 
         setContentView(R.layout.activity_holding);
         setContent();
@@ -39,7 +43,7 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
         mBtnCancel.setOnClickListener(this);
 
         mTextCoinName = (TextView) findViewById(R.id.textCoinName);
-        mTextCoinName.setText(mCoinName);
+        mTextCoinName.setText(mCoin + "/" + mCurrency + "(" + mExchange + ")");
 
         mEditAvgPrice = (EditText) findViewById(R.id.editAvgPrice);
         mEditQuantity = (EditText) findViewById(R.id.editQuantity);
@@ -54,7 +58,9 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
                     double quantity = Double.parseDouble(mEditQuantity.getText().toString());
 
                     Intent intent = new Intent();
-                    intent.putExtra(Constant.HoldingIntentKey.CoinName, mCoinName);
+                    intent.putExtra(Constant.HoldingIntentKey.Coin, mCoin);
+                    intent.putExtra(Constant.HoldingIntentKey.Currency, mCurrency);
+                    intent.putExtra(Constant.HoldingIntentKey.Exchange, mExchange);
                     intent.putExtra(Constant.HoldingIntentKey.AvgPrice, avgPrice);
                     intent.putExtra(Constant.HoldingIntentKey.Quantity, quantity);
                     setResult(RESULT_OK, intent);

@@ -13,6 +13,8 @@ import org.json.JSONObject;
 public class CoinoneClient extends AsyncTask<Void, Void, String> {
     private static final String TAG = "CoinoneClient";
     private static final String TICKER_URL = "https://api.coinone.co.kr/ticker?currency=all";
+    private static final String MY_CURRENCY = Constant.Currency.KRW;
+    private static final String MY_EXCHANGE = Constant.Exchange.COINONE;
 
     // parameter
     // currency    btc(default), eth, etc, xrp, all
@@ -70,28 +72,28 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         ListViewItem curItem;
 
         // BTC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.BTC_COINONE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(BTC)) {
             JSONObject coinObject = responseObject.optJSONObject(BTC);
             updateItemValues(curItem, coinObject);
         }
 
         // ETH
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.ETH_COINONE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.ETH, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(ETH)) {
             JSONObject coinObject = responseObject.optJSONObject(ETH);
             updateItemValues(curItem, coinObject);
         }
 
         // ETC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.ETC_COINONE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.ETC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(ETC)) {
             JSONObject coinObject = responseObject.optJSONObject(ETC);
             updateItemValues(curItem, coinObject);
         }
 
         // XRP
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.CoinName.XRP_COINONE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(XRP)) {
             JSONObject coinObject = responseObject.optJSONObject(XRP);
             updateItemValues(curItem, coinObject);
