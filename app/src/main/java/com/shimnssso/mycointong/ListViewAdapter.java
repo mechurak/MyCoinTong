@@ -46,6 +46,7 @@ public class ListViewAdapter extends BaseAdapter {
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         TextView nameTextView = (TextView) convertView.findViewById(R.id.name);
+        TextView exchangeTextView = (TextView) convertView.findViewById(R.id.exchange);
         TextView priceTextView = (TextView) convertView.findViewById(R.id.price);
         TextView volumeTextView = (TextView) convertView.findViewById(R.id.volume);
         TextView priceChangeTextView = (TextView) convertView.findViewById(R.id.priceChange);
@@ -59,6 +60,7 @@ public class ListViewAdapter extends BaseAdapter {
 
         // 아이템 내 각 위젯에 데이터 반영
         nameTextView.setText(listViewItem.getName());
+        exchangeTextView.setText(listViewItem.getExchange());
         DecimalFormat intFormatter = new DecimalFormat("#,###");
         DecimalFormat floatFormatter = new DecimalFormat("#,##0.00");
 

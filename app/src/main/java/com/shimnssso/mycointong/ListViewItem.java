@@ -38,6 +38,10 @@ public class ListViewItem {
     }
 
     public String getName() {
+        return coin + "/" + currency;
+    }
+
+    public String getFullName() {
         return coin + "/" + currency + "(" + exchange + ")";
     }
 

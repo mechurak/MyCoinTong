@@ -38,14 +38,14 @@ public class KoreaListFragment extends ListFragment implements AdapterView.OnIte
             startActivity(intent);
         }
         else {
-            Snackbar.make(v, "Coninone ProChart does not support " + item.getName(), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(v, "Coninone ProChart does not support " + item.getFullName(), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         ListViewItem item = (ListViewItem ) parent.getItemAtPosition(position) ;
-        Log.d(TAG, "onItemLongClick(). position: " + position + ", id: " + id + "name: " + item.getName());
+        Log.d(TAG, "onItemLongClick(). position: " + position + ", id: " + id + "name: " + item.getFullName());
         Intent intent = new Intent(getActivity(), HoldingActivity.class);
         intent.putExtra(Constant.HoldingIntentKey.Coin, item.getCoin());
         intent.putExtra(Constant.HoldingIntentKey.Currency, item.getCurrency());

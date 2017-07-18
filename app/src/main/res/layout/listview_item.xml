@@ -10,19 +10,35 @@
         android:layout_weight="4.3"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="left|center"
-            android:text="name"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="left|center"
+                android:text="name"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/exchange"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="exchange"
+                android:textSize="10sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -41,6 +57,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="7"
                 android:gravity="right|center"
+                android:paddingRight="40dp"
                 android:text="10,000"
                 android:textSize="12sp" />
         </LinearLayout>
