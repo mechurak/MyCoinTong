@@ -19,6 +19,7 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
     String mCoin;
     String mCurrency;
     String mExchange;
+    Double mAvgPrice, mQuantity;
     EditText mEditAvgPrice, mEditQuantity;
 
     @Override
@@ -30,6 +31,8 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
         mCoin = intent.getStringExtra(Constant.HoldingIntentKey.Coin);
         mCurrency = intent.getStringExtra(Constant.HoldingIntentKey.Currency);
         mExchange = intent.getStringExtra(Constant.HoldingIntentKey.Exchange);
+        mAvgPrice = intent.getDoubleExtra(Constant.HoldingIntentKey.AvgPrice, 0.0d);
+        mQuantity = intent.getDoubleExtra(Constant.HoldingIntentKey.Quantity, 0.0d);
 
         setContentView(R.layout.activity_holding);
         setContent();
@@ -46,7 +49,9 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
         mTextCoinName.setText(mCoin + "/" + mCurrency + "(" + mExchange + ")");
 
         mEditAvgPrice = (EditText) findViewById(R.id.editAvgPrice);
+        mEditAvgPrice.setHint(mAvgPrice.toString());
         mEditQuantity = (EditText) findViewById(R.id.editQuantity);
+        mEditQuantity.setHint(mQuantity.toString());
     }
 
     @Override

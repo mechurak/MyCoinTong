@@ -50,6 +50,8 @@ public class KoreaListFragment extends ListFragment implements AdapterView.OnIte
         intent.putExtra(Constant.HoldingIntentKey.Coin, item.getCoin());
         intent.putExtra(Constant.HoldingIntentKey.Currency, item.getCurrency());
         intent.putExtra(Constant.HoldingIntentKey.Exchange, item.getExchange());
+        intent.putExtra(Constant.HoldingIntentKey.AvgPrice, item.getMyAvgPrice());
+        intent.putExtra(Constant.HoldingIntentKey.Quantity, item.getMyQuantity());
         startActivityForResult(intent, Constant.RequestCode.HoldingActivity);
         return true;
     }
