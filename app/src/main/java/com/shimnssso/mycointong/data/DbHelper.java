@@ -135,4 +135,25 @@ public class DbHelper extends SQLiteOpenHelper {
                 DbMeta.CoinTableMeta.CURRENCY + "='" + currency + "' AND " +
                 DbMeta.CoinTableMeta.EXCHANGE + "='" + exchange + "' ", null);
     }
+
+    public long getUpdateTime() {
+        long ret = 0L;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(DbMeta.GlobalTableMeta.TABLE_NAME, null, null, null, null, null, null);
+        if (c != null && c.moveToFirst()) {
+
+            do {
+                ret = c.getLong(c.getColumnIndex(DbMeta.GlobalTableMeta.UPDATE_TIME));
+            } while (c.moveToNext());
+            c.close();
+        }
+        return ret;
+    }
+
+    public void setUpdateTime(long updateTime) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues content = new ContentValues();
+        content.put(DbMeta.GlobalTableMeta.UPDATE_TIME, updateTime);
+        db.update(DbMeta.GlobalTableMeta.TABLE_NAME, content, null, null);
+    }
 }

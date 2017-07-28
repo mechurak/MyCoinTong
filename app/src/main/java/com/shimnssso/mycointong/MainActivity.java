@@ -25,6 +25,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener {
     private static final String TAG = "MainActivity";
 
+    private static final long REFRESH_INTERVAL_DEFAULT = 1000 * 60;  // 1 min
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
         ListViewAdapter adapter = ListViewAdapter.getInstance();
         if (adapter.getCount() == 0) {
-            DbHelper dbHelper = DbHelper.getInstance(getApplicationContext());
+            DbHelper dbHelper = DbHelper.getInstance(this);
             Log.e(TAG, "after db");
             ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList();
             for (CoinInfo coinRow : coinList) {
@@ -73,7 +75,13 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "LifeCycle. onStart()");
-        refresh();
+        DbHelper dbHelper = DbHelper.getInstance(this);
+        long prevUpdateTime = dbHelper.getUpdateTime();
+        if (System.currentTimeMillis() - prevUpdateTime >= REFRESH_INTERVAL_DEFAULT) {
+            refresh();
+        } else {
+            Log.d(TAG, "skip refresh");
+        }
     }
 
     @Override
@@ -192,5 +200,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         coinoneClient.execute();
         KorbitClient korbitClient = new KorbitClient();
         korbitClient.execute();
+
+        DbHelper dbHelper = DbHelper.getInstance(this);
+        dbHelper.setUpdateTime(System.currentTimeMillis());
     }
 }
