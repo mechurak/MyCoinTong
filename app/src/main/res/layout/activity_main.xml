@@ -20,13 +20,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <fragment
-        android:id="@+id/korea_list_fragment"
-        android:name="com.shimnssso.mycointong.KoreaListFragment"
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp"
-        tools:layout="@android:layout/list_content" />
+        android:layout_marginTop="56dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
