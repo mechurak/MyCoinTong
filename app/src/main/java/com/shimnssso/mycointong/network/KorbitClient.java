@@ -14,7 +14,7 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
     private static final String TAG = "KorbitClient";
     private static final String TICKER_URL = "https://api.korbit.co.kr/v1/ticker/detailed";
     private static final String MY_CURRENCY = Constant.Currency.KRW;
-    private static final String MY_EXCHANGE = Constant.Exchange.COINONE;
+    private static final String MY_EXCHANGE = Constant.Exchange.KORBIT;
 
     // parameter
     // currency_pair	btc_krw (default), etc_krw, eth_krw, xrp_krw
