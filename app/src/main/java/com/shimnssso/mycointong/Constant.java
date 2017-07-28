@@ -57,6 +57,7 @@ public class Constant {
 
     public static class RequestCode {
         public static final int HoldingActivity = 1000;
+        public static final int SettingActivity = 1001;
     }
 
     public static class HoldingIntentKey {

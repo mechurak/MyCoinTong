@@ -123,7 +123,9 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_edit_coin_list) {
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivityForResult(intent, Constant.RequestCode.SettingActivity);
             return true;
         }
 
