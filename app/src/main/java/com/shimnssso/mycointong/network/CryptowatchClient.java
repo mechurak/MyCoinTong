@@ -67,21 +67,21 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
         ListViewItem curItem;
 
         curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, Constant.Currency.USD, Constant.Exchange.BITFINEX);
-        if (responseObject.has(BITFINEX_BTCUSD)) {
+        if (curItem != null && responseObject.has(BITFINEX_BTCUSD)) {
             JSONObject coinObejct = responseObject.optJSONObject(BITFINEX_BTCUSD);
-            updateItemValues(null, coinObejct);
+            updateItemValues(curItem, coinObejct);
         }
 
         curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, Constant.Currency.CNY, Constant.Exchange.OKCOIN);
-        if (responseObject.has(OKCOIN_BTCCNY)) {
+        if (curItem != null && responseObject.has(OKCOIN_BTCCNY)) {
             JSONObject coinObejct = responseObject.optJSONObject(OKCOIN_BTCCNY);
-            updateItemValues(null, coinObejct);
+            updateItemValues(curItem, coinObejct);
         }
 
         curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, Constant.Currency.JPY, Constant.Exchange.BITFLYER);
-        if (responseObject.has(BITFLYER_BTCJPY)) {
+        if (curItem != null && responseObject.has(BITFLYER_BTCJPY)) {
             JSONObject coinObejct = responseObject.optJSONObject(BITFLYER_BTCJPY);
-            updateItemValues(null, coinObejct);
+            updateItemValues(curItem, coinObejct);
         }
 
         adapterInstance.notifyDataSetChanged();
@@ -98,11 +98,9 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
                 double absoluteChange = priceObject.getJSONObject(CHANGE).getDouble(ABSOLUTE);
                 double openPrice = curPrice - absoluteChange;
 
-                Log.d(TAG, "O:" + openPrice + ", H: " + highPrice + ", L: " + lowPrice + ", C: " + curPrice + ", V: " + volume);
+                item.setPrice(openPrice, highPrice, lowPrice, curPrice, volume);
+                Log.d(TAG, item.toString());
             }
-
-            //item.setPrice(openPrice, highPrice, lowPrice, curPrice, volume);
-            //Log.d(TAG, item.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

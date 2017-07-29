@@ -59,20 +59,23 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "0", Constant.ChartSite.BTC_KORBIT},
                 {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "1", Constant.ChartSite.BTC_BITHUM},
                 {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "2", Constant.ChartSite.BTC_COINONE},
+                {Constant.Coin.BTC, Constant.Currency.USD, Constant.Exchange.BITFINEX, "1", "3", Constant.ChartSite.NOT_SUPPORT},
+                {Constant.Coin.BTC, Constant.Currency.CNY, Constant.Exchange.OKCOIN, "1", "4", Constant.ChartSite.NOT_SUPPORT},
+                {Constant.Coin.BTC, Constant.Currency.JPY, Constant.Exchange.BITFLYER, "1", "5", Constant.ChartSite.NOT_SUPPORT},
 
-                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "3", Constant.ChartSite.ETH_KORBIT},
-                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "4", Constant.ChartSite.ETH_BITHUM},
-                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "5", Constant.ChartSite.ETH_COINONE},
+                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "10", Constant.ChartSite.ETH_KORBIT},
+                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "11", Constant.ChartSite.ETH_BITHUM},
+                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "12", Constant.ChartSite.ETH_COINONE},
 
-                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "6", Constant.ChartSite.ETC_KORBIT},
-                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "7", Constant.ChartSite.ETC_BITHUM},
-                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "8", Constant.ChartSite.ETC_COINONE},
+                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "20", Constant.ChartSite.ETC_KORBIT},
+                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "21", Constant.ChartSite.ETC_BITHUM},
+                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "22", Constant.ChartSite.ETC_COINONE},
 
-                {Constant.Coin.DASH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "9", Constant.ChartSite.DASH_BITHUM},
-                {Constant.Coin.LTC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "10", Constant.ChartSite.LTC_BITHUM},
+                {Constant.Coin.DASH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "30", Constant.ChartSite.DASH_BITHUM},
+                {Constant.Coin.LTC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "40", Constant.ChartSite.LTC_BITHUM},
 
-                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "11", Constant.ChartSite.XRP_BITHUM},
-                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "12", Constant.ChartSite.XRP_COINONE},
+                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "50", Constant.ChartSite.XRP_BITHUM},
+                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "51", Constant.ChartSite.XRP_COINONE},
         };
 
         String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,?,?,?,?,null,null,?,null)";

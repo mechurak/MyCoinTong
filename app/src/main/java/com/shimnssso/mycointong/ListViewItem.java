@@ -101,6 +101,6 @@ public class ListViewItem {
 
     @Override
     public String toString() {
-        return "O: " + openPrice+ ", H: " + highPrice + ", L: " + lowPrice + ", C: " + curPrice + ", V: " + volume;
+        return getFullName() + " O: " + openPrice+ ", H: " + highPrice + ", L: " + lowPrice + ", C: " + curPrice + ", V: " + volume;
     }
 }
