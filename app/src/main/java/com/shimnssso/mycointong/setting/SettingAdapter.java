@@ -18,7 +18,15 @@ import java.util.Iterator;
 class SettingAdapter extends BaseAdapter {
     private static final String TAG = "SettingAdapter";
 
-    private ArrayList<CoinItem> listViewItemList = new ArrayList<>() ;
+    private ArrayList<CoinItem> listViewItemList = new ArrayList<>();
+
+    public ArrayList<String> getCoinFullNameList() {
+        ArrayList<String> retList = new ArrayList<>();
+        for (CoinItem coinItem : listViewItemList) {
+            retList.add(coinItem.getCoinFullName());
+        }
+        return retList;
+    }
 
     @Override
     public int getCount() {

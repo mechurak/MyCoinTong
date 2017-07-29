@@ -1,5 +1,6 @@
 package com.shimnssso.mycointong.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.shimnssso.mycointong.Constant;
 import com.shimnssso.mycointong.R;
 import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
@@ -68,6 +70,13 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btn_add:
                 Log.d(TAG, "ADD button was clicked");
+                if (adapter != null) {
+                    Intent intent = new Intent(this, AddActivity.class);
+                    intent.putExtra(AddActivity.INTENT_KEY_COIN_LIST, adapter.getCoinFullNameList());
+                    startActivityForResult(intent, Constant.RequestCode.AddActivity);
+                } else {
+                    Log.e(TAG, "adapter is null");
+                }
                 break;
             case R.id.btn_cancel:
                 Log.d(TAG, "CANCEL button was clicked");
@@ -79,6 +88,30 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             default:
                 Log.w(TAG, "unexpected button. id: " + id);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult(). requestCode: " + requestCode + ", resultCode: " + resultCode);
+        switch (requestCode) {
+            case Constant.RequestCode.AddActivity:
+                if (resultCode == RESULT_OK) {
+                    ArrayList<String> newCoinList = data.getStringArrayListExtra(AddActivity.INTENT_KEY_COIN_LIST);
+                    Log.d(TAG, "newCoinList: " + newCoinList);
+                    if (adapter != null) {
+                        for (String coinFullName : newCoinList) {
+                            adapter.addItem(new CoinItem(coinFullName));
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.e(TAG, "adapter is null.");
+                    }
+                }
+                break;
+            default:
                 break;
         }
     }

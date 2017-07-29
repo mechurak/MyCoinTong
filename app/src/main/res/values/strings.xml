@@ -3,4 +3,5 @@
     <string name="action_edit_coin_list">Edit List</string>
     <string name="title_activity_setting">Edit Coin List</string>
     <string name="title_activity_holding">Holdings</string>
+    <string name="title_activity_add">Add Coins</string>
 </resources>
