@@ -19,6 +19,7 @@ import com.shimnssso.mycointong.data.DbHelper;
 import com.shimnssso.mycointong.network.BithumClient;
 import com.shimnssso.mycointong.network.CoinoneClient;
 import com.shimnssso.mycointong.network.KorbitClient;
+import com.shimnssso.mycointong.setting.SettingActivity;
 
 import java.util.ArrayList;
 
