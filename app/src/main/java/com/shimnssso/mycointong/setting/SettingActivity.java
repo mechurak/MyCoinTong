@@ -1,5 +1,6 @@
 package com.shimnssso.mycointong.setting;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.shimnssso.mycointong.Constant;
 import com.shimnssso.mycointong.R;
 import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
+import com.shimnssso.mycointong.data.DbMeta;
 
 import java.util.ArrayList;
 
@@ -85,6 +87,29 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btn_confirm:
                 Log.d(TAG, "CONFIRM button was clicked");
+                if (adapter != null) {
+                    ArrayList<String> newCoinList = adapter.getCoinFullNameList();
+                    DbHelper dbHelper = DbHelper.getInstance(this);
+
+                    // set interest 0 for all coins
+                    ContentValues contentForRefresh = new ContentValues();
+                    contentForRefresh.put(DbMeta.CoinTableMeta.INTEREST, 0);
+                    dbHelper.updateCoinTable(contentForRefresh, null);
+
+                    // set interest and order for specific coins
+                    int order = 0;
+                    for (String coinFullName : newCoinList) {
+                        ContentValues content = new ContentValues();
+                        content.put(DbMeta.CoinTableMeta.INTEREST, 1);
+                        content.put(DbMeta.CoinTableMeta.LIST_ORDER, order++);
+                        dbHelper.updateCoinTable(content, coinFullName);
+                    }
+
+                    setResult(RESULT_OK);
+                    this.finish();
+                } else {
+                    Log.e(TAG, "adapter is null");
+                }
                 break;
             default:
                 Log.w(TAG, "unexpected button. id: " + id);

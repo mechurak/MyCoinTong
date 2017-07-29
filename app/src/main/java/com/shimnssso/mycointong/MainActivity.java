@@ -158,6 +158,11 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                     adapter.notifyDataSetChanged();
                 }
                 break;
+            case Constant.RequestCode.SettingActivity:
+                if (resultCode == RESULT_OK) {
+                    updateAdapterFromDb();
+                }
+                break;
             default:
                 break;
         }
@@ -206,5 +211,23 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
         DbHelper dbHelper = DbHelper.getInstance(this);
         dbHelper.setUpdateTime(System.currentTimeMillis());
+    }
+
+    private void updateAdapterFromDb() {
+        Log.d(TAG, "updateAdapterFromDb()");
+
+        ListViewAdapter adapter = ListViewAdapter.getInstance();
+        adapter.removeAllItem();
+
+        DbHelper dbHelper = DbHelper.getInstance(this);
+        ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList();
+        for (CoinInfo coinRow : coinList) {
+            Log.i(TAG, coinRow.toString());
+            ListViewItem item = new ListViewItem(coinRow.coin, coinRow.currency, coinRow.exchange, coinRow.chartCoinone);
+            item.setMyAvgPrice(coinRow.avgPrice);
+            item.setMyQuantity(coinRow.quantity);
+            adapter.addItem(item);
+        }
+        adapter.notifyDataSetChanged();
     }
 }

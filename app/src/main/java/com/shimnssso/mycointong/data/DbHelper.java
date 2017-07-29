@@ -179,4 +179,31 @@ public class DbHelper extends SQLiteOpenHelper {
         content.put(DbMeta.GlobalTableMeta.UPDATE_TIME, updateTime);
         db.update(DbMeta.GlobalTableMeta.TABLE_NAME, content, null, null);
     }
+
+    public void updateCoinTable(ContentValues content, String coinFullName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int updateRet = 0;
+        if (coinFullName != null) {
+            String[] values = coinFullName.split("/|\\(|\\)");
+            Log.d(TAG, "updateCoinTable(). coinFullName: " + coinFullName + ", values: " + Arrays.toString(values));
+            if (values.length == 3) {
+                String coin = values[0];
+                String currency = values[1];
+                String exchange = values[2];
+                Log.d(TAG, "updateCoinTable(). coin: " + coin + ", currency: " + currency + ", exchange: " + exchange);
+
+                String whereClause =
+                        DbMeta.CoinTableMeta.COIN + "='" + coin + "' AND " +
+                        DbMeta.CoinTableMeta.CURRENCY + "='" + currency + "' AND " +
+                        DbMeta.CoinTableMeta.EXCHANGE + "='" + exchange + "' ";
+
+                updateRet = db.update(DbMeta.CoinTableMeta.TABLE_NAME, content, whereClause, null);
+            } else {
+                Log.e(TAG, "updateCoinTable(). unexpected coinFullName. values.length: " + values.length);
+            }
+        } else {
+            updateRet = db.update(DbMeta.CoinTableMeta.TABLE_NAME, content, null, null);
+        }
+        Log.d(TAG, "updateCoinTable(). updateRet: " + updateRet);
+    }
 }
