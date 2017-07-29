@@ -2,7 +2,6 @@ package com.shimnssso.mycointong;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,15 +62,26 @@ public class ListViewAdapter extends BaseAdapter {
         exchangeTextView.setText(listViewItem.getExchange());
         DecimalFormat intFormatter = new DecimalFormat("#,###");
         DecimalFormat floatFormatter = new DecimalFormat("#,##0.00");
+        String currency = listViewItem.getCurrency();
+        boolean useIntCurrency = currency.equals(Constant.Currency.KRW) || currency.equals(Constant.Currency.JPY);
+        double changePrice = listViewItem.getCurPrice() - listViewItem.getOpenPrice();
 
-        priceTextView.setText(intFormatter.format(listViewItem.getCurPrice()));
+        String priceText, priceChangeText;
+        if (useIntCurrency) {
+            priceText = intFormatter.format(listViewItem.getCurPrice());
+            priceChangeText = intFormatter.format(changePrice);
+        } else {
+            priceText = floatFormatter.format(listViewItem.getCurPrice());
+            priceChangeText = floatFormatter.format(changePrice);
+        }
+
+        priceTextView.setText(priceText);
         volumeTextView.setText(intFormatter.format(listViewItem.getVolume()));
-        int changePrice = listViewItem.getCurPrice() - listViewItem.getOpenPrice();
         float changePercent = 0.0f;
         if (listViewItem.getOpenPrice() > 0.0f) {
-            changePercent = (float)changePrice / listViewItem.getOpenPrice() * 100;
+            changePercent = (float)(changePrice / listViewItem.getOpenPrice() * 100);
         }
-        priceChangeTextView.setText(intFormatter.format(changePrice));
+        priceChangeTextView.setText(priceChangeText);
         percentChangeTextView.setText(floatFormatter.format(changePercent));
         if (changePrice > 0) {
             priceTextView.setTextColor(Color.RED);
@@ -87,15 +97,20 @@ public class ListViewAdapter extends BaseAdapter {
             percentChangeTextView.setTextColor(Color.BLACK);
         }
 
-        double myPriceChange = 0;
+        double myPriceChange = 0.0d;
         if (listViewItem.getMyAvgPrice() != 0.0d) {
             myPriceChange = listViewItem.getCurPrice() - listViewItem.getMyAvgPrice();
         }
-        double myPercentChange = 0.0d;
-        if (myPriceChange != 0 && listViewItem.getMyAvgPrice() > 0.0d) {
-            myPercentChange = myPriceChange / listViewItem.getMyAvgPrice() * 100;
 
-            myPriceChangeTextView.setText(intFormatter.format(myPriceChange));
+        if (myPriceChange != 0 && listViewItem.getMyAvgPrice() > 0.0d) {
+            float myPercentChange = (float)(myPriceChange / listViewItem.getMyAvgPrice() * 100);
+            String myPriceChangeText;
+            if (useIntCurrency) {
+                myPriceChangeText = intFormatter.format(myPriceChange);
+            } else {
+                myPriceChangeText = floatFormatter.format(myPriceChange);
+            }
+            myPriceChangeTextView.setText(myPriceChangeText);
             myPercentChangeTextView.setText(floatFormatter.format(myPercentChange));
         }
         else {

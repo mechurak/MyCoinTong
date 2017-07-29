@@ -101,7 +101,6 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
                 Log.d(TAG, "O:" + openPrice + ", H: " + highPrice + ", L: " + lowPrice + ", C: " + curPrice + ", V: " + volume);
             }
 
-            // TODO: Change data type of ListViewItem to double so that it could handle dollar as well
             //item.setPrice(openPrice, highPrice, lowPrice, curPrice, volume);
             //Log.d(TAG, item.toString());
         } catch (JSONException e) {

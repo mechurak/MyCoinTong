@@ -26,11 +26,11 @@ public class CandleView extends View {
         super(context, attrs);
     }
 
-    public void setData(int open, int high, int low, int close) {
+    public void setData(double open, double high, double low, double close) {
         if (open != 0) {
-            highPercent = (float)(high - open) / open * 100;
-            lowPercent = (float)(open - low) / open * 100;
-            curPercent = (float)(close - open) / open * 100;
+            highPercent = (float)((high - open) / open * 100);
+            lowPercent = (float)((open - low) / open * 100);
+            curPercent = (float)((close - open) / open * 100);
         }
         invalidate();
     }

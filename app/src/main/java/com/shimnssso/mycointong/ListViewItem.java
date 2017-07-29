@@ -4,19 +4,17 @@ public class ListViewItem {
     private String coin;
     private String currency;
     private String exchange;
-    private int openPrice;
-    private int highPrice;
-    private int lowPrice;
-    private int curPrice;
+
+    // TODO: Consider BigDecimal
+    private double openPrice;
+    private double highPrice;
+    private double lowPrice;
+    private double curPrice;
     private double volume;
     private double myAvgPrice;
     private double myQuantity;
     private String coinoneChartSite = Constant.ChartSite.NOT_SUPPORT;
     private String unitTime = Constant.UnitTime.FIFTEEN_MIN;
-
-    ListViewItem(String coin) {
-        this.coin = coin;
-    }
 
     ListViewItem(String coin, String currency, String exchange, String coinoneChartSite) {
         this.coin = coin;
@@ -41,35 +39,35 @@ public class ListViewItem {
         return coin + "/" + currency;
     }
 
-    public String getFullName() {
+    String getFullName() {
         return coin + "/" + currency + "(" + exchange + ")";
     }
 
-    public int getCurPrice() {
+    double getCurPrice() {
         return curPrice;
     }
 
-    public int getOpenPrice() {
+    double getOpenPrice() {
         return openPrice;
     }
 
-    public int getLowPrice() {
+    double getLowPrice() {
         return lowPrice;
     }
 
-    public int getHighPrice() {
+    double getHighPrice() {
         return highPrice;
     }
 
-    public String getCoinoneChartSite() {
+    String getCoinoneChartSite() {
         return coinoneChartSite;
     }
 
-    public String getUnitTime() {
+    String getUnitTime() {
         return unitTime;
     }
 
-    public void setPrice(int openPrice, int highPrice, int lowPrice, int curPrice, double volume) {
+    public void setPrice(double openPrice, double highPrice, double lowPrice, double curPrice, double volume) {
         this.openPrice = openPrice;
         this.highPrice = highPrice;
         this.lowPrice = lowPrice;
@@ -77,23 +75,23 @@ public class ListViewItem {
         this.volume = volume;
     }
 
-    public double getVolume() {
+    double getVolume() {
         return volume;
     }
 
-    public double getMyAvgPrice() {
+    double getMyAvgPrice() {
         return myAvgPrice;
     }
 
-    public void setMyAvgPrice(double myAvgPrice) {
+    void setMyAvgPrice(double myAvgPrice) {
         this.myAvgPrice = myAvgPrice;
     }
 
-    public double getMyQuantity() {
+    double getMyQuantity() {
         return myQuantity;
     }
 
-    public void setMyQuantity(double myQuantity) {
+    void setMyQuantity(double myQuantity) {
         this.myQuantity = myQuantity;
     }
 
