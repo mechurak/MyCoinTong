@@ -14,6 +14,8 @@ public class Constant {
         public static String KRW = "KRW";
         public static String USD = "USD";
         public static String BTC = "BTC";
+        public static String CNY = "CNY";
+        public static String JPY = "JPY";
     }
 
     public static class Exchange {
@@ -21,6 +23,9 @@ public class Constant {
         public static String BITHUMB = "Bithumb";
         public static String COINONE = "Coinone";
         public static String POLONIEX = "Poloniex";
+        public static String BITFINEX = "Bitfinex";
+        public static String OKCOIN = "OKCoin";
+        public static String BITFLYER = "bitFlyer";
     }
 
     public static class ChartSite {

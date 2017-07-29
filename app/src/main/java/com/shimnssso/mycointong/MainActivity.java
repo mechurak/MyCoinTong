@@ -18,6 +18,7 @@ import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
 import com.shimnssso.mycointong.network.BithumClient;
 import com.shimnssso.mycointong.network.CoinoneClient;
+import com.shimnssso.mycointong.network.CryptowatchClient;
 import com.shimnssso.mycointong.network.KorbitClient;
 import com.shimnssso.mycointong.setting.SettingActivity;
 
@@ -208,6 +209,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         coinoneClient.execute();
         KorbitClient korbitClient = new KorbitClient();
         korbitClient.execute();
+        CryptowatchClient cryptowatchClient = new CryptowatchClient();
+        cryptowatchClient.execute();
 
         DbHelper dbHelper = DbHelper.getInstance(this);
         dbHelper.setUpdateTime(System.currentTimeMillis());
