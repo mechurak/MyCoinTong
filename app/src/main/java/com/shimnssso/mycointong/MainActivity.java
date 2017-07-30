@@ -2,9 +2,7 @@ package com.shimnssso.mycointong;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,11 +20,12 @@ import com.shimnssso.mycointong.network.BithumClient;
 import com.shimnssso.mycointong.network.CoinoneClient;
 import com.shimnssso.mycointong.network.CryptowatchClient;
 import com.shimnssso.mycointong.network.KorbitClient;
+import com.shimnssso.mycointong.network.TickerListener;
 import com.shimnssso.mycointong.setting.SettingActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener {
+public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener, TickerListener {
     private static final String TAG = "MainActivity";
 
     private static final long REFRESH_INTERVAL_DEFAULT = 1000 * 60;  // 1 min
@@ -205,19 +204,38 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         return true;
     }
 
+    private static final Object mRefreshLock = new Object();
+    private ArrayList<String> mRefreshList;
+    @Override
+    public void OnRefreshResult(String site, int result) {
+        synchronized (mRefreshLock) {
+            Log.d(TAG, "OnRefreshResult(). site: " + site + ", result: " + result);
+            if (mRefreshList != null) {
+                boolean removeRet = mRefreshList.remove(site);
+                Log.d(TAG, "removeRet: " + removeRet);
+
+                if (mRefreshList.isEmpty()) mSwipeLayout.setRefreshing(false);
+            }
+        }
+    }
+
     private void refresh() {
         Log.d(TAG, "refresh()");
-
-        // TODO: Let mSwipeLayout know when refresh is finished. setRefreshing(false) is needed.
-
-        BithumClient bithumClient = new BithumClient();
-        bithumClient.execute();
-        CoinoneClient coinoneClient = new CoinoneClient();
-        coinoneClient.execute();
-        KorbitClient korbitClient = new KorbitClient();
-        korbitClient.execute();
-        CryptowatchClient cryptowatchClient = new CryptowatchClient();
-        cryptowatchClient.execute();
+        synchronized (mRefreshLock) {
+            mRefreshList = new ArrayList<>();
+            BithumClient bithumClient = new BithumClient(this);
+            bithumClient.execute();
+            mRefreshList.add(Constant.Exchange.BITHUMB);
+            CoinoneClient coinoneClient = new CoinoneClient(this);
+            coinoneClient.execute();
+            mRefreshList.add(Constant.Exchange.COINONE);
+            KorbitClient korbitClient = new KorbitClient(this);
+            korbitClient.execute();
+            mRefreshList.add(Constant.Exchange.KORBIT);
+            CryptowatchClient cryptowatchClient = new CryptowatchClient(this);
+            cryptowatchClient.execute();
+            mRefreshList.add(Constant.Exchange.CRYPTOWATCH);
+        }
 
         DbHelper dbHelper = DbHelper.getInstance(this);
         dbHelper.setUpdateTime(System.currentTimeMillis());

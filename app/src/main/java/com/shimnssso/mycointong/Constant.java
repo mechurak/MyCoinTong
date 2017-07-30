@@ -26,6 +26,8 @@ public class Constant {
         public static String BITFINEX = "Bitfinex";
         public static String OKCOIN = "OKCoin";
         public static String BITFLYER = "bitFlyer";
+
+        public static String CRYPTOWATCH = "Cryptowat.ch";
     }
 
     public static class ChartSite {

@@ -36,6 +36,11 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
     private static String LOW = "low";
     private static String FIRST = "first";
 
+    private TickerListener mListener;
+    public CoinoneClient(TickerListener listener) {
+        mListener = listener;
+    }
+
     @Override
     protected String doInBackground(Void... params) {
         Log.d(TAG, "doInBackground()");
@@ -48,6 +53,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         Log.d(TAG, "onPostExecute(). response: " + s);
         if (s == null) {
             Log.e(TAG, "s == null");
+            mListener.OnRefreshResult(Constant.Exchange.COINONE, 0);
             return;
         }
 
@@ -56,6 +62,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
             responseObject = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
+            mListener.OnRefreshResult(Constant.Exchange.COINONE, 0);
             return;
         }
 
@@ -65,6 +72,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         }
         if (status == null || !status.equals(RESULT_SUCCESS)) {
             Log.e(TAG, "status: " + status);
+            mListener.OnRefreshResult(Constant.Exchange.COINONE, 0);
             return;
         }
 
@@ -103,7 +111,9 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
             long timestamp = responseObject.optLong(TIME_STAMP);
             Log.d(TAG, "onPostExecute(). timestamp: " + timestamp + ", curTime: " + System.currentTimeMillis());
         }
+
         adapterInstance.notifyDataSetChanged();
+        mListener.OnRefreshResult(Constant.Exchange.COINONE, 1);
     }
 
     private void updateItemValues(ListViewItem item, JSONObject coinObject) {

@@ -27,6 +27,11 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
     private static String VOLUME = "volume";
     private static String CHANGE = "change";
 
+    private TickerListener mListener;
+    public KorbitClient(TickerListener listener) {
+        mListener = listener;
+    }
+
     @Override
     protected String doInBackground(Void... params) {
         Log.d(TAG, "doInBackground()");
@@ -39,6 +44,7 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
         Log.d(TAG, "onPostExecute(). response: " + s);
         if (s == null) {
             Log.e(TAG, "s == null");
+            mListener.OnRefreshResult(Constant.Exchange.KORBIT, 0);
             return;
         }
 
@@ -47,6 +53,7 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
             responseObject = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
+            mListener.OnRefreshResult(Constant.Exchange.KORBIT, 0);
             return;
         }
 
@@ -60,6 +67,7 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
         }
 
         adapterInstance.notifyDataSetChanged();
+        mListener.OnRefreshResult(Constant.Exchange.KORBIT, 1);
     }
 
     private void updateItemValues(ListViewItem item, JSONObject coinObject) {

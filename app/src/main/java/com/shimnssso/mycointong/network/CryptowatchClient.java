@@ -33,6 +33,11 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
     // child of "change"
     private static String ABSOLUTE = "absolute";
 
+    private TickerListener mListener;
+    public CryptowatchClient(TickerListener listener) {
+        mListener = listener;
+    }
+
     @Override
     protected String doInBackground(Void... params) {
         Log.d(TAG, "doInBackground()");
@@ -45,6 +50,7 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
         Log.d(TAG, "onPostExecute(). response: " + s);
         if (s == null) {
             Log.e(TAG, "s == null");
+            mListener.OnRefreshResult(Constant.Exchange.CRYPTOWATCH, 0);
             return;
         }
 
@@ -53,6 +59,7 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
             responseObject = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
+            mListener.OnRefreshResult(Constant.Exchange.CRYPTOWATCH, 0);
             return;
         }
 
@@ -60,6 +67,7 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
             responseObject = responseObject.optJSONObject(RESULT);
         } else {
             Log.e(TAG, "result doesn't exist");
+            mListener.OnRefreshResult(Constant.Exchange.CRYPTOWATCH, 0);
             return;
         }
 
@@ -85,6 +93,7 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
         }
 
         adapterInstance.notifyDataSetChanged();
+        mListener.OnRefreshResult(Constant.Exchange.CRYPTOWATCH, 1);
     }
 
     private void updateItemValues(ListViewItem item, JSONObject coinObject) {
