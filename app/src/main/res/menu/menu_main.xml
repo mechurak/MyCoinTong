@@ -6,4 +6,8 @@
         android:title="@string/action_edit_coin_list"
         android:orderInCategory="100"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_refresh"
+        android:title="@string/action_refresh"
+        app:showAsAction="never" />
 </menu>

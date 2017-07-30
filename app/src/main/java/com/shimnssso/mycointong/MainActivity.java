@@ -2,9 +2,11 @@ package com.shimnssso.mycointong;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     private static final String TAG = "MainActivity";
 
     private static final long REFRESH_INTERVAL_DEFAULT = 1000 * 60;  // 1 min
+
+    private SwipeRefreshLayout mSwipeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +62,11 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View view) {
+            public void onRefresh() {
+                Log.i(TAG, "onRefresh called from SwipeRefreshLayout");
                 refresh();
             }
         });
@@ -119,18 +124,17 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_edit_coin_list) {
-            Intent intent = new Intent(this, SettingActivity.class);
-            startActivityForResult(intent, Constant.RequestCode.SettingActivity);
-            return true;
+        switch (id) {
+            case R.id.action_edit_coin_list:
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivityForResult(intent, Constant.RequestCode.SettingActivity);
+                return true;
+            case R.id.action_refresh:
+                mSwipeLayout.setRefreshing(true);  // explicit call is needed (non swipe gesture case)
+                refresh();
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -203,6 +207,9 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
     private void refresh() {
         Log.d(TAG, "refresh()");
+
+        // TODO: Let mSwipeLayout know when refresh is finished. setRefreshing(false) is needed.
+
         BithumClient bithumClient = new BithumClient();
         bithumClient.execute();
         CoinoneClient coinoneClient = new CoinoneClient();
