@@ -17,7 +17,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
     private static final String MY_EXCHANGE = Constant.Exchange.COINONE;
 
     // parameter
-    // currency    btc(default), eth, etc, xrp, all
+    // currency    btc(default), bch, eth, etc, xrp, all
     private static String RESULT = "result";
     private static String RESULT_SUCCESS = "success";
 
@@ -25,6 +25,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
     private static String TIME_STAMP = "timestamp";
 
     private static String BTC = "btc";
+    private static String BCH = "bch";
     private static String ETH = "eth";
     private static String ETC = "etc";
     private static String XRP = "xrp";
@@ -83,6 +84,13 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(BTC)) {
             JSONObject coinObject = responseObject.optJSONObject(BTC);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // BCH
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BCH, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && responseObject.has(BCH)) {
+            JSONObject coinObject = responseObject.optJSONObject(BCH);
             updateItemValues(curItem, coinObject);
         }
 

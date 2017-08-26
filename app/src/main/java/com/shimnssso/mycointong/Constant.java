@@ -3,6 +3,7 @@ package com.shimnssso.mycointong;
 public class Constant {
     public static class Coin {
         public static String BTC = "BTC";
+        public static String BCH = "BCH";
         public static String ETH = "ETH";
         public static String ETC = "ETC";
         public static String DASH = "DASH";
@@ -36,6 +37,10 @@ public class Constant {
         public static String BTC_KORBIT = "Korbit";
         public static String BTC_BITHUM = "Bithumb";
         public static String BTC_COINONE = "Coinone";
+
+        public static String BCH_BITHUM = NOT_SUPPORT;
+        public static String BCH_COINONE = "CoinoneBCH";
+
         public static String ETH_KORBIT = NOT_SUPPORT;
         public static String ETH_BITHUM = NOT_SUPPORT;
         public static String ETH_COINONE = "CoinoneETH";

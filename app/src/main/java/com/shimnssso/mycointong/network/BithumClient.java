@@ -16,7 +16,7 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
     private static final String MY_CURRENCY = Constant.Currency.KRW;
     private static final String MY_EXCHANGE = Constant.Exchange.BITHUMB;
 
-    // {currency} BTC, ETH, DASH, LTC, ETC, XRP (default: BTC), ALL
+    // {currency} BTC, ETH, DASH, LTC, ETC, XRP, BCH, (default: BTC), ALL
     private static String STATUS = "status";
     private static String STATUS_SUCCESS = "0000";
 
@@ -29,6 +29,7 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
     private static String ETC = "ETC";
     private static String XRP = "XRP";
     private static String DATE = "date";
+    private static String BCH = "BCH";
 
     private static String OPENING_PRICE = "opening_price";
     private static String CLOSING_PRICE = "closing_price";
@@ -98,6 +99,13 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
         curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(BTC)) {
             JSONObject coinObject = dataObject.optJSONObject(BTC);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // BCH
+        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BCH, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && dataObject.has(BCH)) {
+            JSONObject coinObject = dataObject.optJSONObject(BCH);
             updateItemValues(curItem, coinObject);
         }
 
