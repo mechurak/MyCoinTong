@@ -53,6 +53,7 @@ public class ListViewAdapter extends BaseAdapter {
         TextView myPriceChangeTextView = (TextView) convertView.findViewById(R.id.myPriceChange);
         TextView myPercentChangeTextView = (TextView) convertView.findViewById(R.id.myPercentChange);
         CandleView candleView = (CandleView) convertView.findViewById(R.id.candle);
+        int originTextColor = nameTextView.getTextColors().getDefaultColor();
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewItem listViewItem = listViewItemList.get(position);
@@ -92,9 +93,9 @@ public class ListViewAdapter extends BaseAdapter {
             priceChangeTextView.setTextColor(Color.BLUE);
             percentChangeTextView.setTextColor(Color.BLUE);
         } else {
-            priceTextView.setTextColor(Color.BLACK);
-            priceChangeTextView.setTextColor(Color.BLACK);
-            percentChangeTextView.setTextColor(Color.BLACK);
+            priceTextView.setTextColor(originTextColor);
+            priceChangeTextView.setTextColor(originTextColor);
+            percentChangeTextView.setTextColor(originTextColor);
         }
 
         double myPriceChange = 0.0d;
@@ -124,8 +125,8 @@ public class ListViewAdapter extends BaseAdapter {
             myPriceChangeTextView.setTextColor(Color.BLUE);
             myPercentChangeTextView.setTextColor(Color.BLUE);
         } else {
-            myPriceChangeTextView.setTextColor(Color.BLACK);
-            myPercentChangeTextView.setTextColor(Color.BLACK);
+            myPriceChangeTextView.setTextColor(originTextColor);
+            myPercentChangeTextView.setTextColor(originTextColor);
         }
 
         candleView.setData(listViewItem.getOpenPrice(), listViewItem.getHighPrice(), listViewItem.getLowPrice(), listViewItem.getCurPrice());
