@@ -1,5 +1,7 @@
 package com.shimnssso.mycointong;
 
+import android.support.annotation.ColorInt;
+
 public class Constant {
     public static class Coin {
         public static String BTC = "BTC";
@@ -79,5 +81,10 @@ public class Constant {
         public static final String Exchange = "exchange";
         public static final String AvgPrice = "avg_price";
         public static final String Quantity = "quantity";
+    }
+
+    public static class Color {
+        @ColorInt public static final int LTRED = 0xFFFF7777;
+        @ColorInt public static final int LTBLUE = 0xFF5555FF;
     }
 }

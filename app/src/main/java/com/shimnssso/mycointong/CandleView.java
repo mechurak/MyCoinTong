@@ -15,8 +15,6 @@ public class CandleView extends View {
     private static final String TAG = "CandleView";
     private static final float MAX_PERCENT = 30.0f;
     private static final float STROKE_WIDTH = 3.0f;
-    private static final int RED_1 = 0xFFFF7777;
-    private static final int BLUE_1 = 0xFF5555FF;
 
     private float highPercent = 0.0f;
     private float lowPercent = 0.0f;
@@ -54,8 +52,8 @@ public class CandleView extends View {
 
         canvas.drawRect(rect, paint);
 
-        if (curPercent > 0.0f) paint.setColor(RED_1);
-        else if (curPercent < 0.0f) paint.setColor(BLUE_1);
+        if (curPercent > 0.0f) paint.setColor(Constant.Color.LTRED);
+        else if (curPercent < 0.0f) paint.setColor(Constant.Color.LTBLUE);
         else paint.setColor(Color.WHITE);
         paint.setStrokeWidth(STROKE_WIDTH);
 

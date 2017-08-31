@@ -1,7 +1,6 @@
 package com.shimnssso.mycointong;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,13 +84,13 @@ public class ListViewAdapter extends BaseAdapter {
         priceChangeTextView.setText(priceChangeText);
         percentChangeTextView.setText(floatFormatter.format(changePercent));
         if (changePrice > 0) {
-            priceTextView.setTextColor(Color.RED);
-            priceChangeTextView.setTextColor(Color.RED);
-            percentChangeTextView.setTextColor(Color.RED);
+            priceTextView.setTextColor(Constant.Color.LTRED);
+            priceChangeTextView.setTextColor(Constant.Color.LTRED);
+            percentChangeTextView.setTextColor(Constant.Color.LTRED);
         } else if (changePrice < 0) {
-            priceTextView.setTextColor(Color.BLUE);
-            priceChangeTextView.setTextColor(Color.BLUE);
-            percentChangeTextView.setTextColor(Color.BLUE);
+            priceTextView.setTextColor(Constant.Color.LTBLUE);
+            priceChangeTextView.setTextColor(Constant.Color.LTBLUE);
+            percentChangeTextView.setTextColor(Constant.Color.LTBLUE);
         } else {
             priceTextView.setTextColor(originTextColor);
             priceChangeTextView.setTextColor(originTextColor);
@@ -119,11 +118,11 @@ public class ListViewAdapter extends BaseAdapter {
             myPercentChangeTextView.setText("");
         }
         if (myPriceChange > 0) {
-            myPriceChangeTextView.setTextColor(Color.RED);
-            myPercentChangeTextView.setTextColor(Color.RED);
+            myPriceChangeTextView.setTextColor(Constant.Color.LTRED);
+            myPercentChangeTextView.setTextColor(Constant.Color.LTRED);
         } else if (myPriceChange < 0) {
-            myPriceChangeTextView.setTextColor(Color.BLUE);
-            myPercentChangeTextView.setTextColor(Color.BLUE);
+            myPriceChangeTextView.setTextColor(Constant.Color.LTBLUE);
+            myPercentChangeTextView.setTextColor(Constant.Color.LTBLUE);
         } else {
             myPriceChangeTextView.setTextColor(originTextColor);
             myPercentChangeTextView.setTextColor(originTextColor);
