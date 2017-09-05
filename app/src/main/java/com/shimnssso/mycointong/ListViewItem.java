@@ -13,7 +13,7 @@ public class ListViewItem {
     private double volume;
     private double myAvgPrice;
     private double myQuantity;
-    private String coinoneChartSite = Constant.ChartSite.NOT_SUPPORT;
+    private String coinoneChartSite;
     private String unitTime = Constant.UnitTime.FIFTEEN_MIN;
 
     ListViewItem(String coin, String currency, String exchange, String coinoneChartSite) {

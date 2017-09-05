@@ -56,29 +56,29 @@ public class DbHelper extends SQLiteOpenHelper {
         );
 
         String[][] coinList = {
-                {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "0", Constant.ChartSite.BTC_KORBIT},
-                {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "1", Constant.ChartSite.BTC_BITHUM},
-                {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "2", Constant.ChartSite.BTC_COINONE},
-                {Constant.Coin.BTC, Constant.Currency.USD, Constant.Exchange.BITFINEX, "1", "3", Constant.ChartSite.NOT_SUPPORT},
-                {Constant.Coin.BTC, Constant.Currency.CNY, Constant.Exchange.OKCOIN, "1", "4", Constant.ChartSite.NOT_SUPPORT},
-                {Constant.Coin.BTC, Constant.Currency.JPY, Constant.Exchange.BITFLYER, "1", "5", Constant.ChartSite.NOT_SUPPORT},
+                {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "0", "https://coinone.co.kr/chart/?site=Korbit"},
+                {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "1", "https://cryptowat.ch/bithumb/btckrw"},
+                {Constant.Coin.BTC, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "2", "https://coinone.co.kr/chart/?site=Coinone"},
+                {Constant.Coin.BTC, Constant.Currency.USD, Constant.Exchange.BITFINEX, "1", "3", "https://cryptowat.ch/bitfinex/btcusd"},
+                {Constant.Coin.BTC, Constant.Currency.CNY, Constant.Exchange.OKCOIN, "1", "4", "https://cryptowat.ch/okcoin/btccny"},
+                {Constant.Coin.BTC, Constant.Currency.JPY, Constant.Exchange.BITFLYER, "1", "5", "https://cryptowat.ch/bitflyer/btcfxjpy"},
 
-                {Constant.Coin.BCH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "50", Constant.ChartSite.BCH_BITHUM},
-                {Constant.Coin.BCH, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "51", Constant.ChartSite.BCH_COINONE},
+                {Constant.Coin.BCH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "50", "https://cryptowat.ch/bithumb/bchkrw"},
+                {Constant.Coin.BCH, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "51", "https://coinone.co.kr/chart/?site=CoinoneBCH"},
 
-                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "100", Constant.ChartSite.ETH_KORBIT},
-                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "101", Constant.ChartSite.ETH_BITHUM},
-                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "102", Constant.ChartSite.ETH_COINONE},
+                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "100", ""},
+                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "101", "https://cryptowat.ch/bithumb/ethkrw"},
+                {Constant.Coin.ETH, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "102", "https://coinone.co.kr/chart/?site=CoinoneETH"},
 
-                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "200", Constant.ChartSite.ETC_KORBIT},
-                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "201", Constant.ChartSite.ETC_BITHUM},
-                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "202", Constant.ChartSite.ETC_COINONE},
+                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.KORBIT, "1", "200", ""},
+                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "201", "https://cryptowat.ch/bithumb/etckrw"},
+                {Constant.Coin.ETC, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "202", "https://coinone.co.kr/chart/?site=CoinoneETC"},
 
-                {Constant.Coin.DASH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "300", Constant.ChartSite.DASH_BITHUM},
-                {Constant.Coin.LTC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "400", Constant.ChartSite.LTC_BITHUM},
+                {Constant.Coin.DASH, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "300", "https://cryptowat.ch/bithumb/dashkrw"},
+                {Constant.Coin.LTC, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "400", "https://cryptowat.ch/bithumb/ltckrw"},
 
-                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "500", Constant.ChartSite.XRP_BITHUM},
-                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "501", Constant.ChartSite.XRP_COINONE},
+                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.BITHUMB, "1", "500", "https://cryptowat.ch/bithumb/xrpkrw"},
+                {Constant.Coin.XRP, Constant.Currency.KRW, Constant.Exchange.COINONE, "1", "501", "https://coinone.co.kr/chart/?site=CoinoneXRP"},
         };
 
         String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,?,?,?,?,null,null,?,null)";

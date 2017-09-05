@@ -33,28 +33,6 @@ public class Constant {
         public static String CRYPTOWATCH = "Cryptowat.ch";
     }
 
-    public static class ChartSite {
-        public static String NOT_SUPPORT = "NOT_SUPPORT";
-
-        public static String BTC_KORBIT = "Korbit";
-        public static String BTC_BITHUM = "Bithumb";
-        public static String BTC_COINONE = "Coinone";
-
-        public static String BCH_BITHUM = NOT_SUPPORT;
-        public static String BCH_COINONE = "CoinoneBCH";
-
-        public static String ETH_KORBIT = NOT_SUPPORT;
-        public static String ETH_BITHUM = NOT_SUPPORT;
-        public static String ETH_COINONE = "CoinoneETH";
-        public static String ETC_KORBIT = NOT_SUPPORT;
-        public static String ETC_BITHUM = NOT_SUPPORT;
-        public static String ETC_COINONE = "CoinoneETC";
-        public static String DASH_BITHUM = NOT_SUPPORT;
-        public static String LTC_BITHUM = NOT_SUPPORT;
-        public static String XRP_BITHUM = NOT_SUPPORT;
-        public static String XRP_COINONE = "CoinoneXRP";
-    }
-
     public static class UnitTime {
         public static String ONE_MIN = "1M";
         public static String THREE_MIN = "3M";

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 item.setMyQuantity(coinRow.quantity);
                 adapter.addItem(item);
             }
-            ListViewItem tempItem = new ListViewItem("TEST", Constant.Currency.USD, Constant.Exchange.BITFINEX, Constant.ChartSite.NOT_SUPPORT);
+            ListViewItem tempItem = new ListViewItem("TEST", Constant.Currency.USD, Constant.Exchange.BITFINEX, "");
             adapter.addItem(tempItem);
         }
 
@@ -179,14 +179,12 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         Log.d(TAG, "onListItemClick(). position: " + position + ", id: " + id + "name: " + item.getName());
 
         String chartSite = item.getCoinoneChartSite();
-        if (!chartSite.equals(Constant.ChartSite.NOT_SUPPORT)) {
-            String url = String.format("https://coinone.co.kr/chart/?site=%s&unit_time=%s", chartSite, item.getUnitTime());
-            Log.d(TAG, "onListItemClick(). url: " + url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        if (chartSite != null && chartSite.startsWith("http")) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(chartSite));
             startActivity(intent);
         }
         else {
-            Snackbar.make(parent, "Coninone ProChart does not support " + item.getFullName(), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(parent, "Suitable chart site is not available for " + item.getFullName(), Snackbar.LENGTH_SHORT).show();
         }
     }
 
