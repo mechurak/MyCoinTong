@@ -3,7 +3,7 @@ package com.shimnssso.mycointong.network;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.shimnssso.mycointong.Constant;
+import com.shimnssso.mycointong.Const;
 import com.shimnssso.mycointong.ListViewAdapter;
 import com.shimnssso.mycointong.ListViewItem;
 
@@ -13,8 +13,8 @@ import org.json.JSONObject;
 public class BithumClient extends AsyncTask<Void, Void, String> {
     private static final String TAG = "BithumClient";
     private static final String TICKER_URL = "https://api.bithumb.com/public/ticker/all";
-    private static final String MY_CURRENCY = Constant.Currency.KRW;
-    private static final String MY_EXCHANGE = Constant.Exchange.BITHUMB;
+    private static final String MY_CURRENCY = Const.Currency.KRW;
+    private static final String MY_EXCHANGE = Const.Exchange.BITHUMB;
 
     // {currency} BTC, ETH, DASH, LTC, ETC, XRP, BCH, (default: BTC), ALL
     private static String STATUS = "status";
@@ -59,7 +59,7 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
         Log.d(TAG, "onPostExecute(). response: " + s);
         if (s == null) {
             Log.e(TAG, "s == null");
-            mListener.OnRefreshResult(Constant.Exchange.BITHUMB, 0);
+            mListener.OnRefreshResult(Const.Exchange.BITHUMB, 0);
             return;
         }
 
@@ -68,7 +68,7 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
             responseObject = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
-            mListener.OnRefreshResult(Constant.Exchange.BITHUMB, 0);
+            mListener.OnRefreshResult(Const.Exchange.BITHUMB, 0);
             return;
         }
 
@@ -78,7 +78,7 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
         }
         if (status == null || !status.equals(STATUS_SUCCESS)) {
             Log.e(TAG, "status: " + status);
-            mListener.OnRefreshResult(Constant.Exchange.BITHUMB, 0);
+            mListener.OnRefreshResult(Const.Exchange.BITHUMB, 0);
             return;
         }
 
@@ -88,7 +88,7 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
         }
         if (dataObject == null) {
             Log.e(TAG, "dataObject == null");
-            mListener.OnRefreshResult(Constant.Exchange.BITHUMB, 0);
+            mListener.OnRefreshResult(Const.Exchange.BITHUMB, 0);
             return;
         }
 
@@ -96,49 +96,49 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
         ListViewItem curItem;
 
         // BTC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(BTC)) {
             JSONObject coinObject = dataObject.optJSONObject(BTC);
             updateItemValues(curItem, coinObject);
         }
 
         // BCH
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BCH, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BCH, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(BCH)) {
             JSONObject coinObject = dataObject.optJSONObject(BCH);
             updateItemValues(curItem, coinObject);
         }
 
         // ETH
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.ETH, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETH, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(ETH)) {
             JSONObject coinObject = dataObject.optJSONObject(ETH);
             updateItemValues(curItem, coinObject);
         }
 
         // DASH
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.DASH, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.DASH, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(DASH)) {
             JSONObject coinObject = dataObject.optJSONObject(DASH);
             updateItemValues(curItem, coinObject);
         }
 
         // LTC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.LTC, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.LTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(LTC)) {
             JSONObject coinObject = dataObject.optJSONObject(LTC);
             updateItemValues(curItem, coinObject);
         }
 
         // ETC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.ETC, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(ETC)) {
             JSONObject coinObject = dataObject.optJSONObject(ETC);
             updateItemValues(curItem, coinObject);
         }
 
         // XRP
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(XRP)) {
             JSONObject coinObject = dataObject.optJSONObject(XRP);
             updateItemValues(curItem, coinObject);
@@ -150,7 +150,7 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
         }
 
         adapterInstance.notifyDataSetChanged();
-        mListener.OnRefreshResult(Constant.Exchange.BITHUMB, 1);
+        mListener.OnRefreshResult(Const.Exchange.BITHUMB, 1);
     }
 
     private void updateItemValues(ListViewItem item, JSONObject coinObject) {

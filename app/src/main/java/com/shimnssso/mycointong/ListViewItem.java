@@ -14,7 +14,7 @@ public class ListViewItem {
     private double myAvgPrice;
     private double myQuantity;
     private String coinoneChartSite;
-    private String unitTime = Constant.UnitTime.FIFTEEN_MIN;
+    private String unitTime = Const.UnitTime.FIFTEEN_MIN;
 
     ListViewItem(String coin, String currency, String exchange, String coinoneChartSite) {
         this.coin = coin;

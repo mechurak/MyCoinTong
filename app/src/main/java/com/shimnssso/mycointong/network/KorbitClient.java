@@ -3,7 +3,7 @@ package com.shimnssso.mycointong.network;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.shimnssso.mycointong.Constant;
+import com.shimnssso.mycointong.Const;
 import com.shimnssso.mycointong.ListViewAdapter;
 import com.shimnssso.mycointong.ListViewItem;
 
@@ -13,8 +13,8 @@ import org.json.JSONObject;
 public class KorbitClient extends AsyncTask<Void, Void, String> {
     private static final String TAG = "KorbitClient";
     private static final String TICKER_URL = "https://api.korbit.co.kr/v1/ticker/detailed";
-    private static final String MY_CURRENCY = Constant.Currency.KRW;
-    private static final String MY_EXCHANGE = Constant.Exchange.KORBIT;
+    private static final String MY_CURRENCY = Const.Currency.KRW;
+    private static final String MY_EXCHANGE = Const.Exchange.KORBIT;
 
     // parameter
     // currency_pair	btc_krw (default), etc_krw, eth_krw, xrp_krw
@@ -44,7 +44,7 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
         Log.d(TAG, "onPostExecute(). response: " + s);
         if (s == null) {
             Log.e(TAG, "s == null");
-            mListener.OnRefreshResult(Constant.Exchange.KORBIT, 0);
+            mListener.OnRefreshResult(Const.Exchange.KORBIT, 0);
             return;
         }
 
@@ -53,7 +53,7 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
             responseObject = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
-            mListener.OnRefreshResult(Constant.Exchange.KORBIT, 0);
+            mListener.OnRefreshResult(Const.Exchange.KORBIT, 0);
             return;
         }
 
@@ -61,13 +61,13 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
         ListViewItem curItem;
 
         // BTC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(TIME_STAMP)) {
             updateItemValues(curItem, responseObject);
         }
 
         adapterInstance.notifyDataSetChanged();
-        mListener.OnRefreshResult(Constant.Exchange.KORBIT, 1);
+        mListener.OnRefreshResult(Const.Exchange.KORBIT, 1);
     }
 
     private void updateItemValues(ListViewItem item, JSONObject coinObject) {

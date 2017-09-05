@@ -2,7 +2,7 @@ package com.shimnssso.mycointong;
 
 import android.support.annotation.ColorInt;
 
-public class Constant {
+public class Const {
     public static class Coin {
         public static String BTC = "BTC";
         public static String BCH = "BCH";

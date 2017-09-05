@@ -3,7 +3,7 @@ package com.shimnssso.mycointong.network;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.shimnssso.mycointong.Constant;
+import com.shimnssso.mycointong.Const;
 import com.shimnssso.mycointong.ListViewAdapter;
 import com.shimnssso.mycointong.ListViewItem;
 
@@ -13,8 +13,8 @@ import org.json.JSONObject;
 public class CoinoneClient extends AsyncTask<Void, Void, String> {
     private static final String TAG = "CoinoneClient";
     private static final String TICKER_URL = "https://api.coinone.co.kr/ticker?currency=all";
-    private static final String MY_CURRENCY = Constant.Currency.KRW;
-    private static final String MY_EXCHANGE = Constant.Exchange.COINONE;
+    private static final String MY_CURRENCY = Const.Currency.KRW;
+    private static final String MY_EXCHANGE = Const.Exchange.COINONE;
 
     // parameter
     // currency    btc(default), bch, eth, etc, xrp, all
@@ -54,7 +54,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         Log.d(TAG, "onPostExecute(). response: " + s);
         if (s == null) {
             Log.e(TAG, "s == null");
-            mListener.OnRefreshResult(Constant.Exchange.COINONE, 0);
+            mListener.OnRefreshResult(Const.Exchange.COINONE, 0);
             return;
         }
 
@@ -63,7 +63,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
             responseObject = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
-            mListener.OnRefreshResult(Constant.Exchange.COINONE, 0);
+            mListener.OnRefreshResult(Const.Exchange.COINONE, 0);
             return;
         }
 
@@ -73,7 +73,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         }
         if (status == null || !status.equals(RESULT_SUCCESS)) {
             Log.e(TAG, "status: " + status);
-            mListener.OnRefreshResult(Constant.Exchange.COINONE, 0);
+            mListener.OnRefreshResult(Const.Exchange.COINONE, 0);
             return;
         }
 
@@ -81,35 +81,35 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         ListViewItem curItem;
 
         // BTC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(BTC)) {
             JSONObject coinObject = responseObject.optJSONObject(BTC);
             updateItemValues(curItem, coinObject);
         }
 
         // BCH
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BCH, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BCH, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(BCH)) {
             JSONObject coinObject = responseObject.optJSONObject(BCH);
             updateItemValues(curItem, coinObject);
         }
 
         // ETH
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.ETH, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETH, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(ETH)) {
             JSONObject coinObject = responseObject.optJSONObject(ETH);
             updateItemValues(curItem, coinObject);
         }
 
         // ETC
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.ETC, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETC, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(ETC)) {
             JSONObject coinObject = responseObject.optJSONObject(ETC);
             updateItemValues(curItem, coinObject);
         }
 
         // XRP
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(XRP)) {
             JSONObject coinObject = responseObject.optJSONObject(XRP);
             updateItemValues(curItem, coinObject);
@@ -121,7 +121,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         }
 
         adapterInstance.notifyDataSetChanged();
-        mListener.OnRefreshResult(Constant.Exchange.COINONE, 1);
+        mListener.OnRefreshResult(Const.Exchange.COINONE, 1);
     }
 
     private void updateItemValues(ListViewItem item, JSONObject coinObject) {

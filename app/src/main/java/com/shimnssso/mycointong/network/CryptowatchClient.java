@@ -3,7 +3,7 @@ package com.shimnssso.mycointong.network;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.shimnssso.mycointong.Constant;
+import com.shimnssso.mycointong.Const;
 import com.shimnssso.mycointong.ListViewAdapter;
 import com.shimnssso.mycointong.ListViewItem;
 
@@ -50,7 +50,7 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
         Log.d(TAG, "onPostExecute(). response: " + s);
         if (s == null) {
             Log.e(TAG, "s == null");
-            mListener.OnRefreshResult(Constant.Exchange.CRYPTOWATCH, 0);
+            mListener.OnRefreshResult(Const.Exchange.CRYPTOWATCH, 0);
             return;
         }
 
@@ -59,7 +59,7 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
             responseObject = new JSONObject(s);
         } catch (JSONException e) {
             e.printStackTrace();
-            mListener.OnRefreshResult(Constant.Exchange.CRYPTOWATCH, 0);
+            mListener.OnRefreshResult(Const.Exchange.CRYPTOWATCH, 0);
             return;
         }
 
@@ -67,33 +67,33 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
             responseObject = responseObject.optJSONObject(RESULT);
         } else {
             Log.e(TAG, "result doesn't exist");
-            mListener.OnRefreshResult(Constant.Exchange.CRYPTOWATCH, 0);
+            mListener.OnRefreshResult(Const.Exchange.CRYPTOWATCH, 0);
             return;
         }
 
         ListViewAdapter adapterInstance = ListViewAdapter.getInstance();
         ListViewItem curItem;
 
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, Constant.Currency.USD, Constant.Exchange.BITFINEX);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.USD, Const.Exchange.BITFINEX);
         if (curItem != null && responseObject.has(BITFINEX_BTCUSD)) {
             JSONObject coinObejct = responseObject.optJSONObject(BITFINEX_BTCUSD);
             updateItemValues(curItem, coinObejct);
         }
 
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, Constant.Currency.CNY, Constant.Exchange.OKCOIN);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
         if (curItem != null && responseObject.has(OKCOIN_BTCCNY)) {
             JSONObject coinObejct = responseObject.optJSONObject(OKCOIN_BTCCNY);
             updateItemValues(curItem, coinObejct);
         }
 
-        curItem = (ListViewItem) adapterInstance.getItemByName(Constant.Coin.BTC, Constant.Currency.JPY, Constant.Exchange.BITFLYER);
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER);
         if (curItem != null && responseObject.has(BITFLYER_BTCJPY)) {
             JSONObject coinObejct = responseObject.optJSONObject(BITFLYER_BTCJPY);
             updateItemValues(curItem, coinObejct);
         }
 
         adapterInstance.notifyDataSetChanged();
-        mListener.OnRefreshResult(Constant.Exchange.CRYPTOWATCH, 1);
+        mListener.OnRefreshResult(Const.Exchange.CRYPTOWATCH, 1);
     }
 
     private void updateItemValues(ListViewItem item, JSONObject coinObject) {

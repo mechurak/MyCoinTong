@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 item.setMyQuantity(coinRow.quantity);
                 adapter.addItem(item);
             }
-            ListViewItem tempItem = new ListViewItem("TEST", Constant.Currency.USD, Constant.Exchange.BITFINEX, "");
+            ListViewItem tempItem = new ListViewItem("TEST", Const.Currency.USD, Const.Exchange.BITFINEX, "");
             adapter.addItem(tempItem);
         }
 
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         switch (id) {
             case R.id.action_edit_coin_list:
                 Intent intent = new Intent(this, SettingActivity.class);
-                startActivityForResult(intent, Constant.RequestCode.SettingActivity);
+                startActivityForResult(intent, Const.RequestCode.SettingActivity);
                 return true;
             case R.id.action_refresh:
                 mSwipeLayout.setRefreshing(true);  // explicit call is needed (non swipe gesture case)
@@ -142,13 +142,13 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "onActivityResult(). requestCode: " + requestCode + ", resultCode: " + resultCode);
         switch (requestCode) {
-            case Constant.RequestCode.HoldingActivity:
+            case Const.RequestCode.HoldingActivity:
                 if (resultCode == RESULT_OK) {
-                    String coin = data.getStringExtra(Constant.HoldingIntentKey.Coin);
-                    String currency = data.getStringExtra(Constant.HoldingIntentKey.Currency);
-                    String exchange = data.getStringExtra(Constant.HoldingIntentKey.Exchange);
-                    double avgPrice = data.getDoubleExtra(Constant.HoldingIntentKey.AvgPrice, 0.0d);
-                    double quantity = data.getDoubleExtra(Constant.HoldingIntentKey.Quantity, 0.0d);
+                    String coin = data.getStringExtra(Const.HoldingIntentKey.Coin);
+                    String currency = data.getStringExtra(Const.HoldingIntentKey.Currency);
+                    String exchange = data.getStringExtra(Const.HoldingIntentKey.Exchange);
+                    double avgPrice = data.getDoubleExtra(Const.HoldingIntentKey.AvgPrice, 0.0d);
+                    double quantity = data.getDoubleExtra(Const.HoldingIntentKey.Quantity, 0.0d);
                     Log.d(TAG, "coin: " + coin + ", avgPrice: " + avgPrice + ", quantity: " + quantity);
 
                     DbHelper dbHelper = DbHelper.getInstance(this);
@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                     adapter.notifyDataSetChanged();
                 }
                 break;
-            case Constant.RequestCode.SettingActivity:
+            case Const.RequestCode.SettingActivity:
                 if (resultCode == RESULT_OK) {
                     updateAdapterFromDb();
                 }
@@ -193,12 +193,12 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         ListViewItem item = (ListViewItem ) parent.getItemAtPosition(position) ;
         Log.d(TAG, "onItemLongClick(). position: " + position + ", id: " + id + "name: " + item.getFullName());
         Intent intent = new Intent(this, HoldingActivity.class);
-        intent.putExtra(Constant.HoldingIntentKey.Coin, item.getCoin());
-        intent.putExtra(Constant.HoldingIntentKey.Currency, item.getCurrency());
-        intent.putExtra(Constant.HoldingIntentKey.Exchange, item.getExchange());
-        intent.putExtra(Constant.HoldingIntentKey.AvgPrice, item.getMyAvgPrice());
-        intent.putExtra(Constant.HoldingIntentKey.Quantity, item.getMyQuantity());
-        startActivityForResult(intent, Constant.RequestCode.HoldingActivity);
+        intent.putExtra(Const.HoldingIntentKey.Coin, item.getCoin());
+        intent.putExtra(Const.HoldingIntentKey.Currency, item.getCurrency());
+        intent.putExtra(Const.HoldingIntentKey.Exchange, item.getExchange());
+        intent.putExtra(Const.HoldingIntentKey.AvgPrice, item.getMyAvgPrice());
+        intent.putExtra(Const.HoldingIntentKey.Quantity, item.getMyQuantity());
+        startActivityForResult(intent, Const.RequestCode.HoldingActivity);
         return true;
     }
 
@@ -223,16 +223,16 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             mRefreshList = new ArrayList<>();
             BithumClient bithumClient = new BithumClient(this);
             bithumClient.execute();
-            mRefreshList.add(Constant.Exchange.BITHUMB);
+            mRefreshList.add(Const.Exchange.BITHUMB);
             CoinoneClient coinoneClient = new CoinoneClient(this);
             coinoneClient.execute();
-            mRefreshList.add(Constant.Exchange.COINONE);
+            mRefreshList.add(Const.Exchange.COINONE);
             KorbitClient korbitClient = new KorbitClient(this);
             korbitClient.execute();
-            mRefreshList.add(Constant.Exchange.KORBIT);
+            mRefreshList.add(Const.Exchange.KORBIT);
             CryptowatchClient cryptowatchClient = new CryptowatchClient(this);
             cryptowatchClient.execute();
-            mRefreshList.add(Constant.Exchange.CRYPTOWATCH);
+            mRefreshList.add(Const.Exchange.CRYPTOWATCH);
         }
 
         DbHelper dbHelper = DbHelper.getInstance(this);

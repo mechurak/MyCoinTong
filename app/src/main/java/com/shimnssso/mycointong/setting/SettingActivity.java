@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.shimnssso.mycointong.Constant;
+import com.shimnssso.mycointong.Const;
 import com.shimnssso.mycointong.R;
 import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
@@ -75,7 +75,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 if (adapter != null) {
                     Intent intent = new Intent(this, AddActivity.class);
                     intent.putExtra(AddActivity.INTENT_KEY_COIN_LIST, adapter.getCoinFullNameList());
-                    startActivityForResult(intent, Constant.RequestCode.AddActivity);
+                    startActivityForResult(intent, Const.RequestCode.AddActivity);
                 } else {
                     Log.e(TAG, "adapter is null");
                 }
@@ -122,7 +122,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         super.onActivityResult(requestCode, resultCode, data);
         Log.i(TAG, "onActivityResult(). requestCode: " + requestCode + ", resultCode: " + resultCode);
         switch (requestCode) {
-            case Constant.RequestCode.AddActivity:
+            case Const.RequestCode.AddActivity:
                 if (resultCode == RESULT_OK) {
                     ArrayList<String> newCoinList = data.getStringArrayListExtra(AddActivity.INTENT_KEY_COIN_LIST);
                     Log.d(TAG, "newCoinList: " + newCoinList);

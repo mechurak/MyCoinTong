@@ -28,11 +28,11 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         Intent intent = getIntent();
-        mCoin = intent.getStringExtra(Constant.HoldingIntentKey.Coin);
-        mCurrency = intent.getStringExtra(Constant.HoldingIntentKey.Currency);
-        mExchange = intent.getStringExtra(Constant.HoldingIntentKey.Exchange);
-        mAvgPrice = intent.getDoubleExtra(Constant.HoldingIntentKey.AvgPrice, 0.0d);
-        mQuantity = intent.getDoubleExtra(Constant.HoldingIntentKey.Quantity, 0.0d);
+        mCoin = intent.getStringExtra(Const.HoldingIntentKey.Coin);
+        mCurrency = intent.getStringExtra(Const.HoldingIntentKey.Currency);
+        mExchange = intent.getStringExtra(Const.HoldingIntentKey.Exchange);
+        mAvgPrice = intent.getDoubleExtra(Const.HoldingIntentKey.AvgPrice, 0.0d);
+        mQuantity = intent.getDoubleExtra(Const.HoldingIntentKey.Quantity, 0.0d);
 
         setContentView(R.layout.activity_holding);
         setContent();
@@ -63,11 +63,11 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
                     double quantity = Double.parseDouble(mEditQuantity.getText().toString());
 
                     Intent intent = new Intent();
-                    intent.putExtra(Constant.HoldingIntentKey.Coin, mCoin);
-                    intent.putExtra(Constant.HoldingIntentKey.Currency, mCurrency);
-                    intent.putExtra(Constant.HoldingIntentKey.Exchange, mExchange);
-                    intent.putExtra(Constant.HoldingIntentKey.AvgPrice, avgPrice);
-                    intent.putExtra(Constant.HoldingIntentKey.Quantity, quantity);
+                    intent.putExtra(Const.HoldingIntentKey.Coin, mCoin);
+                    intent.putExtra(Const.HoldingIntentKey.Currency, mCurrency);
+                    intent.putExtra(Const.HoldingIntentKey.Exchange, mExchange);
+                    intent.putExtra(Const.HoldingIntentKey.AvgPrice, avgPrice);
+                    intent.putExtra(Const.HoldingIntentKey.Quantity, quantity);
                     setResult(RESULT_OK, intent);
                     this.finish();
                 } catch (NumberFormatException | NullPointerException e) {

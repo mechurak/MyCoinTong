@@ -52,8 +52,8 @@ public class CandleView extends View {
 
         canvas.drawRect(rect, paint);
 
-        if (curPercent > 0.0f) paint.setColor(Constant.Color.LTRED);
-        else if (curPercent < 0.0f) paint.setColor(Constant.Color.LTBLUE);
+        if (curPercent > 0.0f) paint.setColor(Const.Color.LTRED);
+        else if (curPercent < 0.0f) paint.setColor(Const.Color.LTBLUE);
         else paint.setColor(Color.WHITE);
         paint.setStrokeWidth(STROKE_WIDTH);
 
