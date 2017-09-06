@@ -65,20 +65,26 @@ public class DbHelper extends SQLiteOpenHelper {
 
                 {Const.Coin.BCH, Const.Currency.KRW, Const.Exchange.BITHUMB, "1", "50", "https://cryptowat.ch/bithumb/bchkrw"},
                 {Const.Coin.BCH, Const.Currency.KRW, Const.Exchange.COINONE, "1", "51", "https://coinone.co.kr/chart/?site=CoinoneBCH"},
+                {Const.Coin.BCH, Const.Currency.USD, Const.Exchange.BITFINEX, "1", "52", "https://cryptowat.ch/bitfinex/bchusd"},
 
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.KORBIT, "1", "100", ""},
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.BITHUMB, "1", "101", "https://cryptowat.ch/bithumb/ethkrw"},
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.COINONE, "1", "102", "https://coinone.co.kr/chart/?site=CoinoneETH"},
+                {Const.Coin.ETH, Const.Currency.USD, Const.Exchange.BITFINEX, "1", "103", "https://cryptowat.ch/bitfinex/ethusd"},
 
                 {Const.Coin.ETC, Const.Currency.KRW, Const.Exchange.KORBIT, "1", "200", ""},
                 {Const.Coin.ETC, Const.Currency.KRW, Const.Exchange.BITHUMB, "1", "201", "https://cryptowat.ch/bithumb/etckrw"},
                 {Const.Coin.ETC, Const.Currency.KRW, Const.Exchange.COINONE, "1", "202", "https://coinone.co.kr/chart/?site=CoinoneETC"},
+                {Const.Coin.ETC, Const.Currency.USD, Const.Exchange.BITFINEX, "1", "203", "https://cryptowat.ch/bitfinex/etcusd"},
 
                 {Const.Coin.DASH, Const.Currency.KRW, Const.Exchange.BITHUMB, "1", "300", "https://cryptowat.ch/bithumb/dashkrw"},
+
                 {Const.Coin.LTC, Const.Currency.KRW, Const.Exchange.BITHUMB, "1", "400", "https://cryptowat.ch/bithumb/ltckrw"},
+                {Const.Coin.LTC, Const.Currency.USD, Const.Exchange.BITFINEX, "1", "401", "https://cryptowat.ch/bitfinex/ltcusd"},
 
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.BITHUMB, "1", "500", "https://cryptowat.ch/bithumb/xrpkrw"},
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.COINONE, "1", "501", "https://coinone.co.kr/chart/?site=CoinoneXRP"},
+                {Const.Coin.XRP, Const.Currency.USD, Const.Exchange.BITFINEX, "1", "502", "https://cryptowat.ch/bitfinex/xrpusd"},
         };
 
         String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,?,?,?,?,null,null,?,null)";

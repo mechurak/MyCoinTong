@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
+import com.shimnssso.mycointong.network.BitfinexClient;
 import com.shimnssso.mycointong.network.BithumClient;
 import com.shimnssso.mycointong.network.CoinoneClient;
 import com.shimnssso.mycointong.network.CryptowatchClient;
@@ -230,9 +231,12 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             KorbitClient korbitClient = new KorbitClient(this);
             korbitClient.execute();
             mRefreshList.add(Const.Exchange.KORBIT);
-            CryptowatchClient cryptowatchClient = new CryptowatchClient(this);
-            cryptowatchClient.execute();
-            mRefreshList.add(Const.Exchange.CRYPTOWATCH);
+//            CryptowatchClient cryptowatchClient = new CryptowatchClient(this);
+//            cryptowatchClient.execute();
+//            mRefreshList.add(Const.Exchange.CRYPTOWATCH);
+            BitfinexClient bitfinexClient = new BitfinexClient(this);
+            bitfinexClient.execute();
+            mRefreshList.add(Const.Exchange.BITFINEX);
         }
 
         DbHelper dbHelper = DbHelper.getInstance(this);

@@ -10,14 +10,21 @@ import com.shimnssso.mycointong.ListViewItem;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class KorbitClient extends AsyncTask<Void, Void, String> {
+public class KorbitClient extends AsyncTask<Void, Void, JSONObject> {
     private static final String TAG = "KorbitClient";
-    private static final String TICKER_URL = "https://api.korbit.co.kr/v1/ticker/detailed";
+    private static final String TICKER_URL = "https://api.korbit.co.kr/v1/ticker/detailed?currency_pair=";
     private static final String MY_CURRENCY = Const.Currency.KRW;
     private static final String MY_EXCHANGE = Const.Exchange.KORBIT;
 
     // parameter
     // currency_pair	btc_krw (default), etc_krw, eth_krw, xrp_krw
+    private static String BTC_KRW = "btc_krw";
+    private static String BCH_KRW = "bch_krw";
+    private static String ETC_KRW = "etc_krw";
+    private static String ETH_KRW = "eth_krw";
+    private static String XRP_KRW = "xrp_krw";
+
+    // response
     private static String TIME_STAMP = "timestamp";
     private static String LAST = "last";
     private static String BID = "bid";
@@ -33,26 +40,66 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... params) {
+    protected JSONObject doInBackground(Void... params) {
         Log.d(TAG, "doInBackground()");
-        return NetworkUtil.request(TICKER_URL);
+        JSONObject mergedRetJson = new JSONObject();
+        String retString;
+        ListViewAdapter adapterInstance = ListViewAdapter.getInstance();
+        ListViewItem curItem;
+        JSONObject curRetJson;
+
+        try {
+            // BTC
+            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
+            if (curItem != null) {
+                retString = NetworkUtil.request(TICKER_URL + BTC_KRW);
+                curRetJson = new JSONObject(retString);
+                mergedRetJson.put(BTC_KRW, curRetJson);
+            }
+
+            // BCH
+            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BCH, MY_CURRENCY, MY_EXCHANGE);
+            if (curItem != null) {
+                retString = NetworkUtil.request(TICKER_URL + BCH_KRW);
+                curRetJson = new JSONObject(retString);
+                mergedRetJson.put(BCH_KRW, curRetJson);
+            }
+
+            // ETC
+            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETC, MY_CURRENCY, MY_EXCHANGE);
+            if (curItem != null) {
+                retString = NetworkUtil.request(TICKER_URL + ETC_KRW);
+                curRetJson = new JSONObject(retString);
+                mergedRetJson.put(ETC_KRW, curRetJson);
+            }
+
+            // ETH
+            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETH, MY_CURRENCY, MY_EXCHANGE);
+            if (curItem != null) {
+                retString = NetworkUtil.request(TICKER_URL + ETH_KRW);
+                curRetJson = new JSONObject(retString);
+                mergedRetJson.put(ETH_KRW, curRetJson);
+            }
+
+            // XRP
+            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
+            if (curItem != null) {
+                retString = NetworkUtil.request(TICKER_URL + XRP_KRW);
+                curRetJson = new JSONObject(retString);
+                mergedRetJson.put(XRP_KRW, curRetJson);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return mergedRetJson;
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        Log.d(TAG, "onPostExecute(). response: " + s);
-        if (s == null) {
+    protected void onPostExecute(JSONObject mergedRetJson) {
+        super.onPostExecute(mergedRetJson);
+        Log.d(TAG, "onPostExecute(). response: " + mergedRetJson);
+        if (mergedRetJson == null) {
             Log.e(TAG, "s == null");
-            mListener.OnRefreshResult(Const.Exchange.KORBIT, 0);
-            return;
-        }
-
-        JSONObject responseObject;
-        try {
-            responseObject = new JSONObject(s);
-        } catch (JSONException e) {
-            e.printStackTrace();
             mListener.OnRefreshResult(Const.Exchange.KORBIT, 0);
             return;
         }
@@ -62,8 +109,30 @@ public class KorbitClient extends AsyncTask<Void, Void, String> {
 
         // BTC
         curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
-        if (curItem != null && responseObject.has(TIME_STAMP)) {
-            updateItemValues(curItem, responseObject);
+        if (curItem != null && mergedRetJson.has(BTC_KRW)) {
+            JSONObject coinObject = mergedRetJson.optJSONObject(BTC_KRW);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // BCH
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BCH, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && mergedRetJson.has(BCH_KRW)) {
+            JSONObject coinObject = mergedRetJson.optJSONObject(BCH_KRW);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // ETC
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETC, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && mergedRetJson.has(ETC_KRW)) {
+            JSONObject coinObject = mergedRetJson.optJSONObject(ETC_KRW);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // ETH
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETH, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && mergedRetJson.has(ETH_KRW)) {
+            JSONObject coinObject = mergedRetJson.optJSONObject(ETH_KRW);
+            updateItemValues(curItem, coinObject);
         }
 
         adapterInstance.notifyDataSetChanged();
