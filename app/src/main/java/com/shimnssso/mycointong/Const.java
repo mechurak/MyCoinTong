@@ -4,47 +4,47 @@ import android.support.annotation.ColorInt;
 
 public class Const {
     public static class Coin {
-        public static String BTC = "BTC";
-        public static String BCH = "BCH";
-        public static String ETH = "ETH";
-        public static String ETC = "ETC";
-        public static String DASH = "DASH";
-        public static String LTC = "LTC";
-        public static String XRP = "XRP";
+        public static final String BTC = "BTC";
+        public static final String BCH = "BCH";
+        public static final String ETH = "ETH";
+        public static final String ETC = "ETC";
+        public static final String DASH = "DASH";
+        public static final String LTC = "LTC";
+        public static final String XRP = "XRP";
     }
 
     public static class Currency {
-        public static String KRW = "KRW";
-        public static String USD = "USD";
-        public static String BTC = "BTC";
-        public static String CNY = "CNY";
-        public static String JPY = "JPY";
+        public static final String KRW = "KRW";
+        public static final String USD = "USD";
+        public static final String BTC = "BTC";
+        public static final String CNY = "CNY";
+        public static final String JPY = "JPY";
     }
 
     public static class Exchange {
-        public static String KORBIT = "Korbit";
-        public static String BITHUMB = "Bithumb";
-        public static String COINONE = "Coinone";
-        public static String POLONIEX = "Poloniex";
-        public static String BITFINEX = "Bitfinex";
-        public static String OKCOIN = "OKCoin";
-        public static String BITFLYER = "bitFlyer";
+        public static final String KORBIT = "Korbit";
+        public static final String BITHUMB = "Bithumb";
+        public static final String COINONE = "Coinone";
+        public static final String POLONIEX = "Poloniex";
+        public static final String BITFINEX = "Bitfinex";
+        public static final String OKCOIN = "OKCoin";
+        public static final String BITFLYER = "bitFlyer";
 
-        public static String CRYPTOWATCH = "Cryptowat.ch";
+        public static final String CRYPTOWATCH = "Cryptowat.ch";
     }
 
     public static class UnitTime {
-        public static String ONE_MIN = "1M";
-        public static String THREE_MIN = "3M";
-        public static String FIVE_MIN = "5M";
-        public static String FIFTEEN_MIN = "15M";
-        public static String THIRTY_MIN = "50M";
-        public static String ONE_HOUR = "1H";
-        public static String TWO_HOUR = "2H";
-        public static String FOUR_HOUR = "4H";
-        public static String SIX_HOUR = "6H";
-        public static String ONE_DAY = "1D";
-        public static String ONE_WEEK = "1W";
+        public static final String ONE_MIN = "1M";
+        public static final String THREE_MIN = "3M";
+        public static final String FIVE_MIN = "5M";
+        public static final String FIFTEEN_MIN = "15M";
+        public static final String THIRTY_MIN = "50M";
+        public static final String ONE_HOUR = "1H";
+        public static final String TWO_HOUR = "2H";
+        public static final String FOUR_HOUR = "4H";
+        public static final String SIX_HOUR = "6H";
+        public static final String ONE_DAY = "1D";
+        public static final String ONE_WEEK = "1W";
     }
 
     public static class RequestCode {

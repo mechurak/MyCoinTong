@@ -65,13 +65,14 @@ public class ListViewAdapter extends BaseAdapter {
             convertView.setBackgroundColor(originBgColor);
         }
 
+        String currencySymbol = Util.getCurrenySymbol(listViewItem.getCurrency());
+
         // 아이템 내 각 위젯에 데이터 반영
         nameTextView.setText(listViewItem.getName());
         exchangeTextView.setText(listViewItem.getExchange());
         DecimalFormat intFormatter = new DecimalFormat("#,###");
         DecimalFormat floatFormatter = new DecimalFormat("#,##0.00");
-        String currency = listViewItem.getCurrency();
-        boolean useIntCurrency = currency.equals(Const.Currency.KRW) || currency.equals(Const.Currency.JPY);
+        boolean useIntCurrency = Util.useIntCurrency(listViewItem.getCurrency());
         double changePrice = listViewItem.getCurPrice() - listViewItem.getOpenPrice();
 
         String priceText, priceChangeText;
@@ -82,6 +83,8 @@ public class ListViewAdapter extends BaseAdapter {
             priceText = floatFormatter.format(listViewItem.getCurPrice());
             priceChangeText = floatFormatter.format(changePrice);
         }
+        priceText = currencySymbol + priceText;
+        priceChangeText = currencySymbol + priceChangeText;
 
         priceTextView.setText(priceText);
         volumeTextView.setText(intFormatter.format(listViewItem.getVolume()));
@@ -119,6 +122,7 @@ public class ListViewAdapter extends BaseAdapter {
             } else {
                 myPriceChangeText = floatFormatter.format(myProfit);
             }
+            myPriceChangeText = currencySymbol + myPriceChangeText;
             myPriceChangeTextView.setText(myPriceChangeText);
             myPercentChangeTextView.setText(floatFormatter.format(myPercentChange));
         }
