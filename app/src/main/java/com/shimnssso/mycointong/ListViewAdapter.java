@@ -1,6 +1,7 @@
 package com.shimnssso.mycointong;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +54,16 @@ public class ListViewAdapter extends BaseAdapter {
         TextView myPercentChangeTextView = (TextView) convertView.findViewById(R.id.myPercentChange);
         CandleView candleView = (CandleView) convertView.findViewById(R.id.candle);
         int originTextColor = nameTextView.getTextColors().getDefaultColor();
+        int originBgColor = convertView.getSolidColor();
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         ListViewItem listViewItem = listViewItemList.get(position);
+
+        if (position % 2 == 0) {
+            convertView.setBackgroundColor(Color.BLACK);
+        } else {
+            convertView.setBackgroundColor(originBgColor);
+        }
 
         // 아이템 내 각 위젯에 데이터 반영
         nameTextView.setText(listViewItem.getName());
