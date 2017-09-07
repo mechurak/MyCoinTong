@@ -53,14 +53,21 @@ class SettingAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.listview_item_setting, parent, false);
         }
 
-        CheckBox chk_coinName = (CheckBox) convertView.findViewById(R.id.chk_coinName);
+        final CheckBox chk_coinName = (CheckBox) convertView.findViewById(R.id.chk_coinName);
+        chk_coinName.setText(coinItem.getCoinFullName());
         chk_coinName.setChecked(coinItem.isSelected());
-        chk_coinName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        chk_coinName.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                coinItem.setSelected(isChecked);
+            public void onClick(View v) {
+                if (coinItem.isSelected()) {
+                    coinItem.setSelected(false);
+                } else {
+                    coinItem.setSelected(true);
+                }
+                chk_coinName.setSelected(coinItem.isSelected());
             }
         });
+
         Button btn_up = (Button) convertView.findViewById(R.id.btn_up);
         btn_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,8 +98,6 @@ class SettingAdapter extends BaseAdapter {
                 }
             }
         });
-
-        chk_coinName.setText(coinItem.getCoinFullName());
 
         return convertView;
     }
