@@ -8,7 +8,7 @@ public class Util {
             case Const.Currency.USD :
                 return "$";
             case Const.Currency.CNY :
-                return "¥";
+                return "Ұ";
             case Const.Currency.JPY :
                 return "¥";
         }
@@ -25,5 +25,15 @@ public class Util {
                 return false;
         }
         return false;
+    }
+
+    public static String priceWithSymbol(String symbol, String price) {
+        if (symbol == null || price == null ) return price;
+        boolean isPositive = !price.startsWith("-");
+        if (isPositive) {
+            return symbol + price;
+        } else {
+            return "-"+ symbol + price.substring(1);
+        }
     }
 }

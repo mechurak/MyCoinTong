@@ -83,8 +83,8 @@ public class ListViewAdapter extends BaseAdapter {
             priceText = floatFormatter.format(listViewItem.getCurPrice());
             priceChangeText = floatFormatter.format(changePrice);
         }
-        priceText = currencySymbol + priceText;
-        priceChangeText = currencySymbol + priceChangeText;
+        priceText = Util.priceWithSymbol(currencySymbol, priceText);
+        priceChangeText = Util.priceWithSymbol(currencySymbol, priceChangeText);
 
         priceTextView.setText(priceText);
         volumeTextView.setText(intFormatter.format(listViewItem.getVolume()));
@@ -122,7 +122,7 @@ public class ListViewAdapter extends BaseAdapter {
             } else {
                 myPriceChangeText = floatFormatter.format(myProfit);
             }
-            myPriceChangeText = currencySymbol + myPriceChangeText;
+            myPriceChangeText = Util.priceWithSymbol(currencySymbol, myPriceChangeText);
             myPriceChangeTextView.setText(myPriceChangeText);
             myPercentChangeTextView.setText(floatFormatter.format(myPercentChange));
         }
