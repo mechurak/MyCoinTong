@@ -10,28 +10,29 @@ import com.shimnssso.mycointong.ListViewItem;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CryptowatchClient extends AsyncTask<Void, Void, String> {
+public class CryptowatchClient extends AsyncTask<Void, Void, JSONObject> {
     private static final String TAG = "CryptowatchClient";
-    private static final String TICKER_URL = "https://api.cryptowat.ch/markets/summaries";
+    private static final String TICKER_URL = "https://api.cryptowat.ch/markets/";
 
     // parameter
-    private static String RESULT = "result";
+    private static final String OKCOIN_BTC_CNY = "okcoin/btccny/summary";
+    private static final String OKCOIN_LTC_CNY = "okcoin/ltccny/summary";
+    private static final String BITFLYER_BTC_JPY = "bitflyer/btcjpy/summary";
 
-    private static String BITFINEX_BTCUSD = "bitfinex:btcusd";
-    private static String OKCOIN_BTCCNY = "okcoin:btccny";
-    private static String BITFLYER_BTCJPY = "bitflyer:btcjpy";
+    // response
+    private static final String RESULT = "result";
 
-    private static String VOLUME = "volume";
-    private static String PRICE = "price";
+    private static final String VOLUME = "volume";
+    private static final String PRICE = "price";
 
     // child of "price"
-    private static String LAST = "last";
-    private static String HIGH = "high";
-    private static String LOW = "low";
-    private static String CHANGE = "change";
+    private static final String LAST = "last";
+    private static final String HIGH = "high";
+    private static final String LOW = "low";
+    private static final String CHANGE = "change";
 
     // child of "change"
-    private static String ABSOLUTE = "absolute";
+    private static final String ABSOLUTE = "absolute";
 
     private TickerListener mListener;
     public CryptowatchClient(TickerListener listener) {
@@ -39,65 +40,94 @@ public class CryptowatchClient extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... params) {
+    protected JSONObject doInBackground(Void... params) {
         Log.d(TAG, "doInBackground()");
-        return NetworkUtil.request(TICKER_URL);
+
+        JSONObject mergedRetJson = new JSONObject();
+        String retString;
+        ListViewAdapter adapterInstance = ListViewAdapter.getInstance();
+        ListViewItem curItem;
+        JSONObject curRetJson;
+
+        try {
+            // OKCOIN_BTC_CNY
+            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
+            if (curItem != null) {
+                retString = NetworkUtil.request(TICKER_URL + OKCOIN_BTC_CNY);
+                curRetJson = new JSONObject(retString);
+                mergedRetJson.put(OKCOIN_BTC_CNY, curRetJson);
+            }
+
+            // OKCOIN_LTC_CNY
+            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.LTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
+            if (curItem != null) {
+                retString = NetworkUtil.request(TICKER_URL + OKCOIN_LTC_CNY);
+                curRetJson = new JSONObject(retString);
+                mergedRetJson.put(OKCOIN_LTC_CNY, curRetJson);
+            }
+
+            // BITFLYER_BTC_JPY
+            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER);
+            if (curItem != null) {
+                retString = NetworkUtil.request(TICKER_URL + BITFLYER_BTC_JPY);
+                curRetJson = new JSONObject(retString);
+                mergedRetJson.put(BITFLYER_BTC_JPY, curRetJson);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return mergedRetJson;
     }
 
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        Log.d(TAG, "onPostExecute(). response: " + s);
-        if (s == null) {
-            Log.e(TAG, "s == null");
-            mListener.OnRefreshResult(Const.Exchange.CRYPTOWATCH, 0);
-            return;
-        }
-
-        JSONObject responseObject;
-        try {
-            responseObject = new JSONObject(s);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            mListener.OnRefreshResult(Const.Exchange.CRYPTOWATCH, 0);
-            return;
-        }
-
-        if (responseObject.has(RESULT)) {
-            responseObject = responseObject.optJSONObject(RESULT);
-        } else {
-            Log.e(TAG, "result doesn't exist");
+    protected void onPostExecute(JSONObject mergedRetJson) {
+        super.onPostExecute(mergedRetJson);
+        Log.d(TAG, "onPostExecute(). response: " + mergedRetJson);
+        if (mergedRetJson == null) {
+            Log.e(TAG, "mergedRetJson == null");
             mListener.OnRefreshResult(Const.Exchange.CRYPTOWATCH, 0);
             return;
         }
 
         ListViewAdapter adapterInstance = ListViewAdapter.getInstance();
         ListViewItem curItem;
+        JSONObject responseObject;
 
-        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.USD, Const.Exchange.BITFINEX);
-        if (curItem != null && responseObject.has(BITFINEX_BTCUSD)) {
-            JSONObject coinObejct = responseObject.optJSONObject(BITFINEX_BTCUSD);
-            updateItemValues(curItem, coinObejct);
-        }
-
+        // OKCOIN_BTC_CNY
         curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
-        if (curItem != null && responseObject.has(OKCOIN_BTCCNY)) {
-            JSONObject coinObejct = responseObject.optJSONObject(OKCOIN_BTCCNY);
-            updateItemValues(curItem, coinObejct);
+        if (curItem != null && mergedRetJson.has(OKCOIN_BTC_CNY)) {
+            responseObject = mergedRetJson.optJSONObject(OKCOIN_BTC_CNY);
+            updateItemValues(curItem, responseObject);
         }
 
+        // OKCOIN_LTC_CNY
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.LTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
+        if (curItem != null && mergedRetJson.has(OKCOIN_LTC_CNY)) {
+            responseObject = mergedRetJson.optJSONObject(OKCOIN_LTC_CNY);
+            updateItemValues(curItem, responseObject);
+        }
+
+        // BITFLYER_BTC_JPY
         curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER);
-        if (curItem != null && responseObject.has(BITFLYER_BTCJPY)) {
-            JSONObject coinObejct = responseObject.optJSONObject(BITFLYER_BTCJPY);
-            updateItemValues(curItem, coinObejct);
+        if (curItem != null && mergedRetJson.has(BITFLYER_BTC_JPY)) {
+            responseObject = mergedRetJson.optJSONObject(BITFLYER_BTC_JPY);
+            updateItemValues(curItem, responseObject);
         }
 
         adapterInstance.notifyDataSetChanged();
         mListener.OnRefreshResult(Const.Exchange.CRYPTOWATCH, 1);
     }
 
-    private void updateItemValues(ListViewItem item, JSONObject coinObject) {
+    private void updateItemValues(ListViewItem item, JSONObject responseObject) {
         try {
+            JSONObject coinObject;
+            if (responseObject.has(RESULT)) {
+                coinObject = responseObject.optJSONObject(RESULT);
+            } else {
+                Log.e(TAG, "result doesn't exist");
+                return;
+            }
+
             double volume = coinObject.getDouble(VOLUME);
             JSONObject priceObject = coinObject.optJSONObject(PRICE);
             if (priceObject != null) {

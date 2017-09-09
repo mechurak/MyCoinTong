@@ -81,6 +81,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
                 {Const.Coin.LTC, Const.Currency.KRW, Const.Exchange.BITHUMB, "1", "400", "https://cryptowat.ch/bithumb/ltckrw"},
                 {Const.Coin.LTC, Const.Currency.USD, Const.Exchange.BITFINEX, "1", "401", "https://cryptowat.ch/bitfinex/ltcusd"},
+                {Const.Coin.LTC, Const.Currency.CNY, Const.Exchange.OKCOIN, "1", "402", "https://cryptowat.ch/okcoin/ltccny"},
 
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.BITHUMB, "1", "500", "https://cryptowat.ch/bithumb/xrpkrw"},
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.COINONE, "1", "501", "https://coinone.co.kr/chart/?site=CoinoneXRP"},

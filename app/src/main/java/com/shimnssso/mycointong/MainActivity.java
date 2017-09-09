@@ -231,9 +231,9 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             KorbitClient korbitClient = new KorbitClient(this);
             korbitClient.execute();
             mRefreshList.add(Const.Exchange.KORBIT);
-//            CryptowatchClient cryptowatchClient = new CryptowatchClient(this);
-//            cryptowatchClient.execute();
-//            mRefreshList.add(Const.Exchange.CRYPTOWATCH);
+            CryptowatchClient cryptowatchClient = new CryptowatchClient(this);
+            cryptowatchClient.execute();
+            mRefreshList.add(Const.Exchange.CRYPTOWATCH);
             BitfinexClient bitfinexClient = new BitfinexClient(this);
             bitfinexClient.execute();
             mRefreshList.add(Const.Exchange.BITFINEX);
