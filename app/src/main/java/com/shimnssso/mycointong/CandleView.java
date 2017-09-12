@@ -15,10 +15,15 @@ public class CandleView extends View {
     private static final String TAG = "CandleView";
     private static final float MAX_PERCENT = 30.0f;
     private static final float STROKE_WIDTH = 3.0f;
+    private static final int PADDING = 30;
 
     private float highPercent = 0.0f;
     private float lowPercent = 0.0f;
     private float curPercent = 0.0f;
+
+    private Rect rect = new Rect();
+    private RectF rectF = new RectF();
+    private Paint paint = new Paint();
 
     public CandleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -41,15 +46,9 @@ public class CandleView extends View {
         int height = canvas.getHeight();
         float center = (float)width / 2;
         float unit = center / MAX_PERCENT;
-        Log.d(TAG, "width: " + width + ", height: " + height + ", unit: " + unit);
-        int padding = 30;
 
-        Rect rect = new Rect(0, padding, width, height-padding);
-        Log.d(TAG, "rect: " + rect.toString());
-
-        Paint paint = new Paint();
+        rect.set(0, PADDING, width, height-PADDING);
         paint.setColor(Color.GRAY);
-
         canvas.drawRect(rect, paint);
 
         if (curPercent > 0.0f) paint.setColor(Const.Color.LTRED);
@@ -66,27 +65,24 @@ public class CandleView extends View {
 
         float curX = center + curPercent * unit;
         if (MAX_PERCENT < curPercent) { // over 30%
-            canvas.drawRect(center, padding, width, height - padding, paint);
+            canvas.drawRect(center, PADDING, width, height - PADDING, paint);
             paint.setColor(Color.RED);
             curX = center + (curPercent-MAX_PERCENT) * unit;
-
         }
         else if (curPercent < -MAX_PERCENT) { // under -30%
-            canvas.drawRect(0, padding, width/2, height - padding, paint);
+            canvas.drawRect(0, PADDING, width/2, height - PADDING, paint);
             paint.setColor(Color.BLUE);
             curX = center + (curPercent+MAX_PERCENT) * unit;
-
         }
 
-        RectF rectF;
-        if (curX < center) {
-            rectF = new RectF(curX, padding, center, height - padding);
+        if (curX < center && center - curX > STROKE_WIDTH) {
+            rectF.set(curX, PADDING, center, height - PADDING);
         }
-        else if (center < curX) {
-            rectF = new RectF(center, padding, curX, height - padding);
+        else if (center < curX && curX - center > STROKE_WIDTH) {
+            rectF.set(center, PADDING, curX, height - PADDING);
         }
         else {
-            rectF = new RectF(curX - STROKE_WIDTH/2, padding, center + STROKE_WIDTH/2, height - padding);
+            rectF.set(center - STROKE_WIDTH/2, PADDING, center + STROKE_WIDTH/2, height - PADDING);
         }
         canvas.drawRect(rectF, paint);
 

@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 adapter.addItem(item);
             }
             ListViewItem tempItem = new ListViewItem("TEST", Const.Currency.USD, Const.Exchange.BITFINEX, "");
+            tempItem.setPrice(1000, 1001, 999, 1001, 10000);
             adapter.addItem(tempItem);
         }
 
