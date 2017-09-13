@@ -1,17 +1,18 @@
 package com.shimnssso.mycointong;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HoldingActivity extends Activity implements View.OnClickListener {
+import com.shimnssso.mycointong.widget.CurrencyEditText;
+
+public class HoldingActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = HoldingActivity.class.getSimpleName();
 
     TextView mTextCoinName;
@@ -20,12 +21,12 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
     String mCurrency;
     String mExchange;
     Double mAvgPrice, mQuantity;
-    EditText mEditAvgPrice, mEditQuantity;
+    CurrencyEditText mEditAvgPrice;
+    EditText mEditQuantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         Intent intent = getIntent();
         mCoin = intent.getStringExtra(Const.HoldingIntentKey.Coin);
@@ -48,7 +49,7 @@ public class HoldingActivity extends Activity implements View.OnClickListener {
         mTextCoinName = (TextView) findViewById(R.id.textCoinName);
         mTextCoinName.setText(mCoin + "/" + mCurrency + "(" + mExchange + ")");
 
-        mEditAvgPrice = (EditText) findViewById(R.id.editAvgPrice);
+        mEditAvgPrice = (CurrencyEditText) findViewById(R.id.editAvgPrice);
         mEditAvgPrice.setHint(mAvgPrice.toString());
         mEditQuantity = (EditText) findViewById(R.id.editQuantity);
         mEditQuantity.setHint(mQuantity.toString());

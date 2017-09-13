@@ -24,7 +24,7 @@
         <activity
             android:name=".HoldingActivity"
             android:label="@string/title_activity_holding"
-            android:theme="@android:style/Theme.Dialog">
+            android:theme="@style/MyDialog">
         </activity>
 
         <activity
@@ -35,7 +35,7 @@
         <activity
             android:name=".setting.AddActivity"
             android:label="@string/title_activity_add"
-            android:theme="@android:style/Theme.Dialog">
+            android:theme="@style/MyDialog">
         </activity>
 
     </application>

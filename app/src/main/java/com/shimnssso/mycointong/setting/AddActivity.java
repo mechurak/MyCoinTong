@@ -1,8 +1,8 @@
 package com.shimnssso.mycointong.setting;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -15,7 +15,7 @@ import com.shimnssso.mycointong.data.DbHelper;
 
 import java.util.ArrayList;
 
-public class AddActivity extends Activity implements View.OnClickListener {
+public class AddActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "AddActivity";
     public static final String INTENT_KEY_COIN_LIST = "coin_list";
 
@@ -25,7 +25,6 @@ public class AddActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         Intent intent = getIntent();
         mCurCoinList = intent.getStringArrayListExtra(INTENT_KEY_COIN_LIST);
