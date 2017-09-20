@@ -54,6 +54,7 @@ public class CryptowatchClient extends AsyncTask<Void, Void, JSONObject> {
             curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
             if (curItem != null) {
                 retString = NetworkUtil.request(TICKER_URL + OKCOIN_BTC_CNY);
+                if (retString == null) return null;
                 curRetJson = new JSONObject(retString);
                 mergedRetJson.put(OKCOIN_BTC_CNY, curRetJson);
             }
@@ -62,6 +63,7 @@ public class CryptowatchClient extends AsyncTask<Void, Void, JSONObject> {
             curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.LTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
             if (curItem != null) {
                 retString = NetworkUtil.request(TICKER_URL + OKCOIN_LTC_CNY);
+                if (retString == null) return null;
                 curRetJson = new JSONObject(retString);
                 mergedRetJson.put(OKCOIN_LTC_CNY, curRetJson);
             }
@@ -70,6 +72,7 @@ public class CryptowatchClient extends AsyncTask<Void, Void, JSONObject> {
             curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER);
             if (curItem != null) {
                 retString = NetworkUtil.request(TICKER_URL + BITFLYER_BTC_JPY);
+                if (retString == null) return null;
                 curRetJson = new JSONObject(retString);
                 mergedRetJson.put(BITFLYER_BTC_JPY, curRetJson);
             }

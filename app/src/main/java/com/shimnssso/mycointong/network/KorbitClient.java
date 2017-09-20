@@ -53,6 +53,7 @@ public class KorbitClient extends AsyncTask<Void, Void, JSONObject> {
             curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, MY_CURRENCY, MY_EXCHANGE);
             if (curItem != null) {
                 retString = NetworkUtil.request(TICKER_URL + BTC_KRW);
+                if (retString == null) return null;
                 curRetJson = new JSONObject(retString);
                 mergedRetJson.put(BTC_KRW, curRetJson);
             }
@@ -61,6 +62,7 @@ public class KorbitClient extends AsyncTask<Void, Void, JSONObject> {
             curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BCH, MY_CURRENCY, MY_EXCHANGE);
             if (curItem != null) {
                 retString = NetworkUtil.request(TICKER_URL + BCH_KRW);
+                if (retString == null) return null;
                 curRetJson = new JSONObject(retString);
                 mergedRetJson.put(BCH_KRW, curRetJson);
             }
@@ -69,6 +71,7 @@ public class KorbitClient extends AsyncTask<Void, Void, JSONObject> {
             curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETC, MY_CURRENCY, MY_EXCHANGE);
             if (curItem != null) {
                 retString = NetworkUtil.request(TICKER_URL + ETC_KRW);
+                if (retString == null) return null;
                 curRetJson = new JSONObject(retString);
                 mergedRetJson.put(ETC_KRW, curRetJson);
             }
@@ -77,6 +80,7 @@ public class KorbitClient extends AsyncTask<Void, Void, JSONObject> {
             curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ETH, MY_CURRENCY, MY_EXCHANGE);
             if (curItem != null) {
                 retString = NetworkUtil.request(TICKER_URL + ETH_KRW);
+                if (retString == null) return null;
                 curRetJson = new JSONObject(retString);
                 mergedRetJson.put(ETH_KRW, curRetJson);
             }
@@ -85,6 +89,7 @@ public class KorbitClient extends AsyncTask<Void, Void, JSONObject> {
             curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
             if (curItem != null) {
                 retString = NetworkUtil.request(TICKER_URL + XRP_KRW);
+                if (retString == null) return null;
                 curRetJson = new JSONObject(retString);
                 mergedRetJson.put(XRP_KRW, curRetJson);
             }
