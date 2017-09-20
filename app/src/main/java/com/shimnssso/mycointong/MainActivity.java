@@ -14,6 +14,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
 import com.shimnssso.mycointong.network.BitfinexClient;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     private static final long REFRESH_INTERVAL_DEFAULT = 1000 * 60;  // 1 min
 
     private SwipeRefreshLayout mSwipeLayout;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,15 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 refresh();
             }
         });
+
+        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+        MobileAds.initialize(this, "ca-app-pub-5342329730936246~5303083484");
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("AF19AD1C1F48D53DE32E2549DA15AE30")  // TODO: Remove it for release
+                .build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override

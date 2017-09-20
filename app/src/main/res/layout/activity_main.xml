@@ -21,6 +21,7 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
         android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -32,5 +33,16 @@
             android:dividerHeight="0dp" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center_horizontal"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-5342329730936246/9869014455">
+    </com.google.android.gms.ads.AdView>
 
 </android.support.design.widget.CoordinatorLayout>
