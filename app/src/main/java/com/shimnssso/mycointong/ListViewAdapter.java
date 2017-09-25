@@ -113,7 +113,7 @@ public class ListViewAdapter extends BaseAdapter {
             myPriceChange = listViewItem.getCurPrice() - listViewItem.getMyAvgPrice();
         }
 
-        if (myPriceChange != 0 && listViewItem.getMyAvgPrice() > 0.0d) {
+        if (listViewItem.getMyAvgPrice() > 0.0d) {
             float myPercentChange = (float)(myPriceChange / listViewItem.getMyAvgPrice() * 100);
             double myProfit = myPriceChange * listViewItem.getMyQuantity();
             String myPriceChangeText;
