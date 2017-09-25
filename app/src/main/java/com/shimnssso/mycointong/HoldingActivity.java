@@ -60,9 +60,18 @@ public class HoldingActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.btnConfirm:
                 try {
-                    double avgPrice = Double.parseDouble(mEditAvgPrice.getText().toString());
-                    double quantity = Double.parseDouble(mEditQuantity.getText().toString());
-
+                    double avgPrice = mAvgPrice;
+                    String inputAvgPrice = mEditAvgPrice.getText().toString();
+                    if (inputAvgPrice.length() > 0) {
+                        inputAvgPrice = inputAvgPrice.replaceAll("[,]", "");
+                        avgPrice = Double.parseDouble(inputAvgPrice);
+                    }
+                    double quantity = mQuantity;
+                    String inputQuantity = mEditQuantity.getText().toString();
+                    if (inputQuantity.length() > 0) {
+                        inputQuantity = inputQuantity.replaceAll("[,]", "");
+                        quantity = Double.parseDouble(inputQuantity);
+                    }
                     Intent intent = new Intent();
                     intent.putExtra(Const.HoldingIntentKey.Coin, mCoin);
                     intent.putExtra(Const.HoldingIntentKey.Currency, mCurrency);
