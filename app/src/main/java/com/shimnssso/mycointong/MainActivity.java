@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("AF19AD1C1F48D53DE32E2549DA15AE30")  // TODO: Remove it for release
+                .addTestDevice("91E9EA5A56FC555CA14D4E263ACC5301")  // TODO: Remove it for release (S3)
                 .build();
         mAdView.loadAd(adRequest);
     }

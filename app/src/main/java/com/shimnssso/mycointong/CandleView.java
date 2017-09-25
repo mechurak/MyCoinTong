@@ -15,7 +15,7 @@ public class CandleView extends View {
     private static final String TAG = "CandleView";
     private static final float MAX_PERCENT = 30.0f;
     private static final float STROKE_WIDTH = 3.0f;
-    private static final int PADDING = 30;
+    private static final float PADDING_FACTOR = 0.28f;
 
     private float highPercent = 0.0f;
     private float lowPercent = 0.0f;
@@ -46,8 +46,9 @@ public class CandleView extends View {
         int height = canvas.getHeight();
         float center = (float)width / 2;
         float unit = center / MAX_PERCENT;
+        int padding = (int)(height * PADDING_FACTOR);
 
-        rect.set(0, PADDING, width, height-PADDING);
+        rect.set(0, padding, width, height-padding);
         paint.setColor(Color.GRAY);
         canvas.drawRect(rect, paint);
 
@@ -65,24 +66,24 @@ public class CandleView extends View {
 
         float curX = center + curPercent * unit;
         if (MAX_PERCENT < curPercent) { // over 30%
-            canvas.drawRect(center, PADDING, width, height - PADDING, paint);
+            canvas.drawRect(center, padding, width, height - padding, paint);
             paint.setColor(Color.RED);
             curX = center + (curPercent-MAX_PERCENT) * unit;
         }
         else if (curPercent < -MAX_PERCENT) { // under -30%
-            canvas.drawRect(0, PADDING, width/2, height - PADDING, paint);
+            canvas.drawRect(0, padding, width/2, height - padding, paint);
             paint.setColor(Color.BLUE);
             curX = center + (curPercent+MAX_PERCENT) * unit;
         }
 
         if (curX < center && center - curX > STROKE_WIDTH) {
-            rectF.set(curX, PADDING, center, height - PADDING);
+            rectF.set(curX, padding, center, height - padding);
         }
         else if (center < curX && curX - center > STROKE_WIDTH) {
-            rectF.set(center, PADDING, curX, height - PADDING);
+            rectF.set(center, padding, curX, height - padding);
         }
         else {
-            rectF.set(center - STROKE_WIDTH/2, PADDING, center + STROKE_WIDTH/2, height - PADDING);
+            rectF.set(center - STROKE_WIDTH/2, padding, center + STROKE_WIDTH/2, height - padding);
         }
         canvas.drawRect(rectF, paint);
 
