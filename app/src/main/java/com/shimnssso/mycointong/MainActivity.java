@@ -200,9 +200,9 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // get TextView's Text.
-        ListViewItem item = (ListViewItem) parent.getItemAtPosition(position) ;
-        Log.d(TAG, "onListItemClick(). position: " + position + ", id: " + id + "name: " + item.getName());
+        ListViewItem item = (ListViewItem) parent.getItemAtPosition(position);
+        if (item == null) return; // footer case
+        Log.d(TAG, "onListItemClick(). position: " + position + ", id: " + id + ", name: " + item.getName());
 
         String chartSite = item.getCoinoneChartSite();
         if (chartSite != null && chartSite.startsWith("http")) {
@@ -216,8 +216,9 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        ListViewItem item = (ListViewItem ) parent.getItemAtPosition(position) ;
-        Log.d(TAG, "onItemLongClick(). position: " + position + ", id: " + id + "name: " + item.getFullName());
+        ListViewItem item = (ListViewItem ) parent.getItemAtPosition(position);
+        if (item == null) return true; // footer case
+        Log.d(TAG, "onItemLongClick(). position: " + position + ", id: " + id + ", name: " + item.getFullName());
         Intent intent = new Intent(this, HoldingActivity.class);
         intent.putExtra(Const.HoldingIntentKey.Coin, item.getCoin());
         intent.putExtra(Const.HoldingIntentKey.Currency, item.getCurrency());
