@@ -5,4 +5,22 @@
     <string name="title_activity_setting">Edit Coin List</string>
     <string name="title_activity_holding">Holdings</string>
     <string name="title_activity_add">Add Coins</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="avg_price">Avg Price :</string>
+    <string name="quantity">Quantity :</string>
+    <string name="up">Up</string>
+    <string name="down">Down</string>
+    <string name="delete">Delete</string>
+    <string name="revenue_krw">Revenue(KRW)</string>
+    <string name="balance_krw">Balance(KRW)</string>
+    <string name="balance_jpy">Balance(JPY)</string>
+    <string name="balance_usd">Balance(USD)</string>
+    <string name="balance_cny">Balance(CNY)</string>
+    <string name="revenue_cny">Revenue(CNY)</string>
+    <string name="revenue_jpy">Revenue(JPY)</string>
+    <string name="revenue_usd">Revenue(USD)</string>
+    <string name="msg_all_coin_already_added">All available coins are in the interesting coin list.</string>
+    <string name="msg_insert_avg_price_and_quantity">Please insert your average price and quantity.</string>
 </resources>

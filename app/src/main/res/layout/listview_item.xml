@@ -22,7 +22,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:gravity="left|center"
-                android:text="name"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -32,7 +31,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="exchange"
                 android:textSize="10sp" />
         </LinearLayout>
 
@@ -48,7 +46,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="right|center"
-                android:text="10.00"
                 android:textSize="12sp" />
 
             <TextView
@@ -58,7 +55,6 @@
                 android:layout_weight="7"
                 android:gravity="right|center"
                 android:paddingRight="40dp"
-                android:text="10,000"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -83,7 +79,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="right|center"
-            android:text="volume"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -99,7 +94,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="right|center"
-            android:text="price"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -115,7 +109,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:gravity="right|center"
-                android:text="10,000"
                 android:textSize="12sp" />
 
             <TextView
@@ -124,7 +117,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:gravity="right|center"
-                android:text="10.00"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

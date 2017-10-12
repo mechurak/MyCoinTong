@@ -22,14 +22,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Revenue(KRW)" />
+                android:text="@string/revenue_krw" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Balance(KRW)" />
+                android:text="@string/balance_krw" />
 
         </LinearLayout>
 
@@ -44,16 +44,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="20.0" />
+                android:gravity="center_vertical|end" />
 
             <TextView
                 android:id="@+id/txt_currentPriceKRW"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="1,200,000" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
 
@@ -68,16 +66,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="200,000" />
+                android:gravity="center_vertical|end" />
 
             <TextView
                 android:id="@+id/txt_initialPriceKRW"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="1,000,000" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
     </LinearLayout>
@@ -100,14 +96,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Revenue(USD)" />
+                android:text="@string/revenue_usd" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Balance(USD)" />
+                android:text="@string/balance_usd" />
 
         </LinearLayout>
 
@@ -122,16 +118,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="20.0" />
+                android:gravity="center_vertical|end" />
 
             <TextView
                 android:id="@+id/txt_currentPriceUSD"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="1,200,000" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
 
@@ -146,16 +140,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="200,000" />
+                android:gravity="center_vertical|end" />
 
             <TextView
                 android:id="@+id/txt_initialPriceUSD"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="1,000,000" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
     </LinearLayout>
@@ -178,14 +170,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Revenue(CNY)" />
+                android:text="@string/revenue_cny" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Balance(CNY)" />
+                android:text="@string/balance_cny" />
 
         </LinearLayout>
 
@@ -200,16 +192,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="20.0" />
+                android:gravity="center_vertical|end" />
 
             <TextView
                 android:id="@+id/txt_currentPriceCNY"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="1,200,000" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
 
@@ -224,16 +214,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="200,000" />
+                android:gravity="center_vertical|end" />
 
             <TextView
                 android:id="@+id/txt_initialPriceCNY"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="1,000,000" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
     </LinearLayout>
@@ -256,14 +244,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Revenue(JPY)" />
+                android:text="@string/revenue_jpy" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Balance(JPY)" />
+                android:text="@string/balance_jpy" />
 
         </LinearLayout>
 
@@ -278,16 +266,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="20.0" />
+                android:gravity="center_vertical|end" />
 
             <TextView
                 android:id="@+id/txt_currentPriceJPY"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="1,200,000" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
 
@@ -302,16 +288,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="200,000" />
+                android:gravity="center_vertical|end" />
 
             <TextView
                 android:id="@+id/txt_initialPriceJPY"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical|end"
-                android:text="1,000,000" />
+                android:gravity="center_vertical|end" />
 
         </LinearLayout>
     </LinearLayout>

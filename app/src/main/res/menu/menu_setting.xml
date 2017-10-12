@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_cancel"
-        android:title="Cancel"
+        android:title="@string/cancel"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_confirm"
-        android:title="Confirm"
+        android:title="@string/confirm"
         app:showAsAction="always" />
 </menu>

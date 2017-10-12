@@ -82,7 +82,7 @@ public class HoldingActivity extends AppCompatActivity implements View.OnClickLi
                     this.finish();
                 } catch (NumberFormatException | NullPointerException e) {
                     Log.w(TAG, "Failed to get avgPrice and quantity");
-                    Toast.makeText(getApplicationContext(), "Please insert your average price and quantity.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), R.string.msg_insert_avg_price_and_quantity, Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btnCancel:

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -45,7 +44,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             }
         }
         if (candidateCount == 0) {
-            Toast.makeText(getApplicationContext(), "All available coins are in the interesting coin list", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.msg_all_coin_already_added, Toast.LENGTH_SHORT).show();
         }
 
         ListView listView = (ListView) findViewById(R.id.listView);

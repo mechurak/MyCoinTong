@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyCoinTong</string>
+    <string name="action_edit_coin_list" translatable="false">종목 변경</string>
+    <string name="action_refresh">갱신</string>
+    <string name="title_activity_add">코인 추가</string>
+    <string name="title_activity_holding">보유 코인</string>
+    <string name="title_activity_setting">종목 변경</string>
+    <string name="add">추가</string>
+    <string name="cancel">취소</string>
+    <string name="confirm">확인</string>
+    <string name="avg_price">평균 단가 :</string>
+    <string name="quantity">보유량 :</string>
+    <string name="delete">삭제</string>
+    <string name="down">아래로</string>
+    <string name="up">위로</string>
+    <string name="balance_krw">합계(KRW)</string>
+    <string name="revenue_krw">수익(KRW)</string>
+    <string name="balance_cny">합계(CNY)</string>
+    <string name="balance_jpy">합계(JPY)</string>
+    <string name="balance_usd">합계(USD)</string>
+    <string name="revenue_cny">수익(CNY)</string>
+    <string name="revenue_jpy">수익(JPY)</string>
+    <string name="revenue_usd">수익(USD)</string>
+    <string name="msg_all_coin_already_added">가능한 모든 코인이 이미 관심 종목에 추가되어 있습니다.</string>
+    <string name="msg_insert_avg_price_and_quantity">평균단가와 보유량을 적절히 입력해 주세요.</string>
+</resources>

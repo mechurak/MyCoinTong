@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.shimnssso.mycointong.Const;
 import com.shimnssso.mycointong.R;
@@ -71,14 +70,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btn_delete:
                 Log.d(TAG, "DELETE button was clicked");
                 if (adapter != null) {
-                    int deleteCount = adapter.deleteSelected();
-                    if (deleteCount == 1) {
-                        Toast.makeText(getApplicationContext(), deleteCount + " item is deleted.", Toast.LENGTH_SHORT).show();
-                    } else if (deleteCount > 0) {
-                        Toast.makeText(getApplicationContext(), deleteCount + " items are deleted.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "There are no items selected.", Toast.LENGTH_SHORT).show();
-                    }
+                    adapter.deleteSelected();
                 }
                 break;
             case R.id.btn_add:
