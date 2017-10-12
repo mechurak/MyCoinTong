@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.shimnssso.mycointong.R;
 
@@ -19,6 +17,13 @@ class SettingAdapter extends BaseAdapter {
     private static final String TAG = "SettingAdapter";
 
     private ArrayList<CoinItem> listViewItemList = new ArrayList<>();
+    private int mSelectCount = 0;
+    private SelectListener mListener;
+
+    public SettingAdapter(SelectListener listener) {
+        super();
+        mListener = listener;
+    }
 
     ArrayList<String> getCoinFullNameList() {
         ArrayList<String> retList = new ArrayList<>();
@@ -61,45 +66,62 @@ class SettingAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (coinItem.isSelected()) {
                     coinItem.setSelected(false);
+                    mSelectCount--;
                 } else {
                     coinItem.setSelected(true);
+                    mSelectCount++;
                 }
                 chk_coinName.setSelected(coinItem.isSelected());
-            }
-        });
-
-        Button btn_up = (Button) convertView.findViewById(R.id.btn_up);
-        btn_up.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int targetIndex = position - 1;
-                Log.d(TAG, "btn_up. targetIndex: " + targetIndex + ", size: " + listViewItemList.size());
-                if (targetIndex >= 0) {
-                    listViewItemList.remove(coinItem);
-                    listViewItemList.add(targetIndex, coinItem);
-                    notifyDataSetChanged();
-                } else {
-                    Log.d(TAG, "btn_up. very top");
+                if (mListener != null) {
+                    mListener.onSelectCountChanged(mSelectCount);
                 }
             }
         });
-        Button btn_down = (Button) convertView.findViewById(R.id.btn_down);
-        btn_down.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int targetIndex = position + 1;
-                Log.d(TAG, "btn_down. targetIndex: " + targetIndex + ", size: " + listViewItemList.size());
-                if (targetIndex < listViewItemList.size()) {
-                    listViewItemList.remove(coinItem);
-                    listViewItemList.add(targetIndex, coinItem);
-                    notifyDataSetChanged();
-                } else {
-                    Log.d(TAG, "btn_down. very bottom");
-                }
-            }
-        });
-
         return convertView;
+    }
+
+    public static final int BTN_TYPE_UP = 1;
+    public static final int BTN_TYPE_DOWN = 0;
+    void handleUpDown(int type) {
+        int position = 0;
+        CoinItem coinItem = null;
+        Iterator<CoinItem> i = listViewItemList.iterator();
+        while(i.hasNext()) {
+            coinItem = i.next();
+            if (coinItem.isSelected()) {
+                Log.d(TAG, "selected item. " + coinItem.getCoinFullName() + ", position: " + position);
+                break;
+            }
+            position++;
+        }
+        if (coinItem == null) {
+            Log.e(TAG, "coinItem is null!!!");
+            return;
+        }
+
+        if (type == BTN_TYPE_UP) {
+            int targetIndex = position - 1;
+            Log.d(TAG, "btn_up. targetIndex: " + targetIndex + ", size: " + listViewItemList.size());
+            if (targetIndex >= 0) {
+                listViewItemList.remove(coinItem);
+                listViewItemList.add(targetIndex, coinItem);
+                notifyDataSetChanged();
+            } else {
+                Log.d(TAG, "btn_up. very top");
+            }
+        } else if(type == BTN_TYPE_DOWN) {
+            int targetIndex = position + 1;
+            Log.d(TAG, "btn_down. targetIndex: " + targetIndex + ", size: " + listViewItemList.size());
+            if (targetIndex < listViewItemList.size()) {
+                listViewItemList.remove(coinItem);
+                listViewItemList.add(targetIndex, coinItem);
+                notifyDataSetChanged();
+            } else {
+                Log.d(TAG, "btn_down. very bottom");
+            }
+        } else {
+            Log.e(TAG, "unexpected type. " + type);
+        }
     }
 
     void addItem(CoinItem coinItem) {
@@ -114,14 +136,22 @@ class SettingAdapter extends BaseAdapter {
             if (coinItem.isSelected()) {
                 Log.d(TAG, coinItem.getCoinFullName() + " is deleting");
                 i.remove();
+                mSelectCount--;
                 count++;
             }
         }
         if (count > 0) {
             notifyDataSetChanged();
+            if (mListener != null) {
+                mListener.onSelectCountChanged(mSelectCount);
+            }
         } else {
             Log.w(TAG, "There are no items selected.");
         }
         return count;
+    }
+
+    public interface SelectListener {
+        void onSelectCountChanged(int selectCount);
     }
 }
