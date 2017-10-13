@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     DecimalFormat mIntFormatter = new DecimalFormat("#,###");
     DecimalFormat mFloatFormatter = new DecimalFormat("#,##0.00");
 
+    private boolean isVeryFirstTime = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 .addTestDevice("91E9EA5A56FC555CA14D4E263ACC5301")  // TODO: Remove it for release (S3)
                 .build();
         mAdView.loadAd(adRequest);
+
+        isVeryFirstTime = true;
     }
 
     @Override
@@ -102,12 +106,18 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "LifeCycle. onStart()");
-        DbHelper dbHelper = DbHelper.getInstance(this);
-        long prevUpdateTime = dbHelper.getUpdateTime();
-        if (System.currentTimeMillis() - prevUpdateTime >= REFRESH_INTERVAL_DEFAULT) {
+        if (isVeryFirstTime) {
             refresh();
-        } else {
-            Log.d(TAG, "skip refresh");
+            isVeryFirstTime = false;
+        }
+        else {
+            DbHelper dbHelper = DbHelper.getInstance(this);
+            long prevUpdateTime = dbHelper.getUpdateTime();
+            if (System.currentTimeMillis() - prevUpdateTime >= REFRESH_INTERVAL_DEFAULT) {
+                refresh();
+            } else {
+                Log.d(TAG, "skip refresh");
+            }
         }
     }
 
