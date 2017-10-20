@@ -1,6 +1,7 @@
 package com.shimnssso.mycointong;
 
 public class ListViewItem {
+    private int coinId;
     private String coin;
     private String currency;
     private String exchange;
@@ -16,7 +17,8 @@ public class ListViewItem {
     private String coinoneChartSite;
     private String unitTime = Const.UnitTime.FIFTEEN_MIN;
 
-    ListViewItem(String coin, String currency, String exchange, String coinoneChartSite) {
+    ListViewItem(int coinId, String coin, String currency, String exchange, String coinoneChartSite) {
+        this.coinId = coinId;
         this.coin = coin;
         this.currency = currency;
         this.exchange = exchange;

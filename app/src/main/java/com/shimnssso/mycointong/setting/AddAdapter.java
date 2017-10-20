@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.shimnssso.mycointong.R;
 
@@ -17,11 +16,11 @@ public class AddAdapter extends BaseAdapter {
 
     private ArrayList<CoinItem> items = new ArrayList<>();
 
-    public ArrayList<String> getSeletedCoinFullNameList() {
-        ArrayList<String> retList = new ArrayList<>();
+    public ArrayList<Integer> getSelectedCoinIdList() {
+        ArrayList<Integer> retList = new ArrayList<>();
         for (CoinItem coinItem : items) {
             if (coinItem.isSelected()) {
-                retList.add(coinItem.getCoinFullName());
+                retList.add(coinItem.getCoinId());
             }
         }
         return retList;

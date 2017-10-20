@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         if (adapter.getCount() == 0) {
             DbHelper dbHelper = DbHelper.getInstance(this);
             Log.e(TAG, "after db");
-            ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList();
+            ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList(1);
             for (CoinInfo coinRow : coinList) {
                 Log.i(TAG, coinRow.toString());
-                ListViewItem item = new ListViewItem(coinRow.coin, coinRow.currency, coinRow.exchange, coinRow.chartCoinone);
+                ListViewItem item = new ListViewItem(coinRow.coinId, coinRow.coin, coinRow.currency, coinRow.exchange, coinRow.chartCoinone);
                 item.setMyAvgPrice(coinRow.avgPrice);
                 item.setMyQuantity(coinRow.quantity);
                 adapter.addItem(item);
@@ -286,10 +286,10 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         adapter.removeAllItem();
 
         DbHelper dbHelper = DbHelper.getInstance(this);
-        ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList();
+        ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList(1);
         for (CoinInfo coinRow : coinList) {
             Log.i(TAG, coinRow.toString());
-            ListViewItem item = new ListViewItem(coinRow.coin, coinRow.currency, coinRow.exchange, coinRow.chartCoinone);
+            ListViewItem item = new ListViewItem(coinRow.coinId, coinRow.coin, coinRow.currency, coinRow.exchange, coinRow.chartCoinone);
             item.setMyAvgPrice(coinRow.avgPrice);
             item.setMyQuantity(coinRow.quantity);
             adapter.addItem(item);

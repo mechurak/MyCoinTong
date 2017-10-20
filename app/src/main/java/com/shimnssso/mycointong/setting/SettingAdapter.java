@@ -25,10 +25,10 @@ class SettingAdapter extends BaseAdapter {
         mListener = listener;
     }
 
-    ArrayList<String> getCoinFullNameList() {
-        ArrayList<String> retList = new ArrayList<>();
+    public ArrayList<Integer> getCoinIdList() {
+        ArrayList<Integer> retList = new ArrayList<>();
         for (CoinItem coinItem : listViewItemList) {
-            retList.add(coinItem.getCoinFullName());
+            retList.add(coinItem.getCoinId());
         }
         return retList;
     }

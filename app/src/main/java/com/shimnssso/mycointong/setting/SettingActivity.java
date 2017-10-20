@@ -39,10 +39,10 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         adapter = new SettingAdapter(this);
         DbHelper dbHelper = DbHelper.getInstance(this);
-        ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList();
+        ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList(1);
         for (CoinInfo coinRow : coinList) {
             String coinFullName = coinRow.coin + "/" + coinRow.currency + "(" + coinRow.exchange + ")";
-            adapter.addItem(new CoinItem(coinFullName));
+            adapter.addItem(new CoinItem(coinRow.coinId, coinFullName));
         }
 
         ListView listView = (ListView) findViewById(R.id.listView);
@@ -77,7 +77,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                 Log.d(TAG, "ADD button was clicked");
                 if (adapter != null) {
                     Intent intent = new Intent(this, AddActivity.class);
-                    intent.putExtra(AddActivity.INTENT_KEY_COIN_LIST, adapter.getCoinFullNameList());
+                    intent.putExtra(AddActivity.INTENT_KEY_COIN_LIST, adapter.getCoinIdList());
                     startActivityForResult(intent, Const.RequestCode.AddActivity);
                 } else {
                     Log.e(TAG, "adapter is null");
@@ -108,11 +108,12 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         switch (requestCode) {
             case Const.RequestCode.AddActivity:
                 if (resultCode == RESULT_OK) {
-                    ArrayList<String> newCoinList = data.getStringArrayListExtra(AddActivity.INTENT_KEY_COIN_LIST);
-                    Log.d(TAG, "newCoinList: " + newCoinList);
+                    ArrayList<Integer> newCoinIdList = data.getIntegerArrayListExtra(AddActivity.INTENT_KEY_COIN_LIST);
+                    Log.d(TAG, "newCoinIdList: " + newCoinIdList);
                     if (adapter != null) {
-                        for (String coinFullName : newCoinList) {
-                            adapter.addItem(new CoinItem(coinFullName));
+                        for (Integer coinId : newCoinIdList) {
+                            String coinFullName = DbHelper.getInstance(this).getFullNameFromId(coinId);
+                            adapter.addItem(new CoinItem(coinId, coinFullName));
                         }
                         adapter.notifyDataSetChanged();
                     } else {
@@ -139,22 +140,19 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.action_confirm:
                 Log.d(TAG, "CONFIRM button was clicked");
                 if (adapter != null) {
-                    ArrayList<String> newCoinList = adapter.getCoinFullNameList();
+                    ArrayList<Integer> newCoinList = adapter.getCoinIdList();
                     DbHelper dbHelper = DbHelper.getInstance(this);
 
-                    // set interest 0 for all coins
-                    ContentValues contentForRefresh = new ContentValues();
-                    contentForRefresh.put(DbMeta.CoinTableMeta.INTEREST, 0);
-                    dbHelper.updateCoinTable(contentForRefresh, null);
-
-                    // set interest and order for specific coins
-                    int order = 0;
-                    for (String coinFullName : newCoinList) {
+                    // re-order
+                    int curOrder = 1;
+                    for (int coinId : newCoinList) {
                         ContentValues content = new ContentValues();
-                        content.put(DbMeta.CoinTableMeta.INTEREST, 1);
-                        content.put(DbMeta.CoinTableMeta.LIST_ORDER, order++);
-                        dbHelper.updateCoinTable(content, coinFullName);
+                        content.put(DbMeta.InterestTableMeta.ORDER_IN_GROUP, curOrder++);
+                        dbHelper.updateInterestRow(1, coinId, content);
                     }
+
+                    // remove deleted items
+                    dbHelper.removeDeletedRow(1, curOrder);
 
                     setResult(RESULT_OK);
                     this.finish();

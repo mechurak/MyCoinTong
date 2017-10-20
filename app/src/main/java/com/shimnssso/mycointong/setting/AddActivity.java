@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.shimnssso.mycointong.R;
+import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
     private static final String TAG = "AddActivity";
     public static final String INTENT_KEY_COIN_LIST = "coin_list";
 
-    ArrayList<String> mCurCoinList;
+    ArrayList<Integer> mCurCoinList;
     AddAdapter mAdapter;
 
     @Override
@@ -26,21 +27,21 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        mCurCoinList = intent.getStringArrayListExtra(INTENT_KEY_COIN_LIST);
+        mCurCoinList = intent.getIntegerArrayListExtra(INTENT_KEY_COIN_LIST);
         Log.d(TAG, "mCurCoinList: " + mCurCoinList);
 
         setContentView(R.layout.activity_add);
 
         mAdapter = new AddAdapter();
         DbHelper dbHelper = DbHelper.getInstance(this);
-        ArrayList<String> coinFullNameList = dbHelper.getAvailableCoinFullNameList();
+        ArrayList<CoinInfo> coinInfoList = dbHelper.getAvailableCoinInfoList();
         int candidateCount = 0;
-        for (String coinFullName : coinFullNameList) {
-            if (!mCurCoinList.contains(coinFullName)) {
-                mAdapter.addItem(new CoinItem(coinFullName));
+        for (CoinInfo coin : coinInfoList) {
+            if (!mCurCoinList.contains(coin.coinId)) {
+                mAdapter.addItem(new CoinItem(coin.coinId, coin.coin + "/" + coin.currency + "(" + coin.exchange + ")"));
                 candidateCount++;
             } else {
-                Log.d(TAG, coinFullName + " is in the interesting coins.");
+                Log.d(TAG, coin.coinId + " is in the interesting coins.");
             }
         }
         if (candidateCount == 0) {
@@ -68,7 +69,7 @@ public class AddActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.btn_add:
                 if (mAdapter != null) {
                     Intent intent = new Intent();
-                    intent.putExtra(INTENT_KEY_COIN_LIST, mAdapter.getSeletedCoinFullNameList());
+                    intent.putExtra(INTENT_KEY_COIN_LIST, mAdapter.getSelectedCoinIdList());
                     setResult(RESULT_OK, intent);
                     this.finish();
                 } else {
