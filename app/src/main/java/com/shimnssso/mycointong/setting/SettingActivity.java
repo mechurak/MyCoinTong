@@ -146,9 +146,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     // re-order
                     int curOrder = 1;
                     for (int coinId : newCoinList) {
-                        ContentValues content = new ContentValues();
-                        content.put(DbMeta.InterestTableMeta.ORDER_IN_GROUP, curOrder++);
-                        dbHelper.updateInterestRow(1, coinId, content);
+                        dbHelper.upsertInterestRow(1, coinId, curOrder++);
                     }
 
                     // remove deleted items

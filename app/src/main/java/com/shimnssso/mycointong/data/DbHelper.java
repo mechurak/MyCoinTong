@@ -271,12 +271,29 @@ public class DbHelper extends SQLiteOpenHelper {
         db.update(DbMeta.GlobalTableMeta.TABLE_NAME, content, null, null);
     }
 
-    public void updateInterestRow(int group, int coinId, ContentValues content) {
+    public void upsertInterestRow(int group, int coinId, int orderInGroup) {
         SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues content = new ContentValues();
+        content.put(DbMeta.InterestTableMeta.ORDER_IN_GROUP, orderInGroup);
         String whereClause = DbMeta.InterestTableMeta.GROUP_ID + "=" + group + " AND " +
                 DbMeta.InterestTableMeta.COIN_ID + "=" + coinId;
         int updateRet = db.update(DbMeta.InterestTableMeta.TABLE_NAME, content, whereClause, null);
-        Log.d(TAG, "updateInterestRow(). updateRet: " + updateRet);
+        Log.d(TAG, "upsertInterestRow(). updateRet: " + updateRet);
+        if (updateRet == 0) {
+            String[] columns = {
+                DbMeta.CoinTableMeta.DEFAULT_LINK
+            };
+            Cursor c = db.query(DbMeta.CoinTableMeta.TABLE_NAME, columns, DbMeta.CoinTableMeta.ID + "=" + coinId, null, null, null, null);
+            if (c != null && c.moveToFirst()) {
+                String link = c.getString(c.getColumnIndex(DbMeta.CoinTableMeta.DEFAULT_LINK));
+
+                content.put(DbMeta.InterestTableMeta.GROUP_ID, group);
+                content.put(DbMeta.InterestTableMeta.COIN_ID, coinId);
+                content.put(DbMeta.InterestTableMeta.LINK, link);
+                long retId = db.insert(DbMeta.InterestTableMeta.TABLE_NAME, null, content);
+                Log.d(TAG, "upsertInterestRow(). insetRet: " + retId);
+            }
+        }
     }
 
     public void removeDeletedRow(int group, int OutOrderIndex) {
