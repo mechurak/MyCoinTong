@@ -182,6 +182,10 @@ public class BithumbClient extends AsyncTask<Void, Void, String> {
             int openPrice = coinObject.getInt(OPENING_PRICE);
             int highPrice = coinObject.getInt(MAX_PRICE);
             int lowPrice = coinObject.getInt(MIN_PRICE);
+            if (lowPrice < openPrice * 0.05) {
+                Log.w(TAG, item.getCoin() + " lowPrice value is strange. prev:" + lowPrice + ", use new one: " + openPrice);
+                lowPrice = openPrice;
+            }
             int curPrice = coinObject.getInt(CLOSING_PRICE);
             double volume = coinObject.getDouble(VOLUME_1DAY);
 
