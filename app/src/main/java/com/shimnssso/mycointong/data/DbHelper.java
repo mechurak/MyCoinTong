@@ -93,6 +93,13 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/xrpkrw"},
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneXRP"},
                 {Const.Coin.XRP, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/xrpusd"},
+
+                {Const.Coin.XMR, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/xmrkrw"},
+
+                {Const.Coin.ZEC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/zeckrw"},
+
+                {Const.Coin.QTUM, Const.Currency.KRW, Const.Exchange.BITHUMB, ""},
+
         };
 
         String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,?,?,?)";

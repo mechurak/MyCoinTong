@@ -22,7 +22,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
 import com.shimnssso.mycointong.network.BitfinexClient;
-import com.shimnssso.mycointong.network.BithumClient;
+import com.shimnssso.mycointong.network.BithumbClient;
 import com.shimnssso.mycointong.network.CoinoneClient;
 import com.shimnssso.mycointong.network.CryptowatchClient;
 import com.shimnssso.mycointong.network.KorbitClient;
@@ -258,8 +258,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         Log.d(TAG, "refresh()");
         synchronized (mRefreshLock) {
             mRefreshList = new ArrayList<>();
-            BithumClient bithumClient = new BithumClient(this);
-            bithumClient.execute();
+            BithumbClient bithumbClient = new BithumbClient(this);
+            bithumbClient.execute();
             mRefreshList.add(Const.Exchange.BITHUMB);
             CoinoneClient coinoneClient = new CoinoneClient(this);
             coinoneClient.execute();

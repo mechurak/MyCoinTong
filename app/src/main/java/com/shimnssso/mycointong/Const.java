@@ -11,6 +11,9 @@ public class Const {
         public static final String DASH = "DASH";
         public static final String LTC = "LTC";
         public static final String XRP = "XRP";
+        public static final String XMR = "XMR";
+        public static final String ZEC = "ZEC";
+        public static final String QTUM = "QTUM";
     }
 
     public static class Currency {

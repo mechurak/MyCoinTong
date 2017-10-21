@@ -10,13 +10,13 @@ import com.shimnssso.mycointong.ListViewItem;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BithumClient extends AsyncTask<Void, Void, String> {
-    private static final String TAG = "BithumClient";
+public class BithumbClient extends AsyncTask<Void, Void, String> {
+    private static final String TAG = "BithumbClient";
     private static final String TICKER_URL = "https://api.bithumb.com/public/ticker/all";
     private static final String MY_CURRENCY = Const.Currency.KRW;
     private static final String MY_EXCHANGE = Const.Exchange.BITHUMB;
 
-    // {currency} BTC, ETH, DASH, LTC, ETC, XRP, BCH, (default: BTC), ALL
+    // {currency} BTC, ETH, DASH, LTC, ETC, XRP, BCH, XMR, ZEC, QTUM (default: BTC), ALL
     private static String STATUS = "status";
     private static String STATUS_SUCCESS = "0000";
 
@@ -30,6 +30,9 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
     private static String XRP = "XRP";
     private static String DATE = "date";
     private static String BCH = "BCH";
+    private static String XMR = "XMR";
+    private static String ZEC = "ZEC";
+    private static String QTUM = "QTUM";
 
     private static String OPENING_PRICE = "opening_price";
     private static String CLOSING_PRICE = "closing_price";
@@ -43,7 +46,7 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
     private static String SELL_PRICE = "sell_price";
 
     private TickerListener mListener;
-    public BithumClient(TickerListener listener) {
+    public BithumbClient(TickerListener listener) {
         mListener = listener;
     }
 
@@ -141,6 +144,27 @@ public class BithumClient extends AsyncTask<Void, Void, String> {
         curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(XRP)) {
             JSONObject coinObject = dataObject.optJSONObject(XRP);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // XMR
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.XMR, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && dataObject.has(XMR)) {
+            JSONObject coinObject = dataObject.optJSONObject(XMR);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // ZEC
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.ZEC, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && dataObject.has(ZEC)) {
+            JSONObject coinObject = dataObject.optJSONObject(ZEC);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // QTUM
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.QTUM, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && dataObject.has(QTUM)) {
+            JSONObject coinObject = dataObject.optJSONObject(QTUM);
             updateItemValues(curItem, coinObject);
         }
 
