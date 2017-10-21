@@ -140,6 +140,13 @@ public class KorbitClient extends AsyncTask<Void, Void, JSONObject> {
             updateItemValues(curItem, coinObject);
         }
 
+        // XRP
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && mergedRetJson.has(XRP_KRW)) {
+            JSONObject coinObject = mergedRetJson.optJSONObject(XRP_KRW);
+            updateItemValues(curItem, coinObject);
+        }
+
         adapterInstance.notifyDataSetChanged();
         mListener.OnRefreshResult(Const.Exchange.KORBIT, 1);
     }

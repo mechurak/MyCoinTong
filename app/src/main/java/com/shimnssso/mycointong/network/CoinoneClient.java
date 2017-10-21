@@ -29,6 +29,7 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
     private static String ETH = "eth";
     private static String ETC = "etc";
     private static String XRP = "xrp";
+    private static String QTUM = "qtum";
 
     private static String VOLUME = "volume";
     private static String LAST = "last";
@@ -112,6 +113,13 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.XRP, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(XRP)) {
             JSONObject coinObject = responseObject.optJSONObject(XRP);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // QTUM
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.QTUM, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && responseObject.has(QTUM)) {
+            JSONObject coinObject = responseObject.optJSONObject(QTUM);
             updateItemValues(curItem, coinObject);
         }
 

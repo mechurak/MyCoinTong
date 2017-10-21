@@ -63,43 +63,49 @@ public class DbHelper extends SQLiteOpenHelper {
         );
 
         String[][] coinList = {
-                {Const.Coin.BTC, Const.Currency.KRW, Const.Exchange.KORBIT, "https://coinone.co.kr/chart/?site=Korbit"},
+                {Const.Coin.BTC, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/btc_krw"},
                 {Const.Coin.BTC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/btckrw"},
                 {Const.Coin.BTC, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=Coinone"},
                 {Const.Coin.BTC, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/btcusd"},
                 {Const.Coin.BTC, Const.Currency.CNY, Const.Exchange.OKCOIN, "https://cryptowat.ch/okcoin/btccny"},
                 {Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER, "https://cryptowat.ch/bitflyer/btcfxjpy"},
 
+                {Const.Coin.BCH, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/bch_krw"},
                 {Const.Coin.BCH, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/bchkrw"},
                 {Const.Coin.BCH, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneBCH"},
                 {Const.Coin.BCH, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/bchusd"},
 
-                {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.KORBIT, ""},
+                {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/eth_krw"},
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/ethkrw"},
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneETH"},
                 {Const.Coin.ETH, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/ethusd"},
 
-                {Const.Coin.ETC, Const.Currency.KRW, Const.Exchange.KORBIT, ""},
+                {Const.Coin.ETC, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/etc_krw"},
                 {Const.Coin.ETC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/etckrw"},
                 {Const.Coin.ETC, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneETC"},
                 {Const.Coin.ETC, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/etcusd"},
 
                 {Const.Coin.DASH, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/dashkrw"},
+                {Const.Coin.DASH, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/dashusd"},
 
                 {Const.Coin.LTC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/ltckrw"},
                 {Const.Coin.LTC, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/ltcusd"},
                 {Const.Coin.LTC, Const.Currency.CNY, Const.Exchange.OKCOIN, "https://cryptowat.ch/okcoin/ltccny"},
 
+                {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/xrp_krw"},
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/xrpkrw"},
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneXRP"},
                 {Const.Coin.XRP, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/xrpusd"},
 
                 {Const.Coin.XMR, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/xmrkrw"},
+                {Const.Coin.XMR, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/xmrusd"},
 
                 {Const.Coin.ZEC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/zeckrw"},
+                {Const.Coin.ZEC, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/zecusd"},
 
                 {Const.Coin.QTUM, Const.Currency.KRW, Const.Exchange.BITHUMB, ""},
-
+                {Const.Coin.QTUM, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneQTUM"},
+                {Const.Coin.QTUM, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/qtmusd"},
         };
 
         String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,?,?,?)";
