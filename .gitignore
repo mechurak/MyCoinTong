@@ -3,6 +3,7 @@
 /local.properties
 .idea
 .DS_Store
+*.apk
 app/libs
 /build
 /captures
