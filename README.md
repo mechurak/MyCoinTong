@@ -4,8 +4,8 @@
 
 <https://play.google.com/store/apps/details?id=com.shimnssso.mycointong>
 
-![스크린샷](mycointong.jpg)
-![코인추가](my_holding.jpg)
+![스크린샷](mycointong.png)
+![코인추가](my_holding.png)
 
 ## 주요 기능
 - 코인 선택시 적당한 차트 사이트로 이동 (Cryptowat.ch, 코인원 프로차트 등)
