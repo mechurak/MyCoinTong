@@ -284,6 +284,15 @@ public class DbHelper extends SQLiteOpenHelper {
         db.update(DbMeta.GlobalTableMeta.TABLE_NAME, content, null, null);
     }
 
+    public void resetOrder(int group) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues content = new ContentValues();
+        content.put(DbMeta.InterestTableMeta.ORDER_IN_GROUP, 0);
+        String whereClause = DbMeta.InterestTableMeta.GROUP_ID + "=" + group;
+        int updateRet = db.update(DbMeta.InterestTableMeta.TABLE_NAME, content, whereClause, null);
+        Log.d(TAG, "resetOrder(). updateRet: " + updateRet);
+    }
+
     public void upsertInterestRow(int group, int coinId, int orderInGroup) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues content = new ContentValues();

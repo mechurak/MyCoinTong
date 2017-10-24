@@ -143,6 +143,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
                     ArrayList<Integer> newCoinList = adapter.getCoinIdList();
                     DbHelper dbHelper = DbHelper.getInstance(this);
 
+                    // reset order
+                    dbHelper.resetOrder(1);
+
                     // re-order
                     int curOrder = 1;
                     for (int coinId : newCoinList) {
