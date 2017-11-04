@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My코인통</string>
-    <string name="action_edit_coin_list">종목 변경</string>
+    <string name="action_edit_coin_list">종목 편집</string>
     <string name="action_refresh">갱신</string>
     <string name="title_activity_add">코인 추가</string>
     <string name="title_activity_holding">보유 코인</string>
