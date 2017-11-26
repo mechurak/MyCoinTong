@@ -67,7 +67,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Const.Coin.BTC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/btckrw"},
                 {Const.Coin.BTC, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=Coinone"},
                 {Const.Coin.BTC, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/btcusd"},
-                {Const.Coin.BTC, Const.Currency.CNY, Const.Exchange.OKCOIN, "https://cryptowat.ch/okcoin/btccny"},
                 {Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER, "https://cryptowat.ch/bitflyer/btcfxjpy"},
 
                 {Const.Coin.BCH, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/bch_krw"},
@@ -90,7 +89,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
                 {Const.Coin.LTC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/ltckrw"},
                 {Const.Coin.LTC, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/ltcusd"},
-                {Const.Coin.LTC, Const.Currency.CNY, Const.Exchange.OKCOIN, "https://cryptowat.ch/okcoin/ltccny"},
 
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/xrp_krw"},
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/xrpkrw"},
@@ -103,7 +101,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Const.Coin.ZEC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/zeckrw"},
                 {Const.Coin.ZEC, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/zecusd"},
 
-                {Const.Coin.QTUM, Const.Currency.KRW, Const.Exchange.BITHUMB, ""},
+                {Const.Coin.QTUM, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/qtumkrw"},
                 {Const.Coin.QTUM, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneQTUM"},
                 {Const.Coin.QTUM, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/qtmusd"},
         };
@@ -148,10 +146,65 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.i(TAG, "onUpgrade(). old: " + oldVersion + ", new: " + newVersion);
-        db.execSQL("DROP TABLE IF EXISTS " + DbMeta.GlobalTableMeta.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DbMeta.CoinTableMeta.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + DbMeta.InterestTableMeta.TABLE_NAME);
-        onCreate(db);
+        // 1 -> 2
+        if (newVersion <= 2) {
+            // remove OKCoin exchange
+            String[] columns = {DbMeta.CoinTableMeta.ID};
+            ArrayList<Integer> coinList = new ArrayList<>();
+            Cursor c = db.query(DbMeta.CoinTableMeta.TABLE_NAME, columns, DbMeta.CoinTableMeta.EXCHANGE + "='" + Const.Exchange.OKCOIN +"'", null, null, null, null);
+            if (c != null && c.moveToFirst()) {
+                do {
+                    coinList.add(c.getInt(0));
+                } while (c.moveToNext());
+                c.close();
+            }
+            int listSize = coinList.size();
+            if (listSize > 0) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < listSize; i++) {
+                    sb.append(DbMeta.InterestTableMeta.COIN_ID + "=" + coinList.get(i));
+                    if (i < listSize - 1) {
+                        sb.append(" OR ");
+                    }
+                }
+                Log.d(TAG, "onUpgrade 1 to 2. where condition: " + sb);
+                int deleteInterestTableRet = db.delete(DbMeta.InterestTableMeta.TABLE_NAME, sb.toString(), null);
+                Log.i(TAG, "onUpgrade 1 to 2. deleteInterestTableRet: " + deleteInterestTableRet);
+            }
+            int deleteCoinTableRet = db.delete(DbMeta.CoinTableMeta.TABLE_NAME, DbMeta.CoinTableMeta.EXCHANGE + "='" + Const.Exchange.OKCOIN +"'",null);
+            Log.i(TAG, "onUpgrade 1 to 2. deleteCoinTableRet: " + deleteCoinTableRet);
+
+            // Fill QTUM(Bithumb) url
+            String[] columnsQtum = {DbMeta.CoinTableMeta.ID};
+            int qtumId = -1;
+            Cursor cursor = db.query(DbMeta.CoinTableMeta.TABLE_NAME, columnsQtum,
+                    DbMeta.CoinTableMeta.EXCHANGE + "='" + Const.Exchange.BITHUMB +"' AND " +
+                    DbMeta.CoinTableMeta.COIN + "='" + Const.Coin.QTUM + "'"
+                , null, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                qtumId = cursor.getInt(0);
+                cursor.close();
+            }
+            if (qtumId > 0) {
+                ContentValues cvForInterestTable = new ContentValues();
+                cvForInterestTable.put(DbMeta.InterestTableMeta.LINK, "https://cryptowat.ch/bithumb/qtumkrw");
+                int updateInterestTableRet = db.update(DbMeta.InterestTableMeta.TABLE_NAME, cvForInterestTable, DbMeta.InterestTableMeta.COIN_ID + "=" + qtumId, null);
+                Log.i(TAG, "onUpgrade 1 to 2. updateInterestTableRet: " + updateInterestTableRet);
+            }
+
+            ContentValues cv = new ContentValues();
+            cv.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://cryptowat.ch/bithumb/qtumkrw");
+            int updateCoinTableRet = db.update(DbMeta.CoinTableMeta.TABLE_NAME, cv,
+                    DbMeta.CoinTableMeta.COIN + "='" + Const.Coin.QTUM + "' AND " +
+                    DbMeta.CoinTableMeta.EXCHANGE + "='" + Const.Exchange.BITHUMB +"'"
+                , null);
+            Log.i(TAG, "onUpgrade 1 to 2. updateCoinTableRet: " + updateCoinTableRet);
+        }
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        super.onDowngrade(db, oldVersion, newVersion);
     }
 
     public ArrayList<CoinInfo> getInterestingCoinList(int group) {

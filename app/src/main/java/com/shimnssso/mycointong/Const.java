@@ -30,7 +30,7 @@ public class Const {
         public static final String COINONE = "Coinone";
         public static final String POLONIEX = "Poloniex";
         public static final String BITFINEX = "Bitfinex";
-        public static final String OKCOIN = "OKCoin";
+        @Deprecated public static final String OKCOIN = "OKCoin";
         public static final String BITFLYER = "bitFlyer";
 
         public static final String CRYPTOWATCH = "Cryptowat.ch";

@@ -2,7 +2,12 @@ package com.shimnssso.mycointong.data;
 
 public class DbMeta {
     public static final String DATABASE_NAME = "coin.db";
-    public static final int DATABASE_VERSION = 1;
+
+    /**
+     * [1] initial db
+     * [2] 2017-11-26: Remove OKCOIN exchange
+     */
+    public static final int DATABASE_VERSION = 2;
 
     public static final class GlobalTableMeta {
         public static final String TABLE_NAME = "global";

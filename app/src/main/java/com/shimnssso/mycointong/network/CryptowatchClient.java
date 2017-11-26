@@ -15,8 +15,6 @@ public class CryptowatchClient extends AsyncTask<Void, Void, JSONObject> {
     private static final String TICKER_URL = "https://api.cryptowat.ch/markets/";
 
     // parameter
-    private static final String OKCOIN_BTC_CNY = "okcoin/btccny/summary";
-    private static final String OKCOIN_LTC_CNY = "okcoin/ltccny/summary";
     private static final String BITFLYER_BTC_JPY = "bitflyer/btcjpy/summary";
 
     // response
@@ -50,24 +48,6 @@ public class CryptowatchClient extends AsyncTask<Void, Void, JSONObject> {
         JSONObject curRetJson;
 
         try {
-            // OKCOIN_BTC_CNY
-            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
-            if (curItem != null) {
-                retString = NetworkUtil.request(TICKER_URL + OKCOIN_BTC_CNY);
-                if (retString == null) return null;
-                curRetJson = new JSONObject(retString);
-                mergedRetJson.put(OKCOIN_BTC_CNY, curRetJson);
-            }
-
-            // OKCOIN_LTC_CNY
-            curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.LTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
-            if (curItem != null) {
-                retString = NetworkUtil.request(TICKER_URL + OKCOIN_LTC_CNY);
-                if (retString == null) return null;
-                curRetJson = new JSONObject(retString);
-                mergedRetJson.put(OKCOIN_LTC_CNY, curRetJson);
-            }
-
             // BITFLYER_BTC_JPY
             curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER);
             if (curItem != null) {
@@ -95,20 +75,6 @@ public class CryptowatchClient extends AsyncTask<Void, Void, JSONObject> {
         ListViewAdapter adapterInstance = ListViewAdapter.getInstance();
         ListViewItem curItem;
         JSONObject responseObject;
-
-        // OKCOIN_BTC_CNY
-        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
-        if (curItem != null && mergedRetJson.has(OKCOIN_BTC_CNY)) {
-            responseObject = mergedRetJson.optJSONObject(OKCOIN_BTC_CNY);
-            updateItemValues(curItem, responseObject);
-        }
-
-        // OKCOIN_LTC_CNY
-        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.LTC, Const.Currency.CNY, Const.Exchange.OKCOIN);
-        if (curItem != null && mergedRetJson.has(OKCOIN_LTC_CNY)) {
-            responseObject = mergedRetJson.optJSONObject(OKCOIN_LTC_CNY);
-            updateItemValues(curItem, responseObject);
-        }
 
         // BITFLYER_BTC_JPY
         curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER);
