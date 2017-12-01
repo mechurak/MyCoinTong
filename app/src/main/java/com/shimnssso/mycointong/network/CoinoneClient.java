@@ -30,6 +30,8 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
     private static String ETC = "etc";
     private static String XRP = "xrp";
     private static String QTUM = "qtum";
+    private static String IOTA = "iota";
+    private static String LTC = "ltc";
 
     private static String VOLUME = "volume";
     private static String LAST = "last";
@@ -120,6 +122,20 @@ public class CoinoneClient extends AsyncTask<Void, Void, String> {
         curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.QTUM, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && responseObject.has(QTUM)) {
             JSONObject coinObject = responseObject.optJSONObject(QTUM);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // IOTA
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.IOTA, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && responseObject.has(IOTA)) {
+            JSONObject coinObject = responseObject.optJSONObject(IOTA);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // LTC
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.LTC, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && responseObject.has(LTC)) {
+            JSONObject coinObject = responseObject.optJSONObject(LTC);
             updateItemValues(curItem, coinObject);
         }
 

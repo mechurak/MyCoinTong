@@ -74,6 +74,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Const.Coin.BCH, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneBCH"},
                 {Const.Coin.BCH, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/bchusd"},
 
+                {Const.Coin.BTG, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/btgkrw"},  // db version 2
+
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/eth_krw"},
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/ethkrw"},
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneETH"},
@@ -88,6 +90,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Const.Coin.DASH, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/dashusd"},
 
                 {Const.Coin.LTC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/ltckrw"},
+                {Const.Coin.LTC, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneLTC"}, // db version 2
                 {Const.Coin.LTC, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/ltcusd"},
 
                 {Const.Coin.XRP, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/xrp_krw"},
@@ -104,6 +107,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Const.Coin.QTUM, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/qtumkrw"},
                 {Const.Coin.QTUM, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneQTUM"},
                 {Const.Coin.QTUM, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/qtmusd"},
+
+                {Const.Coin.IOTA, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneIOTA"}, // db version 2
         };
 
         String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,?,?,?)";
@@ -199,6 +204,29 @@ public class DbHelper extends SQLiteOpenHelper {
                     DbMeta.CoinTableMeta.EXCHANGE + "='" + Const.Exchange.BITHUMB +"'"
                 , null);
             Log.i(TAG, "onUpgrade 1 to 2. updateCoinTableRet: " + updateCoinTableRet);
+
+            // add BTG(Bithumb)
+            ContentValues cvForBtg = new ContentValues();
+            cvForBtg.put(DbMeta.CoinTableMeta.COIN, Const.Coin.BTG);
+            cvForBtg.put(DbMeta.CoinTableMeta.CURRENCY, Const.Currency.KRW);
+            cvForBtg.put(DbMeta.CoinTableMeta.EXCHANGE, Const.Exchange.BITHUMB);
+            cvForBtg.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://cryptowat.ch/bithumb/btgkrw");
+            long insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForBtg);
+            Log.i(TAG, "onUpgrade 1 to 2. BTG. insertRet: " + insertRet);
+
+            // add IOTA, LTC (Coinone)
+            ContentValues cvForCoinone = new ContentValues();
+            cvForCoinone.put(DbMeta.CoinTableMeta.COIN, Const.Coin.IOTA);
+            cvForCoinone.put(DbMeta.CoinTableMeta.CURRENCY, Const.Currency.KRW);
+            cvForCoinone.put(DbMeta.CoinTableMeta.EXCHANGE, Const.Exchange.COINONE);
+            cvForCoinone.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://coinone.co.kr/chart/?site=CoinoneIOTA");
+            insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForCoinone);
+            Log.i(TAG, "onUpgrade 1 to 2. IOTA. insertRet: " + insertRet);
+
+            cvForCoinone.put(DbMeta.CoinTableMeta.COIN, Const.Coin.LTC);
+            cvForCoinone.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://coinone.co.kr/chart/?site=CoinoneLTC");
+            insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForCoinone);
+            Log.i(TAG, "onUpgrade 1 to 2. LTC. insertRet: " + insertRet);
         }
     }
 

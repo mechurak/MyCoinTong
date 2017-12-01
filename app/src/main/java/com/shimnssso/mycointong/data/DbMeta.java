@@ -6,6 +6,7 @@ public class DbMeta {
     /**
      * [1] initial db
      * [2] 2017-11-26: Remove OKCOIN exchange
+     *     2017-12-02: Add coins (Bithumb: BTG, Coinone: IOTA, LTC)
      */
     public static final int DATABASE_VERSION = 2;
 

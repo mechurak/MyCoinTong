@@ -33,6 +33,7 @@ public class BithumbClient extends AsyncTask<Void, Void, String> {
     private static String XMR = "XMR";
     private static String ZEC = "ZEC";
     private static String QTUM = "QTUM";
+    private static String BTG = "BTG";
 
     private static String OPENING_PRICE = "opening_price";
     private static String CLOSING_PRICE = "closing_price";
@@ -165,6 +166,13 @@ public class BithumbClient extends AsyncTask<Void, Void, String> {
         curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.QTUM, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(QTUM)) {
             JSONObject coinObject = dataObject.optJSONObject(QTUM);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // BTG
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTG, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && dataObject.has(BTG)) {
+            JSONObject coinObject = dataObject.optJSONObject(BTG);
             updateItemValues(curItem, coinObject);
         }
 

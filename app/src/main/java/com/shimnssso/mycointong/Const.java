@@ -14,6 +14,8 @@ public class Const {
         public static final String XMR = "XMR";
         public static final String ZEC = "ZEC";
         public static final String QTUM = "QTUM";
+        public static final String BTG = "BTG";
+        public static final String IOTA = "IOTA";
     }
 
     public static class Currency {
