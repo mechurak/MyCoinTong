@@ -7,8 +7,8 @@ android {
         applicationId "com.shimnssso.mycointong"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 100002  // X.XX.XXX
-        versionName "1.0.2"
+        versionCode 100003  // X.XX.XXX
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
