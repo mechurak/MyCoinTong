@@ -12,7 +12,7 @@ import org.json.JSONException;
 
 public class BitfinexClient extends AsyncTask<Void, Void, String> {
     private static final String TAG = "BitfinexClient";
-    private static final String TICKER_URL = "https://api.bitfinex.com/v2/tickers?symbols=tBTCUSD,tBCHUSD,tLTCUSD,tETHUSD,tETCUSD,tXRPUSD,tZECUSD,tXMRUSD,tDSHUSD,tQTMUSD";
+    private static final String TICKER_URL = "https://api.bitfinex.com/v2/tickers?symbols=tBTCUSD,tBCHUSD,tLTCUSD,tETHUSD,tETCUSD,tXRPUSD,tZECUSD,tXMRUSD,tDSHUSD,tQTMUSD,tBTGUSD,tIOTUSD";
     private static final String MY_CURRENCY = Const.Currency.USD;
     private static final String MY_EXCHANGE = Const.Exchange.BITFINEX;
 
@@ -27,6 +27,9 @@ public class BitfinexClient extends AsyncTask<Void, Void, String> {
     private static String XMRUSD = "tXMRUSD";
     private static String DSHUSD = "tDSHUSD";
     private static String QTMUSD = "tQTMUSD";
+
+    private static String BTGUSD = "tBTGUSD";
+    private static String IOTAUSD = "tIOTUSD";
 
     // result
     private static String TIME_STAMP = "timestamp";
@@ -83,6 +86,8 @@ public class BitfinexClient extends AsyncTask<Void, Void, String> {
                     coin = "QTUM";
                 } else if (coin.equals("DSH")) {
                     coin = "DASH";
+                } else if (coin.equals("IOT")) {
+                    coin = "IOTA";
                 }
                 double dailyChange = curArray.optDouble(5);
                 double lastPrice = curArray.optDouble(7);

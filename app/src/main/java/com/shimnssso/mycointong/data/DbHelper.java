@@ -75,6 +75,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Const.Coin.BCH, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/bchusd"},
 
                 {Const.Coin.BTG, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/btgkrw"},  // db version 2
+                {Const.Coin.BTG, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/btgusd"},  // db version 3
 
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/eth_krw"},
                 {Const.Coin.ETH, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/ethkrw"},
@@ -109,6 +110,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Const.Coin.QTUM, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/qtmusd"},
 
                 {Const.Coin.IOTA, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneIOTA"}, // db version 2
+                {Const.Coin.IOTA, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/iotusd"},  // db version 3
         };
 
         String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,?,?,?)";
@@ -227,6 +229,24 @@ public class DbHelper extends SQLiteOpenHelper {
             cvForCoinone.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://coinone.co.kr/chart/?site=CoinoneLTC");
             insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForCoinone);
             Log.i(TAG, "onUpgrade 1 to 2. LTC. insertRet: " + insertRet);
+        }
+
+
+        // 2 -> 3
+        if (newVersion <= 3) {
+            // add BTG, IOTA (Bitfinex)
+            ContentValues cvForFinex = new ContentValues();
+            cvForFinex.put(DbMeta.CoinTableMeta.COIN, Const.Coin.BTG);
+            cvForFinex.put(DbMeta.CoinTableMeta.CURRENCY, Const.Currency.USD);
+            cvForFinex.put(DbMeta.CoinTableMeta.EXCHANGE, Const.Exchange.BITFINEX);
+            cvForFinex.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://cryptowat.ch/bitfinex/btgusd");
+            long insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForFinex);
+            Log.i(TAG, "onUpgrade 2 to 3. BTG. insertRet: " + insertRet);
+
+            cvForFinex.put(DbMeta.CoinTableMeta.COIN, Const.Coin.IOTA);
+            cvForFinex.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://cryptowat.ch/bitfinex/iotusd");
+            insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForFinex);
+            Log.i(TAG, "onUpgrade 2 to 3. IOTA. insertRet: " + insertRet);
         }
     }
 
