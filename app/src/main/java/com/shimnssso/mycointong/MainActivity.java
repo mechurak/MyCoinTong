@@ -21,6 +21,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
+import com.shimnssso.mycointong.exchangerate.UsdJpy;
+import com.shimnssso.mycointong.exchangerate.UsdKrw;
 import com.shimnssso.mycointong.network.BitfinexClient;
 import com.shimnssso.mycointong.network.BithumbClient;
 import com.shimnssso.mycointong.network.CoinoneClient;
@@ -273,6 +275,14 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             BitfinexClient bitfinexClient = new BitfinexClient(this);
             bitfinexClient.execute();
             mRefreshList.add(Const.Exchange.BITFINEX);
+
+            // TODO: Find acceptable method
+//            mRefreshList.add(Const.ExchangeRate.USDKRW);
+//            UsdKrw usdKrw = new UsdKrw(this, this);
+//            usdKrw.check();
+//            mRefreshList.add(Const.ExchangeRate.USDJPY);
+//            UsdJpy usdJpy = new UsdJpy(this, this);
+//            usdJpy.check();
         }
 
         DbHelper dbHelper = DbHelper.getInstance(this);

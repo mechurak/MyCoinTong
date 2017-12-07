@@ -38,6 +38,11 @@ public class Const {
         public static final String CRYPTOWATCH = "Cryptowat.ch";
     }
 
+    public static class ExchangeRate {
+        public static final String USDKRW = "usdkrw";
+        public static final String USDJPY = "usdjpy";
+    }
+
     public static class UnitTime {
         public static final String ONE_MIN = "1M";
         public static final String THREE_MIN = "3M";
