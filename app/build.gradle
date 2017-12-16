@@ -17,6 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    signingConfigs {
+        // to use same key for debug build
+        debug {
+            storeFile file("debug_sshim.keystore")
+        }
+    }
 }
 
 dependencies {
