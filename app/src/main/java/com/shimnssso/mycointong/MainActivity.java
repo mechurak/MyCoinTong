@@ -3,8 +3,13 @@ package com.shimnssso.mycointong;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -34,7 +39,7 @@ import com.shimnssso.mycointong.setting.SettingActivity;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener, TickerListener {
+public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener, TickerListener, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
 
     private static final long REFRESH_INTERVAL_DEFAULT = 1000 * 60;  // 1 min
@@ -51,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(TAG, "LifeCycle. onCreate()");
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_parent);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -84,6 +89,16 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 refresh();
             }
         });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
 
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
         MobileAds.initialize(this, "ca-app-pub-5342329730936246~5303083484");
@@ -450,5 +465,40 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             txt_revenuePrice.setTextColor(Const.Color.LTBLUE);
             txt_revenuePercent.setTextColor(Const.Color.LTBLUE);
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_kimpro) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://scolkg.com/"));
+            startActivity(intent);
+        } else if (id == R.id.nav_coinmarketcap) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://coinmarketcap.com/"));
+            startActivity(intent);
+        } else if (id == R.id.nav_clien) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.clien.net/service/board/cm_vcoin"));
+            startActivity(intent);
+        } else if (id == R.id.nav_coinpan) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://coinpan.com/"));
+            startActivity(intent);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

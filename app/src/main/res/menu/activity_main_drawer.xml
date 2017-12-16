@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="@string/nav_useful_sites">
+        <menu>
+            <item
+                android:id="@+id/nav_kimpro"
+                android:title="@string/nav_kimpro" />
+            <item
+                android:id="@+id/nav_coinmarketcap"
+                android:title="@string/nav_coinmarketcap" />
+            <item
+                android:id="@+id/nav_clien"
+                android:title="@string/nav_clien" />
+            <item
+                android:id="@+id/nav_coinpan"
+                android:title="@string/nav_coinpan" />
+        </menu>
+    </item>
+
+</menu>

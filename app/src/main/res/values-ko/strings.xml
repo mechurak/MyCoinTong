@@ -24,4 +24,9 @@
     <string name="revenue_usd">수익(USD)</string>
     <string name="msg_all_coin_already_added">가능한 모든 코인이 이미 관심 종목에 추가되어 있습니다.</string>
     <string name="msg_insert_avg_price_and_quantity">평균단가와 보유량을 적절히 입력해 주세요.</string>
+    <string name="nav_kimpro">김프 확인</string>
+    <string name="nav_coinmarketcap">코인마켓캡</string>
+    <string name="nav_clien">가상화폐당</string>
+    <string name="nav_coinpan">코인판</string>
+    <string name="nav_useful_sites">유용한 사이트</string>
 </resources>
