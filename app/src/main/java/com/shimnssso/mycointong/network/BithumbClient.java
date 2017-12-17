@@ -16,7 +16,7 @@ public class BithumbClient extends AsyncTask<Void, Void, String> {
     private static final String MY_CURRENCY = Const.Currency.KRW;
     private static final String MY_EXCHANGE = Const.Exchange.BITHUMB;
 
-    // {currency} BTC, ETH, DASH, LTC, ETC, XRP, BCH, XMR, ZEC, QTUM (default: BTC), ALL
+    // {currency} = BTC, ETH, DASH, LTC, ETC, XRP, BCH, XMR, ZEC, QTUM, BTG, EOS (기본값: BTC), ALL(전체)
     private static String STATUS = "status";
     private static String STATUS_SUCCESS = "0000";
 
@@ -34,6 +34,7 @@ public class BithumbClient extends AsyncTask<Void, Void, String> {
     private static String ZEC = "ZEC";
     private static String QTUM = "QTUM";
     private static String BTG = "BTG";
+    private static String EOS = "EOS";
 
     private static String OPENING_PRICE = "opening_price";
     private static String CLOSING_PRICE = "closing_price";
@@ -173,6 +174,13 @@ public class BithumbClient extends AsyncTask<Void, Void, String> {
         curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.BTG, MY_CURRENCY, MY_EXCHANGE);
         if (curItem != null && dataObject.has(BTG)) {
             JSONObject coinObject = dataObject.optJSONObject(BTG);
+            updateItemValues(curItem, coinObject);
+        }
+
+        // EOS
+        curItem = (ListViewItem) adapterInstance.getItemByName(Const.Coin.EOS, MY_CURRENCY, MY_EXCHANGE);
+        if (curItem != null && dataObject.has(EOS)) {
+            JSONObject coinObject = dataObject.optJSONObject(EOS);
             updateItemValues(curItem, coinObject);
         }
 

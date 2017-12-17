@@ -111,6 +111,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
                 {Const.Coin.IOTA, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=CoinoneIOTA"}, // db version 2
                 {Const.Coin.IOTA, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/iotusd"},  // db version 3
+
+                {Const.Coin.EOS, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/eoskrw"}, // db version 4
+                {Const.Coin.EOS, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/eosusd"},  // db version 4
         };
 
         String sql = "INSERT INTO " + DbMeta.CoinTableMeta.TABLE_NAME + " VALUES (null,?,?,?,?)";
@@ -247,6 +250,27 @@ public class DbHelper extends SQLiteOpenHelper {
             cvForFinex.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://cryptowat.ch/bitfinex/iotusd");
             insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForFinex);
             Log.i(TAG, "onUpgrade 2 to 3. IOTA. insertRet: " + insertRet);
+        }
+
+        // 3 -> 4
+        if (newVersion <= 4) {
+            // add EOS (Bithumb)
+            ContentValues cvForEos = new ContentValues();
+            cvForEos.put(DbMeta.CoinTableMeta.COIN, Const.Coin.EOS);
+            cvForEos.put(DbMeta.CoinTableMeta.CURRENCY, Const.Currency.KRW);
+            cvForEos.put(DbMeta.CoinTableMeta.EXCHANGE, Const.Exchange.BITHUMB);
+            cvForEos.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://cryptowat.ch/bithumb/eoskrw");
+            long insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForEos);
+            Log.i(TAG, "onUpgrade 3 to 4. EOS(Bithumb). insertRet: " + insertRet);
+
+            // add EOS (Bitfinex)
+            ContentValues cvForEosFinex = new ContentValues();
+            cvForEosFinex.put(DbMeta.CoinTableMeta.COIN, Const.Coin.EOS);
+            cvForEosFinex.put(DbMeta.CoinTableMeta.CURRENCY, Const.Currency.USD);
+            cvForEosFinex.put(DbMeta.CoinTableMeta.EXCHANGE, Const.Exchange.BITFINEX);
+            cvForEosFinex.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://cryptowat.ch/bitfinex/eosusd");
+            insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForEosFinex);
+            Log.i(TAG, "onUpgrade 3 to 4. EOS(Finex). insertRet: " + insertRet);
         }
     }
 

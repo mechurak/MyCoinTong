@@ -12,7 +12,7 @@ import org.json.JSONException;
 
 public class BitfinexClient extends AsyncTask<Void, Void, String> {
     private static final String TAG = "BitfinexClient";
-    private static final String TICKER_URL = "https://api.bitfinex.com/v2/tickers?symbols=tBTCUSD,tBCHUSD,tLTCUSD,tETHUSD,tETCUSD,tXRPUSD,tZECUSD,tXMRUSD,tDSHUSD,tQTMUSD,tBTGUSD,tIOTUSD";
+    private static final String TICKER_URL = "https://api.bitfinex.com/v2/tickers?symbols=tBTCUSD,tBCHUSD,tLTCUSD,tETHUSD,tETCUSD,tXRPUSD,tZECUSD,tXMRUSD,tDSHUSD,tQTMUSD,tBTGUSD,tIOTUSD,tEOSUSD";
     private static final String MY_CURRENCY = Const.Currency.USD;
     private static final String MY_EXCHANGE = Const.Exchange.BITFINEX;
 
@@ -30,6 +30,9 @@ public class BitfinexClient extends AsyncTask<Void, Void, String> {
 
     private static String BTGUSD = "tBTGUSD";
     private static String IOTAUSD = "tIOTUSD";
+
+    private static String EOSUSD = "tEOSUSD";
+
 
     // result
     private static String TIME_STAMP = "timestamp";
