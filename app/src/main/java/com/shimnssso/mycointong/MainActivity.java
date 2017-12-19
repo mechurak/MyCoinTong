@@ -63,10 +63,11 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DbHelper dbHelper = DbHelper.getInstance(this);
+        dbHelper.loadExchangeRate();
+
         ListViewAdapter adapter = ListViewAdapter.getInstance();
         if (adapter.getCount() == 0) {
-            DbHelper dbHelper = DbHelper.getInstance(this);
-            Log.e(TAG, "after db");
             ArrayList<CoinInfo> coinList = dbHelper.getInterestingCoinList(1);
             for (CoinInfo coinRow : coinList) {
                 Log.i(TAG, coinRow.toString());
@@ -259,6 +260,10 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
     private static final Object mRefreshLock = new Object();
     private ArrayList<String> mRefreshList;
+    private static final int UPDATE_TYPE_UNKNOWN = -1;
+    private static final int UPDATE_TYPE_COIN = 0;
+    private static final int UPDATE_TYPE_EXCHANGE_RATE = 1;
+    private int mUpdateType = UPDATE_TYPE_COIN;
     @Override
     public void OnRefreshResult(String site, int result) {
         synchronized (mRefreshLock) {
@@ -268,8 +273,16 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 Log.d(TAG, "removeRet: " + removeRet);
 
                 if (mRefreshList.isEmpty()) {
+                    if (mUpdateType == UPDATE_TYPE_COIN) {
+                        updateRevenue();
+                    } else if (mUpdateType == UPDATE_TYPE_EXCHANGE_RATE) {
+                        updateExchangeRateOnDrawer();
+                        DbHelper.getInstance(this).updateExchangeRate();
+                    } else {
+                        Log.e(TAG, "OnRefreshResult(). unexpected condition");
+                    }
                     mSwipeLayout.setRefreshing(false);
-                    updateRevenue();
+                    mUpdateType = UPDATE_TYPE_UNKNOWN;
                 }
             }
         }
@@ -278,6 +291,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     private void refresh() {
         Log.d(TAG, "refresh()");
         synchronized (mRefreshLock) {
+            mUpdateType = UPDATE_TYPE_COIN;
             mRefreshList = new ArrayList<>();
             BithumbClient bithumbClient = new BithumbClient(this);
             bithumbClient.execute();
@@ -294,14 +308,6 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             BitfinexClient bitfinexClient = new BitfinexClient(this);
             bitfinexClient.execute();
             mRefreshList.add(Const.Exchange.BITFINEX);
-
-            // TODO: Find acceptable method
-//            mRefreshList.add(Const.ExchangeRate.USDKRW);
-//            UsdKrw usdKrw = new UsdKrw(this, this);
-//            usdKrw.check();
-//            mRefreshList.add(Const.ExchangeRate.USDJPY);
-//            UsdJpy usdJpy = new UsdJpy(this, this);
-//            usdJpy.check();
         }
 
         DbHelper dbHelper = DbHelper.getInstance(this);
@@ -499,6 +505,18 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         } else if (id == R.id.nav_coinpan) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://coinpan.com/"));
             startActivity(intent);
+        } else if (id == R.id.nav_update_exchange_rate) {
+            synchronized (mRefreshLock) {
+                mSwipeLayout.setRefreshing(true);
+                mUpdateType = UPDATE_TYPE_EXCHANGE_RATE;
+                mRefreshList = new ArrayList<>();
+                mRefreshList.add(Const.ExchangeRate.USDKRW);
+                UsdKrw usdKrw = new UsdKrw(this, this);
+                usdKrw.check();
+                mRefreshList.add(Const.ExchangeRate.USDJPY);
+                UsdJpy usdJpy = new UsdJpy(this, this);
+                usdJpy.check();
+            }
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

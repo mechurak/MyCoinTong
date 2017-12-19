@@ -34,9 +34,9 @@ public class UsdJpy {
                     break;
                 case MSG_CHECK_TITLE:
                     String title = mBrowser.getTitle();
-                    Log.e(TAG, "title: " + title);
+                    Log.d(TAG, "title: " + title);
                     float value = Util.getExchangeRateFromYahooTitle(title);
-                    Log.e(TAG, "value: " + value);
+                    Log.d(TAG, "value: " + value);
                     if (value == 0.0f && counter < 5) {
                         mHandler.sendEmptyMessageDelayed(MSG_CHECK_TITLE, 2000);
                         counter++;

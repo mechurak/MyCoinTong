@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.shimnssso.mycointong.Const;
+import com.shimnssso.mycointong.exchangerate.FinanceHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,10 +38,13 @@ public class DbHelper extends SQLiteOpenHelper {
         Log.i(TAG, "onCreate()");
         db.execSQL("CREATE TABLE " + DbMeta.GlobalTableMeta.TABLE_NAME + " ("
                 + DbMeta.GlobalTableMeta.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + DbMeta.GlobalTableMeta.UPDATE_TIME + " INTEGER"
+                + DbMeta.GlobalTableMeta.UPDATE_TIME + " INTEGER, "
+                + DbMeta.GlobalTableMeta.USD_KRW + " REAL, "
+                + DbMeta.GlobalTableMeta.USD_JPY + " REAL, "
+                + DbMeta.GlobalTableMeta.UPDATE_TIME_EXCHANGE_RATE + " INTEGER"
                 + " )"
         );
-        db.execSQL("INSERT INTO " + DbMeta.GlobalTableMeta.TABLE_NAME + " VALUES (null,0)");
+        db.execSQL("INSERT INTO " + DbMeta.GlobalTableMeta.TABLE_NAME + " VALUES (null,0,1082.38,112.815,1513694042183)");
 
         db.execSQL("CREATE TABLE " + DbMeta.CoinTableMeta.TABLE_NAME + " ("
                 + DbMeta.CoinTableMeta.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -272,6 +276,13 @@ public class DbHelper extends SQLiteOpenHelper {
             insertRet = db.insert(DbMeta.CoinTableMeta.TABLE_NAME, null, cvForEosFinex);
             Log.i(TAG, "onUpgrade 3 to 4. EOS(Finex). insertRet: " + insertRet);
         }
+
+        // 4 -> 5
+        if (newVersion <= 5) {
+            db.execSQL("ALTER TABLE " + DbMeta.GlobalTableMeta.TABLE_NAME + " ADD " + DbMeta.GlobalTableMeta.USD_KRW + " REAL DEFAULT 1082.38;");
+            db.execSQL("ALTER TABLE " + DbMeta.GlobalTableMeta.TABLE_NAME + " ADD " + DbMeta.GlobalTableMeta.USD_JPY + " REAL DEFAULT 112.815;");
+            db.execSQL("ALTER TABLE " + DbMeta.GlobalTableMeta.TABLE_NAME + " ADD " + DbMeta.GlobalTableMeta.UPDATE_TIME_EXCHANGE_RATE + " INTEGER DEFAULT 1513694042183;");
+        }
     }
 
     @Override
@@ -452,6 +463,30 @@ public class DbHelper extends SQLiteOpenHelper {
                 DbMeta.InterestTableMeta.ORDER_IN_GROUP + " IS NULL";
         int removeCount = db.delete(DbMeta.InterestTableMeta.TABLE_NAME, whereClause, null);
         Log.d(TAG, "removeDeletedRow(). removeCount: " + removeCount);
+    }
+
+    public void loadExchangeRate() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(DbMeta.GlobalTableMeta.TABLE_NAME, null, null, null, null, null, null);
+        if (c != null && c.moveToFirst()) {
+            float usdKrw = c.getFloat(c.getColumnIndex(DbMeta.GlobalTableMeta.USD_KRW));
+            FinanceHelper.setUsdKrw(usdKrw);
+            float usdJpy = c.getFloat(c.getColumnIndex(DbMeta.GlobalTableMeta.USD_JPY));
+            FinanceHelper.setUsdJpy(usdJpy);
+            c.close();
+        } else {
+            Log.e(TAG, "readExchangeRate(). unexpected condition");
+        }
+    }
+
+    public void updateExchangeRate() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues content = new ContentValues();
+        content.put(DbMeta.GlobalTableMeta.USD_KRW, FinanceHelper.getUsdKrw());
+        content.put(DbMeta.GlobalTableMeta.USD_JPY, FinanceHelper.getUsdJpy());
+        content.put(DbMeta.GlobalTableMeta.UPDATE_TIME_EXCHANGE_RATE, System.currentTimeMillis());
+        int ret = db.update(DbMeta.GlobalTableMeta.TABLE_NAME, content, null, null);
+        Log.d(TAG, "updateExchangeRate(). ret: " + ret);
     }
 
 }

@@ -9,14 +9,19 @@ public class DbMeta {
      *     2017-12-02: Add coins (Bithumb: BTG, Coinone: IOTA, LTC)
      * [3] 2017-12-04: Add coins (Bitfinex: BTG, IOTA)
      * [4] 2017-12-18: Add coin (Bithumb: EOS)
+     * [5] 2017-12-19: Add exchange rate to global
      */
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 5;
 
     public static final class GlobalTableMeta {
         public static final String TABLE_NAME = "global";
 
         public static final String ID = "_id";
         public static final String UPDATE_TIME = "update_time";
+
+        public static final String USD_KRW = "usd_krw";  // float
+        public static final String USD_JPY = "usd_jpy";  // float
+        public static final String UPDATE_TIME_EXCHANGE_RATE = "update_time_exchange_rate"; // long
     }
 
     public static final class CoinTableMeta {
