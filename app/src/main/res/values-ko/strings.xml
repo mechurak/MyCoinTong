@@ -29,4 +29,6 @@
     <string name="nav_clien">가상화폐당</string>
     <string name="nav_coinpan">코인판</string>
     <string name="nav_useful_sites">유용한 사이트</string>
+    <string name="nav_exchange_rate">환율</string>
+    <string name="nav_update_exchange_rate">환율 다시 확인</string>
 </resources>

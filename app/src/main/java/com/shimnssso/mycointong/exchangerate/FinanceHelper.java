@@ -5,8 +5,8 @@ import android.util.Log;
 public class FinanceHelper {
     public static final String TAG = "FinanceHelper";
 
-    private static float mUsdKrw = 0.0f;
-    private static float mUsdJpy = 0.0f;
+    private static float mUsdKrw = 1085.39f;
+    private static float mUsdJpy = 112.552f;
 
     public static float getUsdKrw() {
         return mUsdKrw;

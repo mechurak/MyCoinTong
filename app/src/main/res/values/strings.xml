@@ -30,4 +30,6 @@
     <string name="nav_coinmarketcap">CoinMarketCap</string>
     <string name="nav_clien">Clien</string>
     <string name="nav_coinpan">Coinpan</string>
+    <string name="nav_exchange_rate">Exchange Rate</string>
+    <string name="nav_update_exchange_rate">Update</string>
 </resources>

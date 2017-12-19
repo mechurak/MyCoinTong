@@ -26,6 +26,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.shimnssso.mycointong.data.CoinInfo;
 import com.shimnssso.mycointong.data.DbHelper;
+import com.shimnssso.mycointong.exchangerate.FinanceHelper;
 import com.shimnssso.mycointong.exchangerate.UsdJpy;
 import com.shimnssso.mycointong.exchangerate.UsdKrw;
 import com.shimnssso.mycointong.network.BitfinexClient;
@@ -37,7 +38,9 @@ import com.shimnssso.mycointong.network.TickerListener;
 import com.shimnssso.mycointong.setting.SettingActivity;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements ListView.OnItemClickListener, ListView.OnItemLongClickListener, TickerListener, NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        updateExchangeRateOnDrawer();
 
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
         MobileAds.initialize(this, "ca-app-pub-5342329730936246~5303083484");
@@ -500,5 +504,19 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void updateExchangeRateOnDrawer() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        Menu menu = navigationView.getMenu();
+        MenuItem exchangeRateItem = menu.findItem(R.id.nav_exchange_rate);
+        Date from = new Date();
+        String to = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT).format(from);
+        exchangeRateItem.setTitle(getString(R.string.nav_exchange_rate) + " (" + to + ")");
+        MenuItem usdKrwItem = menu.findItem(R.id.nav_usdkrw);
+        usdKrwItem.setTitle("USD/KRW: " + FinanceHelper.getUsdKrw());
+        MenuItem usdJpyItem = menu.findItem(R.id.nav_usdjpy);
+        usdJpyItem.setTitle("USD/JPY: " + FinanceHelper.getUsdJpy());
     }
 }
