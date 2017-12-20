@@ -31,4 +31,6 @@
     <string name="nav_useful_sites">유용한 사이트</string>
     <string name="nav_exchange_rate">환율</string>
     <string name="nav_update_exchange_rate">환율 다시 확인</string>
+    <string name="navigation_drawer_open">내비바 열기</string>
+    <string name="navigation_drawer_close">내비바 닫기</string>
 </resources>
