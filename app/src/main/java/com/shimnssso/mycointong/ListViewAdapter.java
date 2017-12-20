@@ -2,11 +2,14 @@ package com.shimnssso.mycointong;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.shimnssso.mycointong.exchangerate.FinanceHelper;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.ArrayList;
 public class ListViewAdapter extends BaseAdapter {
     private static final String TAG = "ListViewAdapter";
 
-    private ArrayList<ListViewItem> listViewItemList = new ArrayList<>() ;
+    private ArrayList<ListViewItem> listViewItemList = new ArrayList<>();
 
     private static ListViewAdapter mInstance;
     public static ListViewAdapter getInstance() {
@@ -52,6 +55,8 @@ public class ListViewAdapter extends BaseAdapter {
         TextView percentChangeTextView = (TextView) convertView.findViewById(R.id.percentChange);
         TextView myPriceChangeTextView = (TextView) convertView.findViewById(R.id.myPriceChange);
         TextView myPercentChangeTextView = (TextView) convertView.findViewById(R.id.myPercentChange);
+        TextView priceDollarView = (TextView) convertView.findViewById(R.id.priceDollar);
+        TextView percentKimpTextView = (TextView) convertView.findViewById(R.id.percentKimp);
         CandleView candleView = (CandleView) convertView.findViewById(R.id.candle);
         int originTextColor = nameTextView.getTextColors().getDefaultColor();
         int originBgColor = convertView.getSolidColor();
@@ -98,14 +103,41 @@ public class ListViewAdapter extends BaseAdapter {
             priceTextView.setTextColor(Const.Color.LTRED);
             priceChangeTextView.setTextColor(Const.Color.LTRED);
             percentChangeTextView.setTextColor(Const.Color.LTRED);
+            priceDollarView.setTextColor(Const.Color.LTRED);
         } else if (changePrice < 0) {
             priceTextView.setTextColor(Const.Color.LTBLUE);
             priceChangeTextView.setTextColor(Const.Color.LTBLUE);
             percentChangeTextView.setTextColor(Const.Color.LTBLUE);
+            priceDollarView.setTextColor(Const.Color.LTBLUE);
         } else {
             priceTextView.setTextColor(originTextColor);
             priceChangeTextView.setTextColor(originTextColor);
             percentChangeTextView.setTextColor(originTextColor);
+            priceDollarView.setTextColor(originTextColor);
+        }
+
+        String priceUsdText = null;
+        double priceUsd = 0.0f;
+        if (listViewItem.getCurrency().equals(Const.Currency.KRW)) {
+            priceUsd = listViewItem.getCurPrice() / FinanceHelper.getUsdKrw();
+            priceUsdText = floatFormatter.format(priceUsd);
+        } else if (listViewItem.getCurrency().equals(Const.Currency.JPY)){
+            priceUsd = listViewItem.getCurPrice() / FinanceHelper.getUsdJpy();
+            priceUsdText = floatFormatter.format(priceUsd);
+        }
+        if (priceUsdText != null) {
+            priceUsdText = Util.priceWithSymbol("$", priceUsdText);
+            priceDollarView.setText(priceUsdText);
+
+            ListViewItem dollarItem = (ListViewItem) getItemByName(listViewItem.getCoin(), Const.Currency.USD, Const.Exchange.BITFINEX);
+            if (dollarItem != null) {
+                double bitfinexPrice = dollarItem.getCurPrice();
+                double percentKimp = (priceUsd - bitfinexPrice) / bitfinexPrice * 100;
+                percentKimpTextView.setText(String.format("(%s)", floatFormatter.format(percentKimp)));
+            }
+        } else {
+            priceDollarView.setText(null);
+            percentKimpTextView.setText(null);
         }
 
         double myPriceChange = 0.0d;

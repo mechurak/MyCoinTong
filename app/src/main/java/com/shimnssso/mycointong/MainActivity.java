@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         super.onStart();
         Log.i(TAG, "LifeCycle. onStart()");
         if (isVeryFirstTime) {
+            mSwipeLayout.setRefreshing(true);  // explicit call is needed (non swipe gesture case)
             refresh();
             isVeryFirstTime = false;
         }
@@ -334,6 +335,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
     private void updateRevenue() {
         ListViewAdapter adapter = ListViewAdapter.getInstance();
+        adapter.notifyDataSetChanged();  // to update kimp
+
         double[] initialPrice = {0.0d, 0.0d, 0.0d, 0.0d};  // KRW, USD, CNY, JPY
         double[] currentPrice = {0.0d, 0.0d, 0.0d, 0.0d};
         double curPrice, curInitPrice;
