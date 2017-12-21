@@ -1,6 +1,7 @@
 package com.shimnssso.mycointong;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -524,6 +525,9 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         }
     }
 
+    private static final String PKG_NAME_ESCLIEN = "com.esstudio.clien";
+    private static final String PKG_NAME_COINPAN = "com.coinpan.coinpan";
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -536,11 +540,37 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://coinmarketcap.com/"));
             startActivity(intent);
         } else if (id == R.id.nav_clien) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.clien.net/service/board/cm_vcoin"));
-            startActivity(intent);
+            PackageManager pm = getPackageManager();
+            String targetPkgName = null;
+            try {
+                pm.getPackageInfo(PKG_NAME_ESCLIEN, PackageManager.GET_ACTIVITIES);
+                targetPkgName = PKG_NAME_ESCLIEN;
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.d(TAG, "NameNotFoundException com.esstudio.clien");
+            }
+            if (targetPkgName != null && targetPkgName.equals(PKG_NAME_ESCLIEN)) {
+                Intent launchIntent = getPackageManager().getLaunchIntentForPackage(PKG_NAME_ESCLIEN);
+                startActivity(launchIntent);
+            } else {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.clien.net/service/board/cm_vcoin"));
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_coinpan) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://coinpan.com/"));
-            startActivity(intent);
+            PackageManager pm = getPackageManager();
+            String targetPkgName = null;
+            try {
+                pm.getPackageInfo(PKG_NAME_COINPAN, PackageManager.GET_ACTIVITIES);
+                targetPkgName = PKG_NAME_COINPAN;
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.d(TAG, "NameNotFoundException " + PKG_NAME_COINPAN);
+            }
+            if (targetPkgName != null && targetPkgName.equals(PKG_NAME_COINPAN)) {
+                Intent launchIntent = getPackageManager().getLaunchIntentForPackage(PKG_NAME_COINPAN);
+                startActivity(launchIntent);
+            } else {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://coinpan.com/"));
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_update_exchange_rate) {
             if (mSwipeLayout.isRefreshing()) return true;
             refreshExchangeRate();
