@@ -473,6 +473,8 @@ public class DbHelper extends SQLiteOpenHelper {
             FinanceHelper.setUsdKrw(usdKrw);
             float usdJpy = c.getFloat(c.getColumnIndex(DbMeta.GlobalTableMeta.USD_JPY));
             FinanceHelper.setUsdJpy(usdJpy);
+            long updateTimeExchangeRate = c.getLong(c.getColumnIndex(DbMeta.GlobalTableMeta.UPDATE_TIME_EXCHANGE_RATE));
+            FinanceHelper.setUpdateTime(updateTimeExchangeRate);
             c.close();
         } else {
             Log.e(TAG, "readExchangeRate(). unexpected condition");
@@ -484,7 +486,7 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues content = new ContentValues();
         content.put(DbMeta.GlobalTableMeta.USD_KRW, FinanceHelper.getUsdKrw());
         content.put(DbMeta.GlobalTableMeta.USD_JPY, FinanceHelper.getUsdJpy());
-        content.put(DbMeta.GlobalTableMeta.UPDATE_TIME_EXCHANGE_RATE, System.currentTimeMillis());
+        content.put(DbMeta.GlobalTableMeta.UPDATE_TIME_EXCHANGE_RATE, FinanceHelper.getUpdateTime());
         int ret = db.update(DbMeta.GlobalTableMeta.TABLE_NAME, content, null, null);
         Log.d(TAG, "updateExchangeRate(). ret: " + ret);
     }

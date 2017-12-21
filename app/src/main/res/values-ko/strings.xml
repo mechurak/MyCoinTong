@@ -33,4 +33,5 @@
     <string name="nav_update_exchange_rate">환율 다시 확인</string>
     <string name="navigation_drawer_open">내비바 열기</string>
     <string name="navigation_drawer_close">내비바 닫기</string>
+    <string name="msg_checking_exchange_rate">환율 갱신중...</string>
 </resources>

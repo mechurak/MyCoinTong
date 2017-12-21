@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -184,6 +185,10 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                 startActivityForResult(intent, Const.RequestCode.SettingActivity);
                 return true;
             case R.id.action_refresh:
+                if (mSwipeLayout.isRefreshing()) {
+                    Log.d(TAG, "isRefreshing(). Do nothing");
+                    return true;
+                }
                 mSwipeLayout.setRefreshing(true);  // explicit call is needed (non swipe gesture case)
                 refresh();
                 return true;
@@ -220,7 +225,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             case Const.RequestCode.SettingActivity:
                 if (resultCode == RESULT_OK) {
                     updateAdapterFromDb();
-                    updateRevenue();
+                    mSwipeLayout.setRefreshing(true);
+                    refresh();
                 }
                 break;
             default:
@@ -265,18 +271,25 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     private static final int UPDATE_TYPE_COIN = 0;
     private static final int UPDATE_TYPE_EXCHANGE_RATE = 1;
     private int mUpdateType = UPDATE_TYPE_COIN;
+    private static final long EXCHANE_RATE_CHECK_TIME_3DAY = 3 * 24 * 60 * 60 * 1000L;
     @Override
     public void OnRefreshResult(String site, int result) {
         synchronized (mRefreshLock) {
             Log.d(TAG, "OnRefreshResult(). site: " + site + ", result: " + result);
             if (mRefreshList != null) {
                 boolean removeRet = mRefreshList.remove(site);
-                Log.d(TAG, "removeRet: " + removeRet);
+                Log.d(TAG, "removeRet: " + removeRet + ", site: " + site);
 
                 if (mRefreshList.isEmpty()) {
+                    boolean isCheckExchangeRateNeeded = false;
                     if (mUpdateType == UPDATE_TYPE_COIN) {
                         updateRevenue();
+                        if (System.currentTimeMillis() - FinanceHelper.getUpdateTime() > EXCHANE_RATE_CHECK_TIME_3DAY) {
+                            isCheckExchangeRateNeeded = true;
+                        }
                     } else if (mUpdateType == UPDATE_TYPE_EXCHANGE_RATE) {
+                        FinanceHelper.setUpdateTime(System.currentTimeMillis());
+                        ListViewAdapter.getInstance().notifyDataSetChanged();
                         updateExchangeRateOnDrawer();
                         DbHelper.getInstance(this).updateExchangeRate();
                     } else {
@@ -284,6 +297,12 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                     }
                     mSwipeLayout.setRefreshing(false);
                     mUpdateType = UPDATE_TYPE_UNKNOWN;
+                    if (isCheckExchangeRateNeeded) {
+                        Toast.makeText(this, R.string.msg_checking_exchange_rate, Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "OnRefreshResult(). isCheckExchangeRateNeeded");
+                        mSwipeLayout.setRefreshing(true);
+                        refreshExchangeRate();
+                    }
                 }
             }
         }
@@ -313,6 +332,20 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
         DbHelper dbHelper = DbHelper.getInstance(this);
         dbHelper.setUpdateTime(System.currentTimeMillis());
+    }
+
+    private void refreshExchangeRate() {
+        synchronized (mRefreshLock) {
+            mSwipeLayout.setRefreshing(true);
+            mUpdateType = UPDATE_TYPE_EXCHANGE_RATE;
+            mRefreshList = new ArrayList<>();
+            mRefreshList.add(Const.ExchangeRate.USDKRW);
+            UsdKrw usdKrw = new UsdKrw(this, this);
+            usdKrw.check();
+            mRefreshList.add(Const.ExchangeRate.USDJPY);
+            UsdJpy usdJpy = new UsdJpy(this, this);
+            usdJpy.check();
+        }
     }
 
     private void updateAdapterFromDb() {
@@ -509,17 +542,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://coinpan.com/"));
             startActivity(intent);
         } else if (id == R.id.nav_update_exchange_rate) {
-            synchronized (mRefreshLock) {
-                mSwipeLayout.setRefreshing(true);
-                mUpdateType = UPDATE_TYPE_EXCHANGE_RATE;
-                mRefreshList = new ArrayList<>();
-                mRefreshList.add(Const.ExchangeRate.USDKRW);
-                UsdKrw usdKrw = new UsdKrw(this, this);
-                usdKrw.check();
-                mRefreshList.add(Const.ExchangeRate.USDJPY);
-                UsdJpy usdJpy = new UsdJpy(this, this);
-                usdJpy.check();
-            }
+            if (mSwipeLayout.isRefreshing()) return true;
+            refreshExchangeRate();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -532,8 +556,8 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
 
         Menu menu = navigationView.getMenu();
         MenuItem exchangeRateItem = menu.findItem(R.id.nav_exchange_rate);
-        Date from = new Date();
-        String to = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT).format(from);
+        Date from = new Date(FinanceHelper.getUpdateTime());
+        String to = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.SHORT, SimpleDateFormat.SHORT).format(from);
         exchangeRateItem.setTitle(getString(R.string.nav_exchange_rate) + " (" + to + ")");
         MenuItem usdKrwItem = menu.findItem(R.id.nav_usdkrw);
         usdKrwItem.setTitle("USD/KRW: " + FinanceHelper.getUsdKrw());

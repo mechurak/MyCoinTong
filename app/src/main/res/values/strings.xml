@@ -23,6 +23,7 @@
     <string name="revenue_usd">Revenue(USD)</string>
     <string name="msg_all_coin_already_added">All available coins are in the interesting coin list.</string>
     <string name="msg_insert_avg_price_and_quantity">Please insert your average price and quantity.</string>
+    <string name="msg_checking_exchange_rate">Checking exchange rate...</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_useful_sites">Useful Sites</string>
