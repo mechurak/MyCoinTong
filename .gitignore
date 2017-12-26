@@ -5,6 +5,7 @@
 .DS_Store
 *.apk
 app/libs
+app/release
 /build
 /captures
 .externalNativeBuild
