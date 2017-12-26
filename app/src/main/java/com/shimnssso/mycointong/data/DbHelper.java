@@ -71,7 +71,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 {Const.Coin.BTC, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/btckrw"},
                 {Const.Coin.BTC, Const.Currency.KRW, Const.Exchange.COINONE, "https://coinone.co.kr/chart/?site=Coinone"},
                 {Const.Coin.BTC, Const.Currency.USD, Const.Exchange.BITFINEX, "https://cryptowat.ch/bitfinex/btcusd"},
-                {Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER, "https://cryptowat.ch/bitflyer/btcfxjpy"},
+                {Const.Coin.BTC, Const.Currency.JPY, Const.Exchange.BITFLYER, "https://cryptowat.ch/bitflyer/btcjpy"},  // db version 6
 
                 {Const.Coin.BCH, Const.Currency.KRW, Const.Exchange.KORBIT, "https://www.korbit.co.kr/market/bch_krw"},
                 {Const.Coin.BCH, Const.Currency.KRW, Const.Exchange.BITHUMB, "https://cryptowat.ch/bithumb/bchkrw"},
@@ -282,6 +282,33 @@ public class DbHelper extends SQLiteOpenHelper {
             db.execSQL("ALTER TABLE " + DbMeta.GlobalTableMeta.TABLE_NAME + " ADD " + DbMeta.GlobalTableMeta.USD_KRW + " REAL DEFAULT 1082.38;");
             db.execSQL("ALTER TABLE " + DbMeta.GlobalTableMeta.TABLE_NAME + " ADD " + DbMeta.GlobalTableMeta.USD_JPY + " REAL DEFAULT 112.815;");
             db.execSQL("ALTER TABLE " + DbMeta.GlobalTableMeta.TABLE_NAME + " ADD " + DbMeta.GlobalTableMeta.UPDATE_TIME_EXCHANGE_RATE + " INTEGER DEFAULT 1513694042183;");
+        }
+
+        // 5 -> 6
+        if (newVersion <= 6) {
+            String[] columnsQtum = {DbMeta.CoinTableMeta.ID};
+            int btcJpyId = -1;
+            Cursor cursor = db.query(DbMeta.CoinTableMeta.TABLE_NAME, columnsQtum,
+                    DbMeta.CoinTableMeta.EXCHANGE + "='" + Const.Exchange.BITFLYER +"' AND " +
+                            DbMeta.CoinTableMeta.COIN + "='" + Const.Coin.BTC + "'"
+                    , null, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                btcJpyId = cursor.getInt(0);
+                cursor.close();
+            }
+            if (btcJpyId > 0) {
+                // Update Interest Table
+                ContentValues cvForInterestTable = new ContentValues();
+                cvForInterestTable.put(DbMeta.InterestTableMeta.LINK, "https://cryptowat.ch/bitflyer/btcjpy");
+                int updateInterestTableRet = db.update(DbMeta.InterestTableMeta.TABLE_NAME, cvForInterestTable, DbMeta.InterestTableMeta.COIN_ID + "=" + btcJpyId, null);
+                Log.i(TAG, "onUpgrade 5 to 6. updateInterestTableRet: " + updateInterestTableRet);
+
+                // Update Coin Table
+                ContentValues cvForCoinTable = new ContentValues();
+                cvForCoinTable.put(DbMeta.CoinTableMeta.DEFAULT_LINK, "https://cryptowat.ch/bitflyer/btcjpy");
+                int updateCoinTableRet = db.update(DbMeta.CoinTableMeta.TABLE_NAME, cvForCoinTable, DbMeta.CoinTableMeta.ID + "=" + btcJpyId, null);
+                Log.i(TAG, "onUpgrade 5 to 6. updateCoinTableRet: " + updateCoinTableRet);
+            }
         }
     }
 

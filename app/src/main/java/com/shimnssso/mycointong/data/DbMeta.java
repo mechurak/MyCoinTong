@@ -10,8 +10,9 @@ public class DbMeta {
      * [3] 2017-12-04: Add coins (Bitfinex: BTG, IOTA)
      * [4] 2017-12-18: Add coin (Bithumb: EOS)
      * [5] 2017-12-19: Add exchange rate to global
+     * [6] 2017-12-27: Change link (bitflyer: BTC)
      */
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 6;
 
     public static final class GlobalTableMeta {
         public static final String TABLE_NAME = "global";
