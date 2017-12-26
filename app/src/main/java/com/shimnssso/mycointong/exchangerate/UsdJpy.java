@@ -93,6 +93,6 @@ public class UsdJpy {
     }
 
     public void check() {
-        mHandler.sendEmptyMessageDelayed(MSG_CHECK_CURRENCY, 200);
+        mHandler.sendEmptyMessageDelayed(MSG_CHECK_CURRENCY, 300);
     }
 }

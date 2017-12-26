@@ -273,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
     private static final int UPDATE_TYPE_EXCHANGE_RATE = 1;
     private int mUpdateType = UPDATE_TYPE_COIN;
     private static final long EXCHANE_RATE_CHECK_TIME_3DAY = 3 * 24 * 60 * 60 * 1000L;
+    private static final long EXCHANE_RATE_CHECK_TIME_12HOURS = 12 * 60 * 60 * 1000L;
     @Override
     public void OnRefreshResult(String site, int result) {
         synchronized (mRefreshLock) {
@@ -285,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
                     boolean isCheckExchangeRateNeeded = false;
                     if (mUpdateType == UPDATE_TYPE_COIN) {
                         updateRevenue();
-                        if (System.currentTimeMillis() - FinanceHelper.getUpdateTime() > EXCHANE_RATE_CHECK_TIME_3DAY) {
+                        if (System.currentTimeMillis() - FinanceHelper.getUpdateTime() > EXCHANE_RATE_CHECK_TIME_12HOURS) {
                             isCheckExchangeRateNeeded = true;
                         }
                     } else if (mUpdateType == UPDATE_TYPE_EXCHANGE_RATE) {
